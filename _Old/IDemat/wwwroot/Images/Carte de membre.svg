@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21" viewBox="0 0 21 21">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_172" data-name="Rectangle 172" width="21" height="21" transform="translate(40 573)" fill="rgba(0,0,0,0.4)"/>
+    </clipPath>
+  </defs>
+  <g id="Carte_de_membre" data-name="Carte de membre" transform="translate(-40 -573)" clip-path="url(#clip-path)">
+    <path id="Icon_fa-regular-address-card" data-name="Icon fa-regular-address-card" d="M18.667,4a.585.585,0,0,1,.583.583V16.25a.585.585,0,0,1-.583.583H2.333a.585.585,0,0,1-.583-.583V4.583A.585.585,0,0,1,2.333,4ZM2.333,2.25A2.335,2.335,0,0,0,0,4.583V16.25a2.335,2.335,0,0,0,2.333,2.333H18.667A2.335,2.335,0,0,0,21,16.25V4.583A2.335,2.335,0,0,0,18.667,2.25Zm5.25,8.167A2.333,2.333,0,1,0,5.25,8.083,2.333,2.333,0,0,0,7.583,10.417ZM6.417,11.583A2.916,2.916,0,0,0,3.5,14.5a.585.585,0,0,0,.583.583h7a.585.585,0,0,0,.583-.583A2.916,2.916,0,0,0,8.75,11.583Zm7.292-5.25a.875.875,0,0,0,0,1.75h2.917a.875.875,0,0,0,0-1.75Zm0,3.5a.875.875,0,1,0,0,1.75h2.917a.875.875,0,1,0,0-1.75Z" transform="translate(40 573.083)" fill="rgba(0,0,0,0.4)"/>
+  </g>
+</svg>

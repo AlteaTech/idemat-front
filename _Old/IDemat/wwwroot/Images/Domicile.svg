@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21" viewBox="0 0 21 21">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_172" data-name="Rectangle 172" width="21" height="21" transform="translate(40 573)" fill="rgba(0,0,0,0.4)"/>
+    </clipPath>
+  </defs>
+  <g id="Domicile" transform="translate(-40 -573)" clip-path="url(#clip-path)">
+    <g id="Icon_core-house" data-name="Icon core-house" transform="translate(38.268 571.258)">
+      <path id="Tracé_125" data-name="Tracé 125" d="M25.6,24.5V17.438H20.25V24.5Zm-3.922-5.639h2.5v4.213h-2.5Z" transform="translate(-6.592 -5.748)" fill="rgba(0,0,0,0.4)"/>
+      <path id="Tracé_126" data-name="Tracé 126" d="M12.9,2.142a1.515,1.515,0,0,0-2.1.044L2.25,10.743v12H7.241v-7.13h2.852v7.13H22.215V10.707Zm7.884,19.174H11.519v-7.13h-5.7v7.13H3.676V11.333l8.263-8.139v0l8.85,8.142Z" fill="rgba(0,0,0,0.4)"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      //"../../../PaiementSecuriseService.wsdl"
+      "../../../securite.wsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, srPayFip"
+    ],
+    "targetFramework": "net5.0",
+    "typeReuseMode": "All"
+  }
+}

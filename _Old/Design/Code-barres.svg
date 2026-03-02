@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21" viewBox="0 0 21 21">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_171" data-name="Rectangle 171" width="21" height="21" transform="translate(0.331 0.429)" fill="rgba(0,0,0,0.4)"/>
+    </clipPath>
+  </defs>
+  <g id="Code-barres" transform="translate(-0.331 -0.429)" clip-path="url(#clip-path)">
+    <path id="barcode_24dp_E8EAED_FILL0_wght200_GRAD0_opsz24" d="M3.037-6.421V-19.785H4.946V-6.421H3.037Zm2.864,0V-19.785H7.81V-6.421H5.9Zm2.864,0V-19.785h.955V-6.421H8.764Zm2.864,0V-19.785h1.909V-6.421H11.628Zm2.864,0V-19.785h2.863V-6.421H14.492Zm3.818,0V-19.785h.955V-6.421H18.31Zm2.864,0V-19.785h2.864V-6.421H21.173Z" transform="translate(-3.037 24.032)" fill="rgba(0,0,0,0.4)"/>
+  </g>
+</svg>

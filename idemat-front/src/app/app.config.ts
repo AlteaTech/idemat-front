@@ -1,0 +1,31 @@
+import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {provideRouter} from '@angular/router';
+
+import {routes} from './app.routes';
+import {BASE_PATH} from '../core/api';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {environment} from '../environments/environment';
+import {authInterceptor} from '../core/interceptors/auth.interceptor';
+import {errorInterceptor} from '../core/interceptors/error.interceptor';
+
+
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {MatPaginatorIntlFr} from './core/i18n/mat-paginator-intl-fr';
+import {provideAnimations} from '@angular/platform-browser/animations';
+import {loaderInterceptor} from '../core/interceptors/loader.interceptor';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideZoneChangeDetection({eventCoalescing: true}),
+    provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([authInterceptor, errorInterceptor, loaderInterceptor]),
+    ),
+    provideAnimations(),
+
+    {provide: BASE_PATH, useValue: environment.apiUrl},
+
+
+    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlFr}
+  ]
+};

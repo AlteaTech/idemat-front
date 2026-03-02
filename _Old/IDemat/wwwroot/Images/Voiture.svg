@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21" viewBox="0 0 21 21">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_172" data-name="Rectangle 172" width="21" height="21" transform="translate(40 573)" fill="rgba(0,0,0,0.4)"/>
+    </clipPath>
+  </defs>
+  <g id="Voiture" transform="translate(-40 -573)" clip-path="url(#clip-path)">
+    <g id="Icon_ion-car-outline" data-name="Icon ion-car-outline" transform="translate(34.375 567.034)">
+      <path id="Tracé_118" data-name="Tracé 118" d="M5.625,14.557,7.709,9.3A2.315,2.315,0,0,1,9.878,7.875H20.786A2.315,2.315,0,0,1,22.955,9.3l2.084,5.259m-19.413,0H25.038v8.591H5.625Zm4.782,8.591v1.909H5.625V23.148m19.413,0v1.909H20.291V23.148" transform="translate(0.743 0)" fill="none" stroke="rgba(0,0,0,0.4)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Tracé_119" data-name="Tracé 119" d="M12.014,20.632a1.507,1.507,0,1,1-1.507-1.507A1.507,1.507,0,0,1,12.014,20.632Z" transform="translate(-0.511 -1.704)" fill="none" stroke="rgba(0,0,0,0.4)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Tracé_120" data-name="Tracé 120" d="M27.764,20.632a1.507,1.507,0,1,1-1.507-1.507A1.507,1.507,0,0,1,27.764,20.632Z" transform="translate(-4.181 -1.704)" fill="none" stroke="rgba(0,0,0,0.4)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

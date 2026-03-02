@@ -1,0 +1,143 @@
+<div class="content-wrapper">
+  <!--  MOCK écran liste avec tableau  -->
+  <div class="page-header">
+    <h1>Seuils</h1>
+    <button class="btn-orange btn" mat-flat-button>
+      Ajouter un seuil
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-area">
+      <div class="search-input-wrapper">
+        <input placeholder="Rechercher" type="text">
+        <mat-icon (click)="onSearch()" class="search-icon">search</mat-icon>
+      </div>
+      <button (click)="isAdvancedSearchOpen.set(!isAdvancedSearchOpen())" [class.active]="isAdvancedSearchOpen()"
+              class="advanced-search-btn"
+              mat-button>
+        <mat-icon class="tune-icon">tune</mat-icon>
+        Recherche avancée
+      </button>
+    </div>
+  </div>
+
+  @if (isAdvancedSearchOpen()) {
+    <div [formGroup]="pocAdvancedForm" class="advanced-search-panel">
+
+      <div class="form-grid">
+
+        <div class="form-col">
+          <label class="input-label">Nom de l'usager</label>
+          <input class="custom-input" formControlName="nom" placeholder="Ex. Julien Dupont">
+        </div>
+        <div class="form-col">
+          <label class="input-label">Société</label>
+          <input class="custom-input" formControlName="societe" placeholder="Nom de la société">
+        </div>
+        <div class="form-col">
+          <label class="input-label">Commune</label>
+          <select class="custom-input custom-select" formControlName="commune">
+            <option disabled selected value="">Commune</option>
+            <option value="paris">Paris</option>
+            <option value="lyon">Lyon</option>
+            <option value="marseille">Marseille</option>
+          </select>
+        </div>
+
+
+        <div class="form-col">
+          <label class="input-label">Identifiant client</label>
+          <input class="custom-input" formControlName="identifiant" placeholder="00000">
+        </div>
+        <div class="form-col">
+          <label class="input-label">Référence client IDbat</label>
+          <input class="custom-input" formControlName="refClient" placeholder="00000">
+        </div>
+        <div class="form-col">
+          <label class="input-label">Numéro de carte</label>
+          <input class="custom-input" formControlName="numCarte" placeholder="00000">
+        </div>
+      </div>
+
+      <div class="advanced-actions">
+        <button class="btn-orange btn search-submit-btn" mat-flat-button>Chercher</button>
+      </div>
+    </div>
+  }
+
+  <div class="table-container overflow-a mat-elevation-z0">
+    <table [dataSource]="dataSource" mat-table>
+
+      <!-- Libellé Column -->
+      <ng-container matColumnDef="libelle">
+        <th *matHeaderCellDef mat-header-cell> Libellé</th>
+        <td *matCellDef="let element" mat-cell> {{ element.libelle }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="type">
+        <th *matHeaderCellDef mat-header-cell> Type de seuil</th>
+        <td *matCellDef="let element" mat-cell> {{ element.type }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="nbPassages">
+        <th *matHeaderCellDef class="text-center" mat-header-cell> Nombre de <br> passages <br> autorisés</th>
+        <td *matCellDef="let element" mat-cell> {{ element.nbPassages }}</td>
+      </ng-container>
+
+      <!-- Matière Column -->
+      <ng-container matColumnDef="matiere">
+        <th *matHeaderCellDef mat-header-cell> Matière</th>
+        <td *matCellDef="let element" mat-cell> {{ element.matiere }}</td>
+      </ng-container>
+
+      <!-- Quantité Column -->
+      <ng-container matColumnDef="quantite">
+        <th *matHeaderCellDef class="text-center" mat-header-cell> Quantité <br> autorisée</th>
+        <td *matCellDef="let element" mat-cell> {{ element.quantite }}</td>
+      </ng-container>
+
+      <!-- Période Column -->
+      <ng-container matColumnDef="periode">
+        <th *matHeaderCellDef mat-header-cell> Période</th>
+        <td *matCellDef="let element" mat-cell> {{ element.periode }}</td>
+      </ng-container>
+
+      <!-- Opération Column -->
+      <ng-container matColumnDef="operation">
+        <th *matHeaderCellDef mat-header-cell> Opération</th>
+        <td *matCellDef="let element" mat-cell> {{ element.operation }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell></th>
+        <td *matCellDef="let element" mat-cell>
+          <div class="action-icons">
+            <mat-icon class="action-icon">print</mat-icon>
+            <mat-icon class="action-icon">visibility</mat-icon>
+            <mat-icon class="action-icon">edit</mat-icon>
+            <mat-icon class="action-icon">delete</mat-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" class="data-row" mat-row></tr>
+    </table>
+  </div>
+
+  <!--  MOCK tooltip  -->
+  <mat-icon matTooltip="Contenu du tooltip">info</mat-icon>
+
+  <!--  MOCK onglets  -->
+  <mat-tab-group>
+    <mat-tab label="Onglet avec composant">
+      <app-mocks-onglet-1></app-mocks-onglet-1>
+    </mat-tab>
+    <mat-tab label="Onglet sans composant">Contenu en dur dans le html du composant parent</mat-tab>
+    <mat-tab [label]="nomOnglet3">{{ contenuOnglet3 }}</mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,241 @@
+.login-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.left-panel {
+  display: none;
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fca5a5 0%, #f87171 50%, #fdba74 100%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .left-panel {
+    display: flex;
+  }
+  .right-panel {
+    width: 50%;
+  }
+}
+
+.decorative-circle {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(60px);
+  transform: translateY(-40px);
+}
+
+.logo-container {
+  z-index: 10;
+  text-align: center;
+  color: white;
+}
+
+.logo-main {
+  font-size: 6rem;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.opacity-90 {
+  opacity: 0.9;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.logo-sub {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.veolia-text {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.veolia-circle {
+  width: 12px;
+  height: 12px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.right-panel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 28rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-header {
+  text-align: center;
+}
+
+.login-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.form-header h2 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.full-width-field {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+::ng-deep .mat-form-field-invalid .mat-mdc-form-field-subscript-wrapper {
+  display: block;
+}
+
+.forgot-password {
+  text-align: right;
+}
+
+.forgot-password a {
+  font-size: 0.75rem;
+  color: #f87171;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.forgot-password a:hover {
+  color: #dc2626;
+}
+
+::ng-deep .custom-toggle-group {
+  width: 100%;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 9999px !important;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+::ng-deep .custom-toggle {
+  flex: 1;
+  background-color: transparent;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-weight: 500;
+  color: #4b5563;
+  text-align: center;
+}
+
+::ng-deep .mat-button-toggle-checked {
+  background-color: #ED6E57 !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(237, 110, 87, 0.3);
+}
+
+::ng-deep .mat-button-toggle-label-content {
+  line-height: 40px !important;
+  padding: 0 8px !important;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1.5rem !important;
+  font-size: 1.125rem !important;
+  border-radius: 0.75rem !important;
+  background-color: #ED6E57 !important;
+  color: white !important;
+}
+
+.submit-btn:hover {
+  background-color: #d65d48 !important;
+}
+
+.google-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 0;
+  gap: 1.5rem;
+}
+
+.google-hint {
+  color: #4b5563;
+  text-align: center;
+}
+
+#google-signin-button {
+  transform: scale(1.1);
+}
+
+.fade-in-content {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

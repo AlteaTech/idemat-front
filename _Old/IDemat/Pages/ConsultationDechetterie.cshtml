@@ -1,0 +1,283 @@
+﻿@page
+@model ConsultationDechetterieModel
+
+@{
+    ViewData["Title"] = "Ma déchetterie";
+    ViewData["guidUsager"] = Model.guidUsager;
+    ViewData["Logo"] = Model.Variables.strURLLogo;
+}
+
+<div class="container-fluid idematbackground">
+    <div class="idematlogoTPcontainer">
+        <button type="button" class="btn btn-primary btn-lg btn-light float-left" style="margin-left: 10px; background-color: transparent" onclick="javascript:window.history.back();">
+            <img src="~/Images/Fleche retour.svg" alt="Fleche retour Image">
+        </button>
+        <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoTP">
+        <button type="button" class="btn btn-primary btn-lg btn-light float-right" style="margin-right: 10px; background-color: transparent" data-toggle="modal" data-target="#menuburger">
+            <img src="~/Images/Burger menu.svg" alt="Burger menu Image" id="btnmenuburger">
+        </button>
+    </div>
+    <div class="modal fade idemattransparence10" id="menuburger">
+        <div class="modal-dialog idematmenumodal-dialog">
+            <div class="modal-content idematmenumodal-content ">
+                <div class="modal-header idematmenumodal-header">
+                    <span>Menu</span>
+                    <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="navbar-nav w-100 justify-content-between">
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="./Menu" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Accueil</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="./CarteAcces" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Carte d'accès</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/Dechetteries" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Déchetteries</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">Mon compte</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mes passages</a>
+                        </li>
+                        @if (Model.Variables.blnPossibiliteAchatPassages)
+                        {
+                            <li class="nav-item idematlabelmenuTP">
+                                <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/AchatPassages" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Recharger mon compte</a>
+                            </li>
+                        }
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/MentionsLegales" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <aside class="d-none d-md-block col-12 col-md-4 col-lg-3 col-xl-2 p-0 bg-light">
+                <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoPC">
+                <div class="sidebar">
+                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="./Menu" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Accueil</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="./CarteAcces" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Carte d'accès</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPCActif">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Dechetteries" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Déchetteries</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">Mon compte</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mes passages</a>
+                        </li>
+                        @if (Model.Variables.blnPossibiliteAchatPassages)
+                        {
+                            <li class="nav-item idematlabelmenuPC">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/AchatPassages" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Recharger mon compte</a>
+                            </li>
+                        }
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MentionsLegales" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="col">
+                <!-- Insérez ici le contenu principal du site ou de l'application -->
+                <div class="row vh-100">
+                    <div class="col-md-12 container-fluid mx-3 mx-md-0">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">
+                            <span class="idematuserPC idematlabelnomutilisateurPC">@Model.Variables.nomUsager<img src="~/Images/User.svg" alt="User Image" style="margin-left: 10px; margin-right: 10px; vertical-align: text-bottom;" /></span>
+                        </a>
+                        <div class="row vh-100">
+                            <div class="col-md-2 col-sm-1 d-none d-sm-block"></div>
+                            <div class="col-md-8 col-sm-10 col-12 align-self-start">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="MaDechetterie.Id" value="@Model.Variables.idDechetterie" />
+                                    <input type="hidden" id="hfXLabels" value="@Model.XLabels" />
+                                    <input type="hidden" id="hfYValues" value="@Model.YValues" />
+                                    <input type="hidden" id="hfYColors" value="@Model.YColors" />
+                                    <input type="hidden" id="hfLabel" value="@Model.lblTitre" />
+
+                                    <br /><br />
+                                    <p class="idematlabelentetepage" style="vertical-align: middle">
+                                        <button type="button" class="btn btn-primary btn-lg btn-light float-left idematbtnbackPC" style="border: none; background-color: transparent" onclick="javascript:window.history.back();">
+                                            <img src="~/Images/Fleche retour.svg" alt="Fleche retour Image">
+                                        </button>@Model.Variables.dechetterieactive.Nom
+                                    </p>
+
+                                    <!-- Adresse-->
+                                    <div class="idematcard">
+                                        <img src="~/Images/Pin map.svg" alt="Pin map Image" style="margin-right: 10px; vertical-align: text-bottom;" /><label for="" class="form-label idematlabelentetebloc">Adresse</label><br />
+                                        <label for="" class="form-label idematlabelentetenoirgras">Numero, Rue</label>
+                                        <p class="idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Adresse</p>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <label for="" class="form-label idematlabelentetenoirgras">Code postal, Ville</label>
+                                        <p class="idematlabelaffichagenoir">@Model.Variables.dechetterieactive.CP @Model.Variables.dechetterieactive.Ville</p>
+                                    </div>
+
+                                    <!-- Horaires-->
+                                    <div class="idematcard">
+                                        <img src="~/Images/Horloge.svg" alt="Horloge Image" style="margin-right: 10px; vertical-align: text-bottom;" /><label for="" class="form-label idematlabelentetebloc">Horaires</label><br />
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Lundi</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heurelundiam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heurelundipm.Replace("h-h", "")</div>
+                                        </div>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Mardi</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuremardiam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuremardipm.Replace("h-h", "")</div>
+                                        </div>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Mercredi</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuremercrediam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuremercredipm.Replace("h-h", "")</div>
+                                        </div>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Jeudi</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heurejeudiam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heurejeudipm.Replace("h-h", "")</div>
+                                        </div>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Vendredi</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heurevendrediam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heurevendredipm.Replace("h-h", "")</div>
+                                        </div>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Samedi</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuresamediam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuresamedipm.Replace("h-h", "")</div>
+                                        </div>
+                                        <hr class="idematligneseparatricegriseforce">
+                                        <div class="row">
+                                            <div class="col-4 col-lg-2"><label for="" class="form-label idematlabelentetenoirgras">Dimanche</label></div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuredimancheam.Replace("h-h", "")</div>
+                                            <div class="col-4 col-lg-2 idematlabelaffichagenoir">@Model.Variables.dechetterieactive.Heuredimanchepm.Replace("h-h", "")</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Affluence-->
+                                    <div class="idematcard">
+                                        <img src="~/Images/Affluence.svg" alt="Affluence Image" style="margin-right: 10px; vertical-align: text-bottom;" /><label for="" class="form-label idematlabelentetebloc">Affluence</label><br />
+                                        <a class="@Model.styleLundi" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="LUN">LUN</a>&nbsp;<a class="@Model.styleMardi" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="MAR">MAR</a>&nbsp;<a class="@Model.styleMercredi" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="MER">MER</a>&nbsp;<a class="@Model.styleJeudi" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="JEU">JEU</a>&nbsp;<a class="@Model.styleVendredi" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="VEN">VEN</a>&nbsp;<a class="@Model.styleSamedi" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="SAM">SAM</a>&nbsp;<a class="@Model.styleDimanche" asp-page="./ConsultationDechetterie" asp-route-guid="@Model.idDechetterie " asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-jour="DIM">DIM</a>
+                                        <br /><br />
+                                        @*https://www.chartjs.org/docs/latest/getting-started/*@
+                                        <div style="width: 250px;">
+                                            <canvas id="myChart"></canvas>
+                                        </div>
+                                        <br />
+                                    </div>
+
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                                    <script>
+                                        const ctx = document.getElementById('myChart');
+                                        const ctxX = document.getElementById('hfXLabels');
+                                        const ctxY = document.getElementById('hfYValues');
+                                        const ctxYColors = document.getElementById('hfYColors');
+                                        const ctxlabel = document.getElementById('hfLabel');
+
+                                        function colorize() {
+                                            return (ctx) => {
+                                                const v = ctx.parsed.y;
+                                                const c = v < 5 ? 'rgba(255, 99, 132, 0.5)' : 'rgba(75, 192, 192, 0.5)';
+
+                                                return c;
+                                            };
+                                        }
+
+                                        new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                //labels: ['7H', '8H', '9H', '10H', '11H', '12H', '13H', '14H', '15H', '16H', '17H', '18H', '19H', '20H'],
+                                                labels: JSON.parse(ctxX.value),
+                                                datasets: [{
+                                                    //label: 'Affluence',
+                                                    label: ctxlabel.value,
+                                                    //data: [0, 0, 1, 5, 7, 6, 0, 4, 6, 8, 2, 3, 0, 0],
+                                                    data: JSON.parse(ctxY.value),
+                                                    //backgroundColor: [
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(255, 99, 132, 0.5)',
+                                                    //    'rgba(255, 99, 132, 0.5)',
+                                                    //    'rgba(255, 99, 132, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(255, 99, 132, 0.5)',
+                                                    //    'rgba(255, 99, 132, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)',
+                                                    //    'rgba(75, 192, 192, 0.5)'
+                                                    //],
+                                                    backgroundColor: JSON.parse(ctxYColors.value),
+                                                    //borderColor: 'rgb(255, 99, 132)',
+                                                    //backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                                    borderWidth: 0,
+                                                    borderRadius: Number.MAX_VALUE,
+                                                    borderSkipped: false,
+                                                }]
+                                            },
+                                            options: {
+                                                animation: false,
+                                                plugins: {
+                                                    legend: {
+                                                        display: false
+                                                    },
+                                                    tooltip: {
+                                                        enabled: false
+                                                    }
+                                                },
+                                                scales: {
+                                                    x: {
+                                                        grid: {
+                                                            display: true,
+                                                            drawOnChartArea: false,
+                                                            drawTicks: true,
+                                                        },
+                                                        ticks: {
+                                                            align: 'center',
+                                                            maxTicksLimit: 6,
+                                                        },
+                                                    },
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        grid: {
+                                                            display: false
+                                                        },
+                                                        min: -1,
+                                                        display: false
+                                                    }
+                                                }
+                                            }
+
+                                        });
+                                    </script>
+
+                                </form>
+                            </div>
+                            <div class="col-md-2 col-sm-1 d-none d-sm-block"></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,237 @@
+﻿@page
+@model ModificationProfilModel
+
+@{
+    ViewData["Title"] = "Modifier le profil";
+    ViewData["GuidUsager"] = Model.guidUsager;
+    ViewData["Logo"] = Model.Variables.strURLLogo;
+}
+
+<div class="container-fluid idematbackground">
+    <div class="idematlogoTPcontainer">
+        <button type="button" class="btn btn-primary btn-lg btn-light float-left" style="margin-left: 10px; background-color: transparent" onclick="javascript:window.history.back();">
+            <img src="~/Images/Fleche retour.svg" alt="Fleche retour Image">
+        </button>
+        <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoTP">
+        <button type="button" class="btn btn-primary btn-lg btn-light float-right" style="margin-right: 10px; background-color: transparent" data-toggle="modal" data-target="#menuburger">
+            <img src="~/Images/Burger menu.svg" alt="Burger menu Image" id="btnmenuburger">
+        </button>
+    </div>
+    <div class="modal fade idemattransparence10" id="menuburger">
+        <div class="modal-dialog idematmenumodal-dialog">
+            <div class="modal-content idematmenumodal-content ">
+                <div class="modal-header idematmenumodal-header">
+                    <span>Menu</span>
+                    <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="navbar-nav w-100 justify-content-between">
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="./Menu" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Accueil</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="./CarteAcces" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Carte d'accès</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/Dechetteries" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Déchetteries</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">Mon compte</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mes passages</a>
+                        </li>
+                        @if (Model.Variables.blnPossibiliteAchatPassages)
+                        {
+                            <li class="nav-item idematlabelmenuTP">
+                                <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/AchatPassages" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Recharger mon compte</a>
+                            </li>
+                        }
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/MentionsLegales" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <aside class="d-none d-md-block col-12 col-md-4 col-lg-3 col-xl-2 p-0 bg-light">
+                <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoPC">
+                <div class="sidebar">
+                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="./Menu" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Accueil</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="./CarteAcces" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Carte d'accès</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Dechetteries" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Déchetteries</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPCActif">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">Mon compte</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mes passages</a>
+                        </li>
+                        @if (Model.Variables.blnPossibiliteAchatPassages)
+                        {
+                            <li class="nav-item idematlabelmenuPC">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/AchatPassages" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Recharger mon compte</a>
+                            </li>
+                        }
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MentionsLegales" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="col">
+                <!-- Insérez ici le contenu principal du site ou de l'application -->
+                <div class="row vh-100">
+                    <div class="col-md-12 container-fluid mx-3 mx-md-0">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">
+                            <span class="idematuserPC idematlabelnomutilisateurPC">@Model.Variables.nomUsager<img src="~/Images/User.svg" alt="User Image" style="margin-left: 10px; margin-right: 10px; vertical-align: text-bottom;" /></span>
+                        </a>
+                        <div class="row vh-100">
+                            <div class="col-md-2 col-sm-1 d-none d-sm-block"></div>
+                            <div class="col-md-8 col-sm-10 col-12 align-self-start">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="Usager.GuidUsager" value="@Model.Variables.guidUsager" />
+
+                                    <br /><br />
+                                    <p class="idematlabelentetepage" style="vertical-align: middle">
+                                        <button type="button" class="btn btn-primary btn-lg btn-light float-left idematbtnbackPC" style="border: none; background-color: transparent" onclick="javascript:window.history.back();">
+                                            <img src="~/Images/Fleche retour.svg" alt="Fleche retour Image">
+                                        </button>Modifier mon profil
+                                    </p>
+
+                                    <!-- Informations personnelles -->
+                                    <div class="idematcard">
+                                        <img src="~/Images/Carte de membre.svg" alt="Carte de membre Image" style="margin-right: 10px; vertical-align: text-bottom;" /><label for="" class="form-label idematlabelentetebloc">Informations personnelles</label><br />
+                                        <div class="row mb-3">
+                                            <div class="col-xl-6">
+                                                <label for="nomPrenom" class="form-label idematlabelsaisienoir">Nom, Prénom</label>
+                                                <input type="text" class="form-control idematsaisiefondblanc" id="nomPrenom" asp-for="Usager.Nom" readonly>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="adresse" class="form-label idematlabelsaisienoir">Adresse</label>
+                                                <input type="text" class="form-control idematsaisiefondblanc" id="adresse" asp-for="Usager.Adresse" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-xl-6">
+                                                <label for="telephone" class="form-label idematlabelsaisienoir">Téléphone</label>
+                                                <input type="tel" class="form-control idematsaisiefondblanc" id="telephone" asp-for="Usager.Telephone" readonly>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <label for="codePostal" class="form-label idematlabelsaisienoir">Code Postal</label>
+                                                <input type="text" class="form-control idematsaisiefondblanc" id="codePostal" asp-for="Usager.CP" readonly>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <label for="ville" class="form-label idematlabelsaisienoir">Ville</label>
+                                                <input type="text" class="form-control idematsaisiefondblanc" id="ville" asp-for="Usager.Ville" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Véhicules enregistrés -->
+                                    @if (Model.Variables.blnImmatriculations && Model.Variables.strImmatriculationsAnciennes.Trim() != "")
+                                    {
+
+                                        <div class="idematcard">
+                                            <img src="~/Images/Voiture.svg" alt="Voiture Image" style="margin-right: 10px; vertical-align: text-bottom;" /><label for="" class="form-label idematlabelentetebloc">Véhicules enregistrés</label><br />
+                                            @foreach (string immat in Model.Variables.strImmatriculationsAnciennes.Split(";").ToList())
+                                            {
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="idematlabelentetenoirgras">@immat</span>
+                                                    <button type="submit" class="btn" asp-page-handler="SuppressionImmat" asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-strImmatriculationsAnciennes="@Model.Variables.strImmatriculationsAnciennes" asp-route-strImmatriculations="@Model.Variables.strImmatriculations" asp-route-strImmatriculation="@immat">
+                                                        <img src="~/Images/Corbeille.svg" alt="Corbeille Image" style="margin-right: 10px; vertical-align: text-bottom;" />
+                                                    </button>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    }
+
+                                    @if (Model.Variables.blnImmatriculations)
+                                    {
+                                        <!-- Ajouter un véhicule -->
+                                        <input type="hidden" asp-for="AjoutVehicule.strImmatriculations" value="@Model.Variables.strImmatriculations" />
+                                        <div class="idematcard">
+                                            <img src="~/Images/Voiture.svg" alt="Voiture Image" style="margin-right: 10px; vertical-align: text-bottom;" /><label for="" class="form-label idematlabelentetebloc">Ajouter un véhicule</label><br />
+
+
+                                            <div class="row mb-3">
+                                                <div class="col-xl-6">
+                                                    <label for="immatriculation" class="form-label idematlabelsaisienoir">Immatriculation du véhicule</label>
+                                                    <input asp-for="AjoutVehicule.ImmatEnCours" type="text" class="form-control idematsaisiefondblanc" id="immatriculation" placeholder="Ex : AB123CD" value="@(Model.AjoutVehicule == null ? "" : Model.AjoutVehicule.ImmatEnCours)">
+                                                    @if (Model.Variables.erreurImmat)
+                                                    {
+                                                        <div style="color:red">@Html.Raw("L'immatriculation est obligatoire")</div>
+                                                    }
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="UploadCG" class="form-label idematlabelsaisienoir">Carte grise</label>
+                                                    <input type="file" asp-for="UploadCG" accept=".pdf, .jpg, .jpeg, .gif, .png" class="form-control" id="carteGrise" title="Carte grise" lang="fr" style="border: none;">
+                                                    @if (Model.Variables.erreurCG)
+                                                    {
+                                                        <div style="color:red">@Html.Raw("Vous devez joindre votre carte grise")</div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            @if (Model.Variables.blnDemandeZoneJ1F3)
+                                            {
+                                                <div class="row mb-3">
+                                                    <div class="col-xl-6">
+                                                        <label for="zoneJ1CG" class="form-label idematlabelsaisienoir">Zone J.1 de la carte grise</label>
+                                                        <select asp-for="AjoutVehicule.ImmatJ1EnCours" asp-items="Model.ZoneJ1CG" class="form-control idematsaisiefondblanc" id="immatriculationJ1pro"><option value="">-- Sélectionnez le genre national --</option> <!-- Empty option --></select>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <label for="UploadCG" class="form-label idematlabelsaisienoir">Zone F.3 de la carte grise</label>
+                                                        <input asp-for="AjoutVehicule.ImmatF3EnCours" type="text" class="form-control idematsaisiefondblanc" id="immatriculationF3pro" value="@(Model.AjoutVehicule == null ? "" : Model.AjoutVehicule.ImmatF3EnCours)">
+                                                        @if (Model.Variables.erreurF3)
+                                                        {
+                                                            <div style="color:red">@Html.Raw("Le poids doit être un nombre entier")</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                            <input id="btnAjouterImmat" type="submit" value="Ajouter le véhicule" class="btn btn-primary idematbtnblancfondtransparent" asp-page-handler="AjoutImmat" asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-strImmatriculationsAnciennes="@Model.Variables.strImmatriculationsAnciennes" asp-route-strImmatriculations="@Model.Variables.strImmatriculations" />
+
+                                            @{
+                                                int index = 1;
+                                                foreach (string immat in Model.Variables.strImmatriculations.Split(";").ToList())
+                                                {
+                                                    <div class="idematlabelentetenoirgras">
+                                                        @immat
+                                                    </div>
+                                                    index++;
+                                                }
+                                            }
+                                        </div>
+                                    }
+
+                                    <!-- Bouton de validation -->
+                                    <div class="text-center">
+                                        <button type="submit" class="idematbtnrouge" asp-page-handler="Validation" asp-route-usagerGuid="@Crypto.Crypte(Model.guidUsager.ToString())" asp-route-strImmatsAnciennes="@Model.Variables.strImmatriculationsAnciennes" asp-route-strImmats="@Model.Variables.strImmatriculations"><img src="~/Images/Check.svg" alt="Check Image" style="margin-right: 10px; margin-top: 5px; vertical-align: text-bottom;" />Valider les informations</button>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-2 col-sm-1 d-none d-sm-block"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</div>

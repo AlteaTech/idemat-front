@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_175" data-name="Rectangle 175" width="16" height="16" transform="translate(398 583.945)" fill="#f2664f"/>
+    </clipPath>
+  </defs>
+  <g id="Crayon" transform="translate(-398 -583.945)" clip-path="url(#clip-path)">
+    <path id="stylus_24dp_E8EAED_FILL0_wght200_GRAD0_opsz24" d="M6.419-10.514a.774.774,0,0,1-.743-.218.774.774,0,0,1-.218-.743l.685-3.313L9.733-11.2l-3.313.685ZM9.733-11.2,6.143-14.788,17.327-25.971a1.571,1.571,0,0,1,1.157-.468,1.571,1.571,0,0,1,1.157.468l1.276,1.276a1.571,1.571,0,0,1,.468,1.157,1.571,1.571,0,0,1-.468,1.157Zm8.32-14.052L7.774-14.992l2.163,2.163L20.2-23.108a.6.6,0,0,0,.176-.44.6.6,0,0,0-.176-.44l-1.262-1.262a.6.6,0,0,0-.44-.176A.6.6,0,0,0,18.053-25.251Z" transform="translate(392.561 610.439)" fill="#f2664f"/>
+  </g>
+</svg>

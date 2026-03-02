@@ -1,0 +1,27 @@
+@if (authService.user()) {
+  <div class="text-center">
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">
+      Profil Utilisateur
+    </h2>
+    <img
+      [src]="authService.user()?.picture"
+      alt="Photo de profil"
+      class="rounded-full w-24 h-24 mx-auto mb-4 border-4 border-gray-200"
+    />
+    <p class="text-lg text-gray-700">
+      Bonjour, <strong>{{ authService.user()?.name }}</strong>
+    </p>
+    <p class="text-md text-gray-500 mb-6">
+      {{ authService.user()?.email }}
+    </p>
+  </div>
+} @else {
+  <p class="text-center text-red-600">
+    Aucun utilisateur n'est connecté.
+  </p>
+  <div class="text-center mt-4">
+    <a class="px-4 py-2 bg-blue-600 text-white rounded-lg" routerLink="/">
+      Retour à l'accueil
+    </a>
+  </div>
+}

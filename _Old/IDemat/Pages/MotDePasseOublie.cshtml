@@ -1,0 +1,43 @@
+﻿@page "{contrat}"
+@model MotDePasseOublieModel
+
+@{
+    ViewData["Title"] = "Mot de passe oublié";
+    ViewData["Logo"] = Model.Variables.strURLLogo;
+}
+
+<div class="container-fluid idematbackgroundlogin">
+    <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoPC">
+    <div class="idematlogoTPcontainer">
+        <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoTP">
+    </div>
+    <div class="idematcontainercentre">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Identifiant.IdEnseigne" value="@Model.Variables.idEnseigne" />
+            <p class="idematlabelentetepageblanc" style="vertical-align: middle;">
+                <button type="button" class="btn btn-primary btn-lg btn-light float-left idematbtnbackPC" style="border: none; background-color: transparent;" onclick="javascript:window.history.back();">
+                    <img src="~/Images/Fleche retour blanche.svg" alt="Fleche retour blanche Image">
+                </button>Mot de passe oublié
+                <br /><br />
+            <p class="idematlabelsaisieblancfin">Saisissez votre e-mail pour réinitialiser votre mot de passe.</p>
+            <br /><br />
+            <div class="form-group">
+                <p class="idematlabelsaisieblanc">Saisissez votre e-mail</p>
+                <input asp-for="Identifiant.Login" class="form-control idematsaisiefondtransparent80pc" />
+                <span asp-validation-for="Identifiant.Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Réinitialiser votre mot de passe" class="btn idematbtnrougefondblanc" asp-page-handler="Reinitialiser" />
+            </div>
+            @if (Model.Variables.erreurLogin)
+            {
+                <div class="idematlabelaffichagenoir"><br />@Html.Raw("Il n'existe pas de compte avec cet e-mail")<br /><br /></div>
+            }
+            <br />
+            <hr class="idematligneseparatrice">
+            <br />
+            <p class="text-center idematlabelsaisieblanc">Vous n&rsquo;avez pas encore de compte ?<br /><b><a href="../Products/Create/@Model.contrat" class="btn idematbtnblancfondtransparent">S&rsquo;inscrire</a></b></p>
+        </form>
+    </div>
+</div>

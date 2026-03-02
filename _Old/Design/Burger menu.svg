@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_138" data-name="Rectangle 138" width="20" height="20" transform="translate(318 79.926)"/>
+    </clipPath>
+  </defs>
+  <g id="Burger_menu" data-name="Burger menu" transform="translate(-318 -79.926)" clip-path="url(#clip-path)">
+    <path id="menu_24dp_E8EAED_FILL0_wght200_GRAD0_opsz24" d="M8.75-24.652V-25.9H28.676v1.245Zm0-5.94v-1.245H28.676v1.245Zm0-5.94v-1.245H28.676v1.245Z" transform="translate(309.25 121.177)"/>
+  </g>
+</svg>

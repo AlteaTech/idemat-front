@@ -1,0 +1,7 @@
+<svg id="Carte" xmlns="http://www.w3.org/2000/svg" width="87.409" height="63.746" viewBox="0 0 87.409 63.746">
+  <g id="Carte_à_puce" data-name="Carte à puce" transform="translate(8.107 0) rotate(9)">
+    <path id="Carte_-_Contour" data-name="Carte - Contour" d="M7.3,1.46A5.846,5.846,0,0,0,1.46,7.3V44.525A5.846,5.846,0,0,0,7.3,50.364H72.991a5.846,5.846,0,0,0,5.839-5.839V7.3A5.846,5.846,0,0,0,72.991,1.46H7.3M7.3,0H72.991a7.3,7.3,0,0,1,7.3,7.3V44.525a7.3,7.3,0,0,1-7.3,7.3H7.3a7.3,7.3,0,0,1-7.3-7.3V7.3A7.3,7.3,0,0,1,7.3,0Z" transform="translate(0 0)" fill="#fff"/>
+    <path id="Tracé_2" data-name="Tracé 2" d="M0,0H78.831V8.759H0Z" transform="translate(0.73 37.226)" fill="#fff"/>
+    <path id="Icon_material-outline-barcode" data-name="Icon material-outline-barcode" d="M0,0H1.639V19.667H0ZM3.278,0H6.556V19.667H3.278ZM9.834,0h1.639V19.667H9.834Zm3.278,0h4.917V19.667H13.111Zm6.556,0h1.639V19.667H19.667Zm4.917,0h1.639V19.667H24.584Zm3.278,0H29.5V19.667H27.862Zm3.278,0h1.639V19.667H31.139Z" transform="translate(25.017 10.389)" fill="#fff"/>
+  </g>
+</svg>

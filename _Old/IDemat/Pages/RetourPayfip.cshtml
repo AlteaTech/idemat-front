@@ -1,0 +1,149 @@
+﻿@page
+@model RetourPayfipModel
+@attribute [IgnoreAntiforgeryToken]
+@{
+    ViewData["Title"] = "Retour Payfip";
+    //ViewData["guidUsager"] = Model.guidUsager;
+    //ViewData["Logo"] = Model.Variables.strURLLogo;
+}
+
+<div class="container-fluid idematbackground">
+    <div class="idematlogoTPcontainer">
+        <a class="nav-link text-dark" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">
+            <button type="button" class="btn btn-primary btn-lg btn-light float-left" style="margin-left: 10px; background-color: transparent">
+                <img src="~/Images/Fleche retour.svg" alt="Fleche retour Image">
+            </button>
+        </a>
+        <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoTP">
+        <button type="button" class="btn btn-primary btn-lg btn-light float-right" style="margin-right: 10px; background-color: transparent" data-toggle="modal" data-target="#menuburger">
+            <img src="~/Images/Burger menu.svg" alt="Burger menu Image" id="btnmenuburger">
+        </button>
+    </div>
+    <div class="modal fade idemattransparence10" id="menuburger">
+        <div class="modal-dialog idematmenumodal-dialog">
+            <div class="modal-content idematmenumodal-content ">
+                <div class="modal-header idematmenumodal-header">
+                    <span>Menu</span>
+                    <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="navbar-nav w-100 justify-content-between">
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="./Menu" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Accueil</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="./CarteAcces" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Carte d'accès</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/Dechetteries" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Déchetteries</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">Mon compte</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mes passages</a>
+                        </li>
+                        @if (Model.Variables.blnPossibiliteAchatPassages)
+                        {
+                            <li class="nav-item idematlabelmenuTP">
+                                <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/AchatPassages" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Recharger mon compte</a>
+                            </li>
+                        }
+                        <li class="nav-item idematlabelmenuTP">
+                            <a class="nav-link text-dark idematlabelmenuTP" asp-area="" asp-page="/MentionsLegales" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <aside class="d-none d-md-block col-12 col-md-4 col-lg-3 col-xl-2 p-0 bg-light">
+                <img src=@ViewData["Logo"].ToString() alt="Logo" class="idematlogoPC">
+                <div class="sidebar">
+                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="./Menu" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Accueil</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="./CarteAcces" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Carte d'accès</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Dechetteries" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Déchetteries</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">Mon compte</a>
+                        </li>
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mes passages</a>
+                        </li>
+                        @if (Model.Variables.blnPossibiliteAchatPassages)
+                        {
+                            <li class="nav-item idematlabelmenuPC">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/AchatPassages" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Recharger mon compte</a>
+                            </li>
+                        }
+                        <li class="nav-item idematlabelmenuPC">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MentionsLegales" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="col">
+                <!-- Insérez ici le contenu principal du site ou de l'application -->
+                <div class="row vh-100">
+                    <div class="col-md-12 container-fluid mx-3 mx-md-0">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/InformationsPersonnelles" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())" asp-route-deconnect="false">
+                            <span class="idematuserPC idematlabelnomutilisateurPC">@Model.Variables.nomUsager<img src="~/Images/User.svg" alt="User Image" style="margin-left: 10px; margin-right: 10px; vertical-align: text-bottom;" /></span>
+                        </a>
+                        <div class="row vh-100">
+                            <div class="col-md-2 col-sm-1 d-none d-sm-block"></div>
+                            <div class="col-md-8 col-sm-10 col-12 align-self-start">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="Identifiant.GuidUsager" value="@Model.Variables.guidUsager" />
+
+                                    <br /><br />
+                                    <p class="idematlabelentetepage" style="vertical-align: middle">
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/ConsultationSolde" asp-route-usagerGuid="@Crypto.Crypte(ViewData["guidUsager"].ToString())">
+                                            <button type="button" class="btn btn-primary btn-lg btn-light float-left idematbtnbackPC" style="border: none; background-color: transparent">
+                                                <img src="~/Images/Fleche retour.svg" alt="Fleche retour Image">
+                                            </button>
+                                        </a>Recharger mon compte
+                                    </p>
+                                    @*<p class="idematlabelnomutilisateurTP">@Model.Variables.nomUsager</p>*@
+                                    <input type="hidden" asp-for="idop" value="@Model.idop" />
+                                    <p class="idematlabelentetenoirgras">@Html.Raw(@Model.Variables.texteRetourPayfip)</p>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-1 d-none d-sm-block">
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</div>
+
+
+@*<div class="text-center">
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="idop" value="@Model.idop" />
+            <h2 class=".idbatpastropgrosgris">Votre opération a bien été prise en compte</h2>
+            <h2 class=".idbatpastropgrosgris">IDOP = @Model.idop</h2>
+            <input type="submit" value="Patientez quelques minutes pour récupérer les informations de paiement en cliquant ici" class="btn btn-primary" asp-page-handler="Fermer" />
+            @if (Model.Variables.detailPaiement != null)
+            {
+                <p class="text-left idbatpastropgrosvert">idop :  @Model.Variables.detailPaiement.idOp</p>
+                <p class="text-left idbatpastropgrosvert">Objet : @Model.Variables.detailPaiement.objet</p>
+                <p class="text-left idbatpastropgrosvert">Résultat (P=paiement effectif ; A=abandon ; R=autres cas (paiement refusé)) : @Model.Variables.detailPaiement.resultrans</p>
+                <p class="text-left idbatpastropgrosvert">Date de transaction : @Model.Variables.detailPaiement.dattrans</p>
+                <p class="text-left idbatpastropgrosvert">Heure de transaction : @Model.Variables.detailPaiement.heurtrans</p>
+                <p class="text-left idbatpastropgrosvert">Numéro autorisation CB : @Model.Variables.detailPaiement.numauto</p>
+            }
+        </form>
+    </div>*@

@@ -1,0 +1,98 @@
+<div class="login-container">
+
+  <!-- 1. COLONNE GAUCHE : DÉCORATION -->
+  <div class="left-panel">
+    <!-- Cercle décoratif en arrière-plan -->
+    <div class="decorative-circle"></div>
+
+
+    <div class="logo-container">
+      <div class="logo-main">
+        <span class="opacity-90">ide</span>
+        <span class="opacity-100">mat</span>
+      </div>
+      <div class="logo-sub">
+        <span>by</span>
+        <span class="veolia-text">
+
+              <div class="veolia-circle"></div>
+              VEOLIA
+            </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. COLONNE DROITE : FORMULAIRE -->
+  <div class="right-panel">
+    <div class="form-wrapper">
+
+      <!-- En-tête -->
+      <div class="form-header">
+        <mat-icon class="login-icon">login</mat-icon>
+        <h2>Connexion</h2>
+      </div>
+
+      <!-- SÉLECTEUR (Toggle) -->
+      <div class="input-group">
+        <label class="field-label">Je suis :</label>
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          (change)="loginMode.set($event.value)"
+          [value]="loginMode()"
+          appearance="legacy"
+          class="custom-toggle-group"
+        >
+          <mat-button-toggle class="custom-toggle" value="veolia">
+            Collaborateur.ice Veolia
+          </mat-button-toggle>
+          <mat-button-toggle class="custom-toggle" value="external">
+            Utilisateur.ice externe
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+
+      @if (loginMode() === 'external') {
+
+        <form (ngSubmit)="onExternalLogin()" [formGroup]="loginForm" class="fade-in-content">
+
+          <div class="input-group">
+            <label class="field-label">Login</label>
+            <mat-form-field appearance="outline" class="full-width-field">
+              <input formControlName="email" matInput placeholder="adresse@mail.com">
+              <mat-error>Email requis</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="input-group">
+            <label class="field-label">Mot de passe</label>
+            <mat-form-field appearance="outline" class="full-width-field">
+              <input formControlName="password" matInput placeholder=".........." type="password">
+              <mat-error>Mot de passe requis</mat-error>
+            </mat-form-field>
+            <div class="forgot-password">
+            </div>
+          </div>
+
+          <button
+            class="submit-btn"
+            mat-flat-button
+            type="submit"
+          >
+            Connexion
+          </button>
+        </form>
+
+      } @else {
+
+        <div class="google-container fade-in-content">
+          <p class="google-hint">
+            Utilisez votre compte d'entreprise Veolia pour vous connecter.
+          </p>
+          <div id="google-signin-button"></div>
+        </div>
+      }
+
+    </div>
+  </div>
+</div>
