@@ -1,0 +1,78 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <mat-sidenav-container class="shell-container">
+
+    <!-- SIDENAV -->
+    <mat-sidenav #sidenav
+                 [mode]="isDesktop() ? 'side' : 'over'"
+                 [opened]="isDesktop()"
+                 class="shell-sidenav">
+
+      <!-- Logo / Enseigne -->
+      <div class="sidenav-header">
+        @if (contrat()?.logoUrl) {
+          <img [src]="contrat()!.logoUrl" [alt]="contrat()!.nomEnseigne" class="sidenav-logo"/>
+        } @else {
+          <div class="sidenav-enseigne">{{ contrat()?.nomEnseigne }}</div>
+        }
+      </div>
+
+      <!-- Liens de navigation -->
+      <nav class="sidenav-nav">
+        @for (lien of liensNav(); track lien.route) {
+          <button class="nav-lien" [class.nav-lien--active]="isActive(lien.route)" (click)="naviguer(lien.route)">
+            <mat-icon>{{ lien.icon }}</mat-icon>
+            <span>{{ lien.label }}</span>
+          </button>
+        }
+      </nav>
+
+      <!-- Déconnexion -->
+      <div class="sidenav-footer">
+        <button class="nav-lien nav-lien--logout" (click)="deconnecter()">
+          <mat-icon>logout</mat-icon>
+          <span>Déconnexion</span>
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <!-- CONTENU PRINCIPAL -->
+    <mat-sidenav-content class="shell-content">
+
+      <!-- TOP BAR DESKTOP -->
+      @if (isDesktop()) {
+        <div class="top-bar">
+          <span class="top-bar-user">
+            {{ usager()?.prenom }} {{ usager()?.nom }}
+            <mat-icon>person_outline</mat-icon>
+          </span>
+        </div>
+      }
+
+      <!-- HEADER MOBILE -->
+      @if (!isDesktop()) {
+        <header class="mobile-header">
+          <button class="btn-icon" (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          @if (contrat()?.logoUrl) {
+            <img [src]="contrat()!.logoUrl" [alt]="contrat()!.nomEnseigne" class="mobile-logo"/>
+          } @else {
+            <span class="mobile-enseigne">{{ contrat()?.nomEnseigne }}</span>
+          }
+          <div class="mobile-user">
+            <mat-icon>person_outline</mat-icon>
+            <span>{{ usager()?.prenom }}</span>
+          </div>
+        </header>
+      }
+
+      <!-- PAGE -->
+      <router-outlet/>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+}

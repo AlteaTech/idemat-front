@@ -93,7 +93,7 @@ export class ConnexionComponent implements AfterViewInit {
   }
 
   goToProfile(): void {
-    this.router.navigate(['/' + routesConstantes.profile]);
+    this.router.navigate(['/' + routesConstantes.home]);
   }
 
   goToMotDePasseOublie():void{

@@ -1,1 +1,35 @@
-<p>home works!</p>
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="home-container">
+
+    <!-- TITRE -->
+    <h1 class="bienvenue">Bienvenue {{ usager()?.prenom }} {{ usager()?.nom }}</h1>
+
+    <!-- GRILLE DE TUILES -->
+    <div class="tuiles-grid">
+      @for (tuile of tuiles(); track tuile.route) {
+        <button class="tuile" (click)="naviguer(tuile.route)">
+          <div class="tuile-texte">
+            <span class="tuile-label">{{ tuile.label }}</span>
+            <span class="tuile-subtitle">{{ tuile.subtitle }}</span>
+          </div>
+          <mat-icon class="tuile-icon">{{ tuile.icon }}</mat-icon>
+        </button>
+      }
+    </div>
+
+    <!-- BOUTON CARTE D'ACCÈS -->
+    @if (showCarteAcces()) {
+      <button class="btn-acces" (click)="naviguer(routesConstantes.carteAcces)">
+        <div class="btn-acces-inner">
+          <mat-icon class="acces-icon">qr_code_2</mat-icon>
+          <span class="acces-label">Accès</span>
+        </div>
+      </button>
+    }
+
+  </div>
+}

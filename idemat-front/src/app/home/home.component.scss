@@ -1,0 +1,132 @@
+$primary: #ED6E57;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.home-container {
+  padding: 48px 80px 64px;
+  flex: 1;
+  background: #f2f2f2;
+  max-width: 960px;
+
+  @media (max-width: 900px) {
+    padding: 32px 32px 48px;
+  }
+}
+
+// TITRE
+.bienvenue {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 0 28px;
+}
+
+// GRILLE
+.tuiles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+  max-width: 700px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tuile {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 28px 24px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.15s, border-color 0.15s;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    border-color: $primary;
+  }
+}
+
+.tuile-texte {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tuile-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.tuile-subtitle {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.tuile-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: $primary;
+  flex-shrink: 0;
+}
+
+// BOUTON CARTE D'ACCÈS
+.btn-acces {
+  width: 100%;
+  max-width: 700px;
+  border: none;
+  border-radius: 12px;
+  padding: 3px;
+  background: linear-gradient(90deg, #e05a44 0%, #F09878 100%);
+  cursor: pointer;
+  transition: opacity 0.15s;
+  box-shadow: 0 2px 12px rgba(224, 90, 68, 0.25);
+
+  &:hover { opacity: 0.9; }
+}
+
+.btn-acces-inner {
+  background: white;
+  border-radius: 9px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.acces-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: $primary;
+}
+
+.acces-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $primary;
+  letter-spacing: 0.5px;
+}
