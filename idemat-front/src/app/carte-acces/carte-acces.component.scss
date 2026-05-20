@@ -1,0 +1,127 @@
+$primary: #ED6E57;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.page-container {
+  padding: 40px 80px 48px;
+  flex: 1;
+  background: #f2f2f2;
+  max-width: 960px;
+
+  @media (max-width: 900px) {
+    padding: 24px 20px 40px;
+  }
+}
+
+// TITRE
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+}
+
+.btn-retour {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #555;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.15s;
+
+  &:hover { background: #e0e0e0; }
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+// BLOCS
+.bloc {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  max-width: 600px;
+}
+
+.bloc-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.bloc-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: #888;
+}
+
+.bloc-titre {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+// QR CODE
+.qr-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+}
+
+.qr-image {
+  width: 200px;
+  height: 200px;
+}
+
+// INFORMATIONS
+.info-ligne {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.info-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.info-valeur {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.separateur {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  margin: 4px 0;
+}

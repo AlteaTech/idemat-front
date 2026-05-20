@@ -17,6 +17,7 @@ export class UsagerIdematServiceAgents {
       codePostal: '69001',
       ville: 'Lyon',
       hasChangedPassword: true,
+      codeBarres: 'MOCK-CB-0012345678',
     }).pipe(delay(300));
   }
 }

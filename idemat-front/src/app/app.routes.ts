@@ -5,6 +5,7 @@ import {IdematShellComponent} from './idemat-shell/idemat-shell.component';
 import {HomeComponent} from './home/home.component';
 import {LoggedComponent} from './logged/logged.component';
 import {routesConstantes} from '../constantes/routes.constantes';
+import {CarteAccesComponent} from './carte-acces/carte-acces.component';
 import {MocksComponent} from '../mocks/mocks.component';
 import {authGuard} from './core/guards/auth.guard';
 
@@ -25,8 +26,8 @@ export const routes: Routes = [
       {path: routesConstantes.profile, component: LoggedComponent},
       {path: routesConstantes.mocks, component: MocksComponent},
 
+      {path: routesConstantes.carteAcces, component: CarteAccesComponent},
       // IDEMAT - à compléter au fil des issues
-      // {path: routesConstantes.carteAcces, component: CarteAccesComponent},
       // {path: routesConstantes.dechetteries, component: DechetteriesComponent},
       // {path: routesConstantes.consultationSolde, component: ConsultationSoldeComponent},
       // {path: routesConstantes.achatPassages, component: AchatPassagesComponent},

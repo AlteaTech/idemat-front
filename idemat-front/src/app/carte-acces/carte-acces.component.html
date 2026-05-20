@@ -1,0 +1,47 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="page-container">
+
+    <!-- TITRE -->
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>Carte d'accès</h1>
+    </div>
+
+    <!-- CARTE QR CODE -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">qr_code_2</mat-icon>
+        <span class="bloc-titre">Carte d'accès</span>
+      </div>
+      <div class="qr-container">
+        @if (qrCodeUrl()) {
+          <img [src]="qrCodeUrl()" alt="QR code d'accès" class="qr-image"/>
+        }
+      </div>
+    </div>
+
+    <!-- INFORMATIONS -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">person_outline</mat-icon>
+        <span class="bloc-titre">Informations</span>
+      </div>
+      <div class="info-ligne">
+        <span class="info-label">Nom / Prénom</span>
+        <span class="info-valeur">{{ usager()?.nom }} {{ usager()?.prenom }}</span>
+      </div>
+      <hr class="separateur"/>
+      <div class="info-ligne">
+        <span class="info-label">Adresse</span>
+        <span class="info-valeur">{{ usager()?.adresse }} {{ usager()?.codePostal }} {{ usager()?.ville }}</span>
+      </div>
+    </div>
+
+  </div>
+}

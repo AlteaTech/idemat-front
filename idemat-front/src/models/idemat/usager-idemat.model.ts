@@ -8,4 +8,5 @@ export interface UsagerIdematModel {
   codePostal?: string;
   ville?: string;
   hasChangedPassword: boolean;
+  codeBarres?: string;
 }
