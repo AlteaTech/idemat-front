@@ -1,0 +1,15 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="page-container">
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>Mentions légales</h1>
+    </div>
+    <div class="contenu" [innerHTML]="contenu()"></div>
+  </div>
+}

@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.loading-screen { display: flex; justify-content: center; align-items: center; padding: 60px 0; }
+
+.page-container {
+  padding: 40px 80px 48px;
+  flex: 1;
+  background: $background-page;
+  max-width: 960px;
+  @media (max-width: 900px) { padding: 24px 20px 40px; }
+}
+
+.page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.page-title h1 { font-size: 1.5rem; font-weight: 700; color: $text-color-primary; margin: 0; }
+
+.btn-retour {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; color: $text-color-secondary;
+  padding: 4px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+
+.contenu {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 24px 28px;
+  box-shadow: $bloc-shadow;
+  max-width: 700px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: $text-color-secondary;
+
+  p { margin: 0 0 12px; &:last-child { margin: 0; } }
+}
