@@ -1,42 +1,52 @@
-<div class="container-fluid idematbackgroundlogin">
-    <img [src]="logoUrl" alt="Logo" class="idematlogoPC">
-    <div class="idematlogoTPcontainer">
-        <img [src]="logoUrl" alt="Logo" class="idematlogoTP">
-    </div>
-    <div class="idematcontainercentre">
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" enctype="multipart/form-data">
-            <div class="text-danger"></div>
-            <input type="hidden" [value]="idEnseigne" />
-            <div class="form-group">
-                <p class="idematlabelsaisieblanc">Identifiant</p>
-                <input formControlName="login" class="form-control idematsaisiefondtransparent80pc" />
-                <span *ngIf="loginForm.get('login')?.invalid && loginForm.get('login')?.touched" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <p class="idematlabelsaisieblanc">Mot de passe</p>
-                <input formControlName="motdepasse" type="password" class="form-control idematsaisiefondtransparent80pc" />
-                <span *ngIf="loginForm.get('motdepasse')?.invalid && loginForm.get('motdepasse')?.touched" class="text-danger"></span>
-            </div>
-            <p class="text-center"><a [href]="'MotDePasseOublie/' + contrat" class="idematlabelsaisieblanc">J&rsquo;ai oublié mon mot de passe</a></p>
-            <div class="form-group">
-                <input type="submit" value="Se connecter" class="btn idematbtnrougefondblanc" />
-            </div>
-            @if (erreurLogin)
-            {
-                <div class="idematlabelsaisieblanc"><br />Votre identifiant est incorrect<br /><br /></div>
-            }
-            @if (erreurMotdepasse)
-            {
-                <div class="idematlabelsaisieblanc"><br />Votre mot de passe est incorrect<br /><br /></div>
-            }
-            @if (erreurCompteSupprime)
-            {
-                <div class="idematlabelsaisieblanc"><br />Ce compte a été supprimé à votre demande<br /><br /></div>
-            }
-            <br />
-            <hr class="idematligneseparatrice">
-            <br />
-            <p class="text-center idematlabelsaisieblanc">Vous n&rsquo;avez pas encore de compte ?<br /><b><a [href]="'Products/Create/' + contrat" class="btn idematbtnblancfondtransparent">S&rsquo;inscrire</a></b></p>
-        </form>
-    </div>
+<div class="page">
+  @if (logoUrl()) {
+    <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+  }
+
+  <div class="card">
+    <form [formGroup]="form" (ngSubmit)="onLogin()">
+
+      <div class="champ">
+        <label class="label" for="login">Identifiant</label>
+        <input id="login" type="email" class="input" formControlName="login"
+               placeholder="Ex : adresse@mail.com" autocomplete="email" />
+      </div>
+
+      <div class="champ">
+        <label class="label" for="motdepasse">Mot de passe</label>
+        <input id="motdepasse" type="password" class="input" formControlName="motdepasse"
+               placeholder="Votre mot de passe" autocomplete="current-password" />
+      </div>
+
+      <button type="button" class="lien-oublie" (click)="onMotDePasseOublie()">
+        J'ai oublié mon mot de passe
+      </button>
+
+      @if (erreurLogin()) {
+        <p class="erreur">Votre identifiant est incorrect</p>
+      }
+      @if (erreurMotdepasse()) {
+        <p class="erreur">Votre mot de passe est incorrect</p>
+      }
+      @if (erreurCompteSupprime()) {
+        <p class="erreur">Ce compte a été supprimé à votre demande</p>
+      }
+
+      <button type="submit" class="btn-connexion" [disabled]="form.invalid || enCours()">
+        @if (enCours()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate" />
+        } @else {
+          Se connecter
+        }
+      </button>
+
+      <hr class="separateur" />
+
+      <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
+      <button type="button" class="btn-inscription" (click)="onSInscrire()">
+        S'inscrire
+      </button>
+
+    </form>
+  </div>
 </div>

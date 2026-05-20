@@ -1,103 +1,90 @@
-import { Component, inject, NgZone, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-import { AuthService } from '../../services/auth/auth.service';
-import { AuthenticationServiceAgents } from '../../services/agents/authentication-service-agents';
-import { routesConstantes } from '../../constantes/routes.constantes';
-
-interface IdematLoginFormModel {
-  login: FormControl<string>;
-  motdepasse: FormControl<string>;
-}
+import {AuthService} from '../../services/auth/auth.service';
+import {AuthenticationServiceAgents} from '../../services/agents/authentication-service-agents';
+import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
+import {routesConstantes} from '../../constantes/routes.constantes';
 
 @Component({
   selector: 'app-connexion-idemat',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule],
   templateUrl: './connexion-idemat.component.html',
-  styleUrls: ['./connexion-idemat.component.scss']
+  styleUrl: './connexion-idemat.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConnexionIdematComponent implements OnInit {
-  authService = inject(AuthService);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
-  ngZone = inject(NgZone);
-  apiService = inject(AuthenticationServiceAgents);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly apiService = inject(AuthenticationServiceAgents);
+  private readonly contratService = inject(ContratIdematServiceAgents);
 
-  // Variables du modèle ASPX
-  contrat: string | null = null;
-  logoUrl: string = ''; // Model.Variables.strURLLogo
-  idEnseigne: string = ''; // Model.Variables.idEnseigne
+  protected contrat = signal<string | null>(null);
+  protected logoUrl = signal('');
+  protected enCours = signal(false);
+  protected erreurLogin = signal(false);
+  protected erreurMotdepasse = signal(false);
+  protected erreurCompteSupprime = signal(false);
 
-  // Gestion des erreurs comme dans le modèle ASPX
-  erreurLogin: boolean = false;
-  erreurMotdepasse: boolean = false;
-  erreurCompteSupprime: boolean = false;
-
-  loginForm = new FormGroup<IdematLoginFormModel>({
-    login: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    motdepasse: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+  protected form = new FormGroup({
+    login: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    motdepasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
   });
 
-  constructor() {
+  ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.authService.logout();
     }
-  }
-
-  ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.contrat = params.get('contrat');
-      // TODO: Charger les variables du modèle (Logo, IdEnseigne) via une API si nécessaire
-      // Pour l'instant, initialisé à vide comme demandé pour la traduction stricte
+      const contrat = params.get('contrat');
+      this.contrat.set(contrat);
+      if (contrat) {
+        this.contratService.getContratByUrl(contrat).subscribe(c => {
+          this.logoUrl.set(c.logoUrl);
+        });
+      }
     });
   }
 
-  onLogin() {
-    // Réinitialisation des erreurs
-    this.erreurLogin = false;
-    this.erreurMotdepasse = false;
-    this.erreurCompteSupprime = false;
-
-    if (this.loginForm.valid) {
-      const { login, motdepasse } = this.loginForm.getRawValue();
-
-      this.apiService.authenticateUser(login, motdepasse)
-        .subscribe({
-          next: (resp) => {
-            this.authService.loginSuccess({
-              sub: 'ext-' + Math.random(),
-              name: 'Utilisateur Idemat',
-              email: login,
-              picture: '',
-              idGoogle: '',
-              jwt: resp,
-            });
-            this.ngZone.run(() => {
-              this.router.navigate(['/' + routesConstantes.home]);
-            });
-          },
-          error: (err) => {
-            // Mapping des codes d'erreur HTTP vers les booléens du modèle
-            if (err.status === 401) {
-                 // On ne sait pas distinguer login/mdp incorrect via un simple 401 générique souvent,
-                 // mais pour l'exemple on active l'erreur générique ou on tente de deviner.
-                 // Dans le doute, on peut activer erreurLogin ou erreurMotdepasse selon le retour backend précis.
-                 // Ici je simule le comportement ASPX qui semblait les distinguer.
-                 this.erreurLogin = true;
-                 // Ou this.erreurMotdepasse = true;
-            } else if (err.status === 403) {
-                 this.erreurCompteSupprime = true;
-            } else {
-                 this.erreurLogin = true; // Fallback
-            }
-          }
+  protected onLogin(): void {
+    this.erreurLogin.set(false);
+    this.erreurMotdepasse.set(false);
+    this.erreurCompteSupprime.set(false);
+    if (this.form.invalid) return;
+    this.enCours.set(true);
+    const {login, motdepasse} = this.form.getRawValue();
+    this.apiService.authenticateUser(login, motdepasse).subscribe({
+      next: (resp) => {
+        this.authService.loginSuccess({
+          sub: 'ext-' + Math.random(),
+          name: 'Utilisateur Idemat',
+          email: login,
+          picture: '',
+          idGoogle: '',
+          jwt: resp,
         });
-    }
+        this.router.navigate(['/' + routesConstantes.home]);
+      },
+      error: (err) => {
+        this.enCours.set(false);
+        if (err.status === 403) {
+          this.erreurCompteSupprime.set(true);
+        } else {
+          this.erreurLogin.set(true);
+        }
+      },
+    });
+  }
+
+  protected onMotDePasseOublie(): void {
+    // TODO #122 : naviguer vers l'écran mot de passe oublié IDemat
+    this.router.navigate(['/' + routesConstantes.motDePasseOublie]);
+  }
+
+  protected onSInscrire(): void {
+    // TODO #123-125 : naviguer vers l'écran inscription
   }
 }
