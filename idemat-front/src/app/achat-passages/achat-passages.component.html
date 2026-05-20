@@ -1,0 +1,37 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else if (options()) {
+  <div class="page-container">
+
+    <!-- TITRE -->
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>Recharger mon compte</h1>
+    </div>
+
+    <p class="subtitle">Sélectionnez le nombre de passages que vous souhaitez obtenir</p>
+
+    <div class="contenu">
+    <!-- OFFRE -->
+    <div class="offre-ligne">
+      <span class="offre-label">{{ options()!.nbPassages }} passages</span>
+      <span class="offre-prix">{{ options()!.montantFormate }}</span>
+    </div>
+
+    <!-- BOUTON VALIDER -->
+    <button class="btn-valider" (click)="valider()" [disabled]="enCours()">
+      @if (enCours()) {
+        <mat-spinner diameter="20" color="accent"></mat-spinner>
+      } @else {
+        <mat-icon>check_circle_outline</mat-icon>
+        <span>Valider</span>
+      }
+    </button>
+    </div>
+
+  </div>
+}

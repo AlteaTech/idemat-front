@@ -9,6 +9,7 @@ import {CarteAccesComponent} from './carte-acces/carte-acces.component';
 import {DechetteriesComponent} from './dechetteries/dechetteries.component';
 import {DechetterieDetailComponent} from './dechetterie-detail/dechetterie-detail.component';
 import {PassagesPointsComponent} from './passages-points/passages-points.component';
+import {AchatPassagesComponent} from './achat-passages/achat-passages.component';
 import {MocksComponent} from '../mocks/mocks.component';
 import {authGuard} from './core/guards/auth.guard';
 
@@ -33,6 +34,7 @@ export const routes: Routes = [
       {path: routesConstantes.dechetteries, component: DechetteriesComponent},
       {path: routesConstantes.dechetterieDetail, component: DechetterieDetailComponent},
       {path: routesConstantes.consultationSolde, component: PassagesPointsComponent},
+      {path: routesConstantes.achatPassages, component: AchatPassagesComponent},
       // IDEMAT - à compléter au fil des issues
       // {path: routesConstantes.dechetteries, component: DechetteriesComponent},
       // {path: routesConstantes.consultationSolde, component: ConsultationSoldeComponent},
