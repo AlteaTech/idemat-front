@@ -10,6 +10,7 @@ export const routesConstantes = {
   connexionIdemat: 'connexion-idemat',
   carteAcces: 'carte-acces',
   dechetteries: 'dechetteries',
+  dechetterieDetail: 'dechetteries/:id',
   consultationSolde: 'consultation-solde',
   achatPassages: 'achat-passages',
   informationsPersonnelles: 'informations-personnelles',

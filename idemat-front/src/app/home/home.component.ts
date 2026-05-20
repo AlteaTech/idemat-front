@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
@@ -22,25 +22,24 @@ interface TuileMenu {
   selector: 'app-home',
   imports: [CommonModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  private router = inject(Router);
-  private usagerService = inject(UsagerIdematServiceAgents);
-  private contratService = inject(ContratIdematServiceAgents);
+  private readonly router = inject(Router);
+  private readonly usagerService = inject(UsagerIdematServiceAgents);
+  private readonly contratService = inject(ContratIdematServiceAgents);
 
-  usager = signal<UsagerIdematModel | null>(null);
-  contrat = signal<ContratIdematModel | null>(null);
-  tuiles = signal<TuileMenu[]>([]);
-  showCarteAcces = signal(false);
-  loading = signal(true);
-  readonly routesConstantes = routesConstantes;
+  protected usager = signal<UsagerIdematModel | null>(null);
+  protected tuiles = signal<TuileMenu[]>([]);
+  protected showCarteAcces = signal(false);
+  protected loading = signal(true);
+  protected readonly routesConstantes = routesConstantes;
 
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => {
       this.usager.set(u);
       this.contratService.getContratForCurrentUser().subscribe(c => {
-        this.contrat.set(c);
         this.tuiles.set(this.buildTuiles(c));
         this.showCarteAcces.set(c.allowCarteDematerialisee);
         this.loading.set(false);
@@ -48,7 +47,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  naviguer(route: string): void {
+  protected naviguer(route: string): void {
     this.router.navigate(['/' + route]);
   }
 

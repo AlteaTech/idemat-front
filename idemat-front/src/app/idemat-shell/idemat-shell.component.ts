@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewChild} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,22 +24,23 @@ interface LienNav {
   selector: 'app-idemat-shell',
   imports: [CommonModule, RouterModule, MatIconModule, MatSidenavModule, MatProgressSpinnerModule],
   templateUrl: './idemat-shell.component.html',
-  styleUrl: './idemat-shell.component.scss'
+  styleUrl: './idemat-shell.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IdematShellComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  private router = inject(Router);
-  private authService = inject(AuthService);
-  private usagerService = inject(UsagerIdematServiceAgents);
-  private contratService = inject(ContratIdematServiceAgents);
-  private breakpointObserver = inject(BreakpointObserver);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly usagerService = inject(UsagerIdematServiceAgents);
+  private readonly contratService = inject(ContratIdematServiceAgents);
+  private readonly breakpointObserver = inject(BreakpointObserver);
 
-  usager = signal<UsagerIdematModel | null>(null);
-  contrat = signal<ContratIdematModel | null>(null);
-  liensNav = signal<LienNav[]>([]);
-  loading = signal(true);
-  isDesktop = signal(false);
+  protected usager = signal<UsagerIdematModel | null>(null);
+  protected contrat = signal<ContratIdematModel | null>(null);
+  protected liensNav = signal<LienNav[]>([]);
+  protected loading = signal(true);
+  protected isDesktop = signal(false);
 
   ngOnInit(): void {
     this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
@@ -55,18 +56,18 @@ export class IdematShellComponent implements OnInit {
     });
   }
 
-  isActive(route: string): boolean {
+  protected isActive(route: string): boolean {
     return this.router.url === '/' + route || this.router.url.startsWith('/' + route + '/');
   }
 
-  naviguer(route: string): void {
+  protected naviguer(route: string): void {
     this.router.navigate(['/' + route]);
     if (!this.isDesktop()) {
       this.sidenav.close();
     }
   }
 
-  deconnecter(): void {
+  protected deconnecter(): void {
     this.authService.logout();
   }
 
