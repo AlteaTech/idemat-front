@@ -1,0 +1,29 @@
+<div class="page-container">
+
+  <!-- TITRE -->
+  <div class="page-title">
+    <button class="btn-retour" (click)="retour()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Mon compte</h1>
+  </div>
+
+  <!-- LISTE ENTRÉES -->
+  <div class="liste">
+    <button class="liste-item" (click)="naviguer(routesConstantes.modificationProfil)">
+      <span class="liste-item-label">Modifier le profil</span>
+      <mat-icon class="liste-item-chevron">chevron_right</mat-icon>
+    </button>
+    <button class="liste-item" (click)="naviguer(routesConstantes.parametresCompte)">
+      <span class="liste-item-label">Paramètres du compte</span>
+      <mat-icon class="liste-item-chevron">chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <!-- DÉCONNEXION -->
+  <button class="btn-deconnexion" (click)="deconnecter()">
+    <span>Déconnexion</span>
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+</div>

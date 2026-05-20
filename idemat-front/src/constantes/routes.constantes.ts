@@ -15,6 +15,7 @@ export const routesConstantes = {
   achatPassages: 'achat-passages',
   informationsPersonnelles: 'informations-personnelles',
   modificationProfil: 'modification-profil',
+  parametresCompte: 'parametres-compte',
   modificationEmail: 'modification-email',
   modificationMotDePasseIdemat: 'modification-mot-de-passe',
   mentionsLegales: 'mentions-legales',

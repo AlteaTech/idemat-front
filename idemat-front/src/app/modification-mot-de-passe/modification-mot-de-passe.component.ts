@@ -1,0 +1,50 @@
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {Router} from '@angular/router';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
+import {routesConstantes} from '../../constantes/routes.constantes';
+
+function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+  const nouveau = control.get('nouveauMotDePasse')?.value;
+  const confirmation = control.get('confirmation')?.value;
+  return nouveau && confirmation && nouveau !== confirmation ? {passwordsMismatch: true} : null;
+}
+
+@Component({
+  selector: 'app-modification-mot-de-passe',
+  imports: [ReactiveFormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
+  templateUrl: './modification-mot-de-passe.component.html',
+  styleUrl: './modification-mot-de-passe.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ModificationMotDePasseComponent {
+  private readonly router = inject(Router);
+  private readonly usagerService = inject(UsagerIdematServiceAgents);
+
+  protected enCours = signal(false);
+
+  protected form = new FormGroup({
+    ancienMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    nouveauMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(8)]}),
+    confirmation: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+  }, {validators: passwordsMatchValidator});
+
+  protected retour(): void {
+    this.router.navigate(['/' + routesConstantes.parametresCompte]);
+  }
+
+  protected onSubmit(): void {
+    if (this.form.invalid) return;
+    this.enCours.set(true);
+    const {ancienMotDePasse, nouveauMotDePasse} = this.form.getRawValue();
+    this.usagerService.updateMotDePasse(ancienMotDePasse, nouveauMotDePasse).subscribe({
+      next: () => this.router.navigate(['/' + routesConstantes.parametresCompte]),
+      error: () => this.enCours.set(false),
+    });
+  }
+}

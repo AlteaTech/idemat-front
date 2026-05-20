@@ -16,6 +16,8 @@ export class ContratIdematServiceAgents {
       allowCarteDematerialisee: true,
       allowCartePhysique: false,
       allowImmatriculations: true,
+      demandeZoneJ1F3: false,
+      communes: ['Lyon', 'Villeurbanne', 'Bron', 'Vénissieux', 'Saint-Priest', 'Décines-Charpieu'],
     }).pipe(delay(300));
   }
 

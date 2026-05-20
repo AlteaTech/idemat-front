@@ -1,0 +1,55 @@
+@use 'variables' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-container {
+  padding: 40px 80px 48px;
+  flex: 1;
+  background: $background-page;
+  max-width: 960px;
+  @media (max-width: 900px) { padding: 24px 20px 40px; }
+}
+
+.page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.page-title h1 { font-size: 1.5rem; font-weight: 700; color: $text-color-primary; margin: 0; }
+
+.btn-retour {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; color: $text-color-secondary;
+  padding: 4px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+
+.contenu { max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+
+.bloc {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 20px 24px;
+  box-shadow: $bloc-shadow;
+}
+
+.bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
+
+.field-label { font-size: 0.85rem; color: $text-color-muted; display: block; margin-bottom: 4px; }
+.full-width { width: 100%; }
+
+::ng-deep {
+  .mdc-notched-outline__leading { border-radius: 12px 0 0 12px !important; }
+  .mdc-notched-outline__trailing { border-radius: 0 12px 12px 0 !important; }
+}
+
+.btn-valider {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 24px;
+  background: $primary-color; color: white;
+  border: none; border-radius: 30px;
+  font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  &:hover:not(:disabled) { background: $primary-color-darker; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}

@@ -1,0 +1,34 @@
+<div class="page-container">
+
+  <div class="page-title">
+    <button class="btn-retour" (click)="retour()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Modifier l'e-mail</h1>
+  </div>
+
+  <form class="contenu" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">badge</mat-icon>
+        <span class="bloc-titre">Nouvel E-mail</span>
+      </div>
+      <label class="field-label">Saisissez votre nouvel e-mail</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput formControlName="email" type="email" placeholder="Ex: nouveau@mail.com"/>
+        <mat-error>Adresse e-mail invalide</mat-error>
+      </mat-form-field>
+    </div>
+
+    <button type="submit" class="btn-valider" [disabled]="form.invalid || enCours()">
+      @if (enCours()) {
+        <mat-spinner diameter="20" color="accent"></mat-spinner>
+      } @else {
+        <mat-icon>check_circle_outline</mat-icon>
+        <span>Enregistrer le nouveau mail</span>
+      }
+    </button>
+
+  </form>
+</div>

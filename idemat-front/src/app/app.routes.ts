@@ -11,6 +11,11 @@ import {DechetterieDetailComponent} from './dechetterie-detail/dechetterie-detai
 import {PassagesPointsComponent} from './passages-points/passages-points.component';
 import {AchatPassagesComponent} from './achat-passages/achat-passages.component';
 import {MentionsLegalesComponent} from './mentions-legales/mentions-legales.component';
+import {InformationsPersonnellesComponent} from './informations-personnelles/informations-personnelles.component';
+import {ParametresCompteComponent} from './parametres-compte/parametres-compte.component';
+import {ModificationEmailComponent} from './modification-email/modification-email.component';
+import {ModificationMotDePasseComponent} from './modification-mot-de-passe/modification-mot-de-passe.component';
+import {ModificationProfilComponent} from './modification-profil/modification-profil.component';
 import {MocksComponent} from '../mocks/mocks.component';
 import {authGuard} from './core/guards/auth.guard';
 
@@ -37,6 +42,11 @@ export const routes: Routes = [
       {path: routesConstantes.consultationSolde, component: PassagesPointsComponent},
       {path: routesConstantes.achatPassages, component: AchatPassagesComponent},
       {path: routesConstantes.mentionsLegales, component: MentionsLegalesComponent},
+      {path: routesConstantes.informationsPersonnelles, component: InformationsPersonnellesComponent},
+      {path: routesConstantes.parametresCompte, component: ParametresCompteComponent},
+      {path: routesConstantes.modificationEmail, component: ModificationEmailComponent},
+      {path: routesConstantes.modificationMotDePasseIdemat, component: ModificationMotDePasseComponent},
+      {path: routesConstantes.modificationProfil, component: ModificationProfilComponent},
       // IDEMAT - à compléter au fil des issues
       // {path: routesConstantes.dechetteries, component: DechetteriesComponent},
       // {path: routesConstantes.consultationSolde, component: ConsultationSoldeComponent},

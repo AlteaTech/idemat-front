@@ -1,0 +1,55 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="page-container">
+
+    <!-- TITRE -->
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>Paramètres du compte</h1>
+    </div>
+
+    <div class="contenu">
+    <!-- IDENTIFIANTS -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">badge</mat-icon>
+        <span class="bloc-titre">Identifiants</span>
+      </div>
+
+      <div class="champ-ligne">
+        <div class="champ-info">
+          <span class="champ-label">Email</span>
+          <span class="champ-valeur">{{ usager()?.email }}</span>
+        </div>
+        <button class="btn-edit" (click)="naviguer(routesConstantes.modificationEmail)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+      <hr class="separateur"/>
+
+      <div class="champ-ligne">
+        <div class="champ-info">
+          <span class="champ-label">Mot de passe</span>
+          <span class="champ-valeur champ-mdp">••••••••••••</span>
+        </div>
+        <button class="btn-edit" (click)="naviguer(routesConstantes.modificationMotDePasseIdemat)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- SUPPRIMER LE COMPTE -->
+    <button class="btn-supprimer" (click)="supprimerCompte()">
+      <span>Supprimer le compte</span>
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    </div>
+
+  </div>
+}
