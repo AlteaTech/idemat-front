@@ -103,7 +103,10 @@ $sidenav-width: 220px;
 .top-bar-user {
   display: flex; align-items: center; gap: 6px;
   font-size: 0.88rem; font-weight: 500; color: $text-color-secondary;
-  mat-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+  background: none; border: none; cursor: pointer; padding: 6px 10px;
+  border-radius: 8px; transition: background 0.15s, color 0.15s;
+  mat-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; transition: color 0.15s; }
+  &:hover { background: #fef2ef; color: $primary-color; mat-icon { color: $primary-color; } }
 }
 
 .mobile-header {

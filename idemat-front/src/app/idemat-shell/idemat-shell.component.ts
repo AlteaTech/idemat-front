@@ -36,6 +36,7 @@ export class IdematShellComponent implements OnInit {
   private readonly contratService = inject(ContratIdematServiceAgents);
   private readonly breakpointObserver = inject(BreakpointObserver);
 
+  protected readonly routesConstantes = routesConstantes;
   protected usager = signal<UsagerIdematModel | null>(null);
   protected contrat = signal<ContratIdematModel | null>(null);
   protected liensNav = signal<LienNav[]>([]);
@@ -76,7 +77,6 @@ export class IdematShellComponent implements OnInit {
       {icon: 'home', label: 'Accueil', route: routesConstantes.home, visible: true},
       {icon: 'qr_code_2', label: 'Ma carte d\'accès', route: routesConstantes.carteAcces, visible: contrat.allowCarteDematerialisee},
       {icon: 'delete_outline', label: 'Déchetteries', route: routesConstantes.dechetteries, visible: true},
-      {icon: 'person_outline', label: 'Mon compte', route: routesConstantes.informationsPersonnelles, visible: true},
       {icon: 'bar_chart', label: 'Mes passages & points', route: routesConstantes.consultationSolde, visible: true},
       {icon: 'add_circle_outline', label: 'Recharger mon compte', route: routesConstantes.achatPassages, visible: contrat.allowAchatPassages},
       {icon: 'gavel', label: 'Mentions légales', route: routesConstantes.mentionsLegales, visible: true},

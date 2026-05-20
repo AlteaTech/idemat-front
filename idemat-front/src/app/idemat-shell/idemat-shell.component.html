@@ -45,10 +45,10 @@
       <!-- TOP BAR DESKTOP -->
       @if (isDesktop()) {
         <div class="top-bar">
-          <span class="top-bar-user">
+          <button class="top-bar-user" (click)="naviguer(routesConstantes.informationsPersonnelles)">
             {{ usager()?.prenom }} {{ usager()?.nom }}
             <mat-icon>person_outline</mat-icon>
-          </span>
+          </button>
         </div>
       }
 
