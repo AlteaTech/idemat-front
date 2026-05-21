@@ -1,0 +1,54 @@
+<div class="page">
+  @if (logoUrl()) {
+    <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+  }
+
+  <div class="card">
+    @if (!succes()) {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="entete">
+          <button type="button" class="btn-retour" (click)="retour()">←</button>
+          <div>
+            <h1 class="titre">Mot de passe oublié</h1>
+            <p class="sous-titre">Saisissez votre e-mail pour réinitialiser votre mot de passe.</p>
+          </div>
+        </div>
+
+        <div class="champ">
+          <label class="label" for="email">Saisissez votre e-mail</label>
+          <input id="email" type="email" class="input" formControlName="email"
+                 placeholder="exemple@mail.com" autocomplete="email" />
+        </div>
+
+        @if (erreurEmail()) {
+          <p class="erreur">Il n'existe pas de compte avec cet e-mail</p>
+        }
+
+        <button type="submit" class="btn-principal" [disabled]="form.invalid || enCours()">
+          @if (enCours()) {
+            <mat-progress-spinner diameter="20" mode="indeterminate" />
+          } @else {
+            Réinitialiser votre mot de passe
+          }
+        </button>
+
+        <hr class="separateur" />
+
+        <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
+        <button type="button" class="btn-inscription" (click)="onSInscrire()">
+          S'inscrire
+        </button>
+
+      </form>
+    } @else {
+      <div class="succes">
+        <p class="succes-titre">E-mail envoyé !</p>
+        <p class="succes-texte">Vérifiez votre boîte mail et suivez les instructions pour réinitialiser votre mot de passe.</p>
+        <button type="button" class="btn-principal" (click)="retour()">
+          Retour à la connexion
+        </button>
+      </div>
+    }
+  </div>
+</div>

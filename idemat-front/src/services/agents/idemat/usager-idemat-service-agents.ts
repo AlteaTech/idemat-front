@@ -46,4 +46,9 @@ export class UsagerIdematServiceAgents {
   deleteVehicule(immat: string): Observable<void> {
     return of(void 0).pipe(delay(400));
   }
+
+  // TODO: remplacer par appel HTTP POST /api/idemat/usager/reset-password
+  demanderResetPassword(email: string): Observable<void> {
+    return of(void 0).pipe(delay(600));
+  }
 }
