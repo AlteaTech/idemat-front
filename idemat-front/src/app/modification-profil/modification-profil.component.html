@@ -31,18 +31,20 @@
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Adresse</mat-label>
               <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
+              <mat-error>Champ obligatoire</mat-error>
             </mat-form-field>
           </div>
 
           <!-- Ligne 2 : Téléphone | Code postal | Ville -->
           <div class="row-tel">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Téléphone</mat-label>
+              <mat-label>Téléphone <span class="label-optionnel">(optionnel)</span></mat-label>
               <input matInput formControlName="telephone" type="tel" placeholder="ex. 00 00 00 00 00" />
             </mat-form-field>
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Code postal</mat-label>
               <input matInput formControlName="codePostal" placeholder="ex. 75000" />
+              <mat-error>Champ obligatoire</mat-error>
             </mat-form-field>
             @if (contrat()!.communes.length) {
               <mat-form-field appearance="outline" class="full-width">
@@ -52,11 +54,13 @@
                     <mat-option [value]="commune">{{ commune }}</mat-option>
                   }
                 </mat-select>
+                <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
             } @else {
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Ville</mat-label>
                 <input matInput formControlName="ville" placeholder="Votre ville" />
+                <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
             }
           </div>

@@ -40,10 +40,10 @@ export class ModificationProfilComponent implements OnInit {
 
   protected form = new FormGroup<ModificationProfilFormModel>({
     nomPrenom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    adresse: new FormControl('', {nonNullable: true}),
+    adresse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     telephone: new FormControl('', {nonNullable: true}),
-    codePostal: new FormControl('', {nonNullable: true}),
-    ville: new FormControl('', {nonNullable: true}),
+    codePostal: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    ville: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
   });
 
   protected vehiculeForm = new FormGroup<VehiculeFormModel>({

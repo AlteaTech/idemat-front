@@ -11,6 +11,7 @@ import {errorInterceptor} from '../core/interceptors/error.interceptor';
 
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {MatPaginatorIntlFr} from './core/i18n/mat-paginator-intl-fr';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {loaderInterceptor} from '../core/interceptors/loader.interceptor';
 
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
     {provide: BASE_PATH, useValue: environment.apiUrl},
 
 
-    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlFr}
+    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlFr},
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {hideRequiredMarker: true}}
   ]
 };
