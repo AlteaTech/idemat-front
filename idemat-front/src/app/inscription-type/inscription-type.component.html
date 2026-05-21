@@ -1,0 +1,21 @@
+<div class="page">
+  @if (logoUrl()) {
+    <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+  }
+
+  <div class="card">
+    <div class="entete">
+      <button type="button" class="btn-retour" (click)="retour()">←</button>
+      <h1 class="titre">Vous êtes...</h1>
+    </div>
+    <hr class="separateur" />
+    <div class="choix">
+      <button type="button" class="btn-choix" (click)="choisir('Part')">
+        Particulier
+      </button>
+      <button type="button" class="btn-choix" (click)="choisir('Pro')">
+        Professionnel
+      </button>
+    </div>
+  </div>
+</div>

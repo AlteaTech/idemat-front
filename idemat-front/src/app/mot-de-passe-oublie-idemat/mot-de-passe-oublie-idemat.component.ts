@@ -61,6 +61,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   }
 
   protected onSInscrire(): void {
-    // TODO #123-125 : naviguer vers l'écran inscription
+    const contrat = this.route.snapshot.paramMap.get('contrat') ?? 'default';
+    this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}`]);
   }
 }

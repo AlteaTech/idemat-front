@@ -85,6 +85,7 @@ export class ConnexionIdematComponent implements OnInit {
   }
 
   protected onSInscrire(): void {
-    // TODO #123-125 : naviguer vers l'écran inscription
+    const contrat = this.contrat() ?? 'default';
+    this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}`]);
   }
 }

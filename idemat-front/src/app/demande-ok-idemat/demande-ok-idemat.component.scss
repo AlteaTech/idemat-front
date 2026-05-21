@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+:host { display: flex; flex: 1; min-height: 100vh; }
+
+.page {
+  flex: 1;
+  min-height: 100vh;
+  background: linear-gradient(150deg, #FBCAB6 0%, #F09878 30%, #ED6E57 60%, #C94535 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card {
+  width: 100%; max-width: 360px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+
+.icone-ok { font-size: 64px; width: 64px; height: 64px; color: white; }
+
+.titre { color: white; font-size: 1.6rem; font-weight: 700; margin: 0; }
+
+.texte {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem; line-height: 1.5; margin: 0;
+}
+
+.btn-retour {
+  background: white; color: $primary-color;
+  border: none; border-radius: 30px;
+  padding: 14px 32px; font-size: 1rem; font-weight: 700; font-family: inherit;
+  cursor: pointer; width: 100%; margin-top: 8px;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.9; }
+}

@@ -17,6 +17,9 @@ import {ModificationEmailComponent} from './modification-email/modification-emai
 import {ModificationMotDePasseComponent} from './modification-mot-de-passe/modification-mot-de-passe.component';
 import {ModificationProfilComponent} from './modification-profil/modification-profil.component';
 import {MotDePasseOublieIdematComponent} from './mot-de-passe-oublie-idemat/mot-de-passe-oublie-idemat.component';
+import {InscriptionTypeComponent} from './inscription-type/inscription-type.component';
+import {InscriptionComponent} from './inscription/inscription.component';
+import {DemandOkIdematComponent} from './demande-ok-idemat/demande-ok-idemat.component';
 import {MocksComponent} from '../mocks/mocks.component';
 import {authGuard} from './core/guards/auth.guard';
 
@@ -27,6 +30,9 @@ export const routes: Routes = [
   {path: `${routesConstantes.connexionIdemat}/:contrat`, component: ConnexionIdematComponent},
   {path: routesConstantes.motDePasseOublie, component: MotDePasseOublieIdematComponent},
   {path: `${routesConstantes.motDePasseOublie}/:contrat`, component: MotDePasseOublieIdematComponent},
+  {path: `${routesConstantes.creationCompte}/:contrat`, component: InscriptionTypeComponent},
+  {path: `${routesConstantes.creationCompte}/:contrat/:type`, component: InscriptionComponent},
+  {path: routesConstantes.demandeOk, component: DemandOkIdematComponent},
 
   // --- ROUTES PROTÉGÉES (shell IDemat) ---
   {
