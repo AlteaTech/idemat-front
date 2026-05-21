@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDemat Front — Notes & Questions pour le lead</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; color: #1a1a1a; background: #f5f5f5; padding: 40px 24px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+    .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 36px; }
+    h2 { font-size: 1.1rem; font-weight: 700; color: #fff; background: #ED6E57; padding: 10px 16px; border-radius: 8px 8px 0 0; margin-top: 32px; }
+    .card { background: #fff; border-radius: 0 0 8px 8px; box-shadow: 0 2px 8px rgba(0,0,0,.07); padding: 20px 24px; margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { text-align: left; padding: 8px 12px; background: #f9f9f9; border-bottom: 2px solid #eee; color: #555; font-weight: 600; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+    .badge-done { background: #e8f5e9; color: #2e7d32; }
+    .badge-mock { background: #fff3e0; color: #e65100; }
+    .badge-todo { background: #f3e5f5; color: #7b1fa2; }
+    .badge-ticket { background: #e3f2fd; color: #1565c0; }
+    .badge-no-ticket { background: #fce4ec; color: #c62828; }
+    .q-list { list-style: none; }
+    .q-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+    .q-list li:last-child { border-bottom: none; }
+    .q-num { flex-shrink: 0; width: 26px; height: 26px; background: #ED6E57; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; }
+    .q-content strong { display: block; margin-bottom: 4px; }
+    .q-content span { color: #555; font-size: 0.88rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+    .tech-list li:last-child { border-bottom: none; }
+    .tech-list code { background: #f4f4f4; padding: 1px 6px; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 0.85rem; }
+    .note { background: #fff8e1; border-left: 4px solid #ffc107; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 0.88rem; color: #5d4037; margin-top: 12px; }
+    .route { font-family: 'SF Mono', Monaco, monospace; font-size: 0.82rem; color: #1565c0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>IDemat Front — Notes de développement</h1>
+  <p class="subtitle">À destination du lead pour review — généré le 21 mai 2026 · PR globale : <strong>#11 feature/idemat-portal-v1</strong></p>
+
+  <!-- ÉCRANS RÉALISÉS -->
+  <h2>Écrans réalisés</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Écran</th>
+          <th>Route</th>
+          <th>Ticket</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Connexion usager</td>
+          <td class="route">/connexion-idemat[/:contrat]</td>
+          <td><span class="badge badge-ticket">#121 IV-54</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Mot de passe oublié</td>
+          <td class="route">/mot-de-passe-oublie[/:contrat]</td>
+          <td><span class="badge badge-ticket">#122 IV-55</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Sélection type inscription</td>
+          <td class="route">/creation-compte/:contrat</td>
+          <td><span class="badge badge-ticket">#123 IV-45</span></td>
+          <td><span class="badge badge-done">Fait</span></td>
+        </tr>
+        <tr>
+          <td>Inscription particulier</td>
+          <td class="route">/creation-compte/:contrat/particulier</td>
+          <td><span class="badge badge-ticket">#125 IV-47</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Inscription professionnel</td>
+          <td class="route">/creation-compte/:contrat/professionnel</td>
+          <td><span class="badge badge-ticket">#124 IV-46</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Confirmation inscription</td>
+          <td class="route">/demande-ok</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-done">Fait</span></td>
+        </tr>
+        <tr>
+          <td>Accueil (menu tuiles)</td>
+          <td class="route">/home</td>
+          <td><span class="badge badge-ticket">#127 IV-49</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Carte d'accès dématérialisée</td>
+          <td class="route">/carte-acces</td>
+          <td><span class="badge badge-ticket">#128 IV-50</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Déchetteries (liste + détail)</td>
+          <td class="route">/dechetteries[/:id]</td>
+          <td><span class="badge badge-ticket">#129 IV-56</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Passages &amp; points</td>
+          <td class="route">/consultation-solde</td>
+          <td><span class="badge badge-ticket">#130 IV-57</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Recharger mon compte</td>
+          <td class="route">/achat-passages</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Mentions légales</td>
+          <td class="route">/mentions-legales</td>
+          <td><span class="badge badge-ticket">#131 IV-60</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Mon compte — hub</td>
+          <td class="route">/informations-personnelles</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-done">Fait</span></td>
+        </tr>
+        <tr>
+          <td>Paramètres du compte</td>
+          <td class="route">/parametres-compte</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-done">Fait</span></td>
+        </tr>
+        <tr>
+          <td>Modifier email</td>
+          <td class="route">/modification-email</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Modifier mot de passe</td>
+          <td class="route">/modification-mot-de-passe</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+        <tr>
+          <td>Modifier profil + véhicules</td>
+          <td class="route">/modification-profil</td>
+          <td><span class="badge badge-no-ticket">Sans ticket</span></td>
+          <td><span class="badge badge-mock">Mock</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>Légende :</strong> <span class="badge badge-done">Fait</span> = aucun appel API nécessaire &nbsp;|&nbsp;
+      <span class="badge badge-mock">Mock</span> = service agent mocké, à brancher sur l'API IDemat quand disponible
+    </div>
+  </div>
+
+  <!-- QUESTIONS OUVERTES -->
+  <h2>Questions &amp; arbitrages en attente</h2>
+  <div class="card">
+    <ul class="q-list">
+      <li>
+        <div class="q-num">1</div>
+        <div class="q-content">
+          <strong>5 écrans sans ticket Kanban</strong>
+          <span>Les écrans "Recharger mon compte", "Hub Mon compte", "Paramètres du compte", "Modifier email" et "Modifier mot de passe" ont été développés sans issue dans le Kanban. Faut-il créer des tickets rétroactivement (IV-XX) ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">2</div>
+        <div class="q-content">
+          <strong>PUT /profil — nom et prénom combinés ou séparés ?</strong>
+          <span>La maquette montre un champ unique "Nom, Prénom". Le modèle front envoie actuellement <code>nomPrenom: string</code>. L'API doit-elle recevoir un champ unique ou <code>nom</code> + <code>prenom</code> séparés ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">3</div>
+        <div class="q-content">
+          <strong>Texte des conditions générales (inscription)</strong>
+          <span>Dans le .NET, le texte venait de <code>strMentionsLegales</code> (base de données, par enseigne). Viendra-t-il d'un endpoint API ou sera-t-il statique côté front ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">4</div>
+        <div class="q-content">
+          <strong>Redirection post-inscription</strong>
+          <span>Après envoi du formulaire d'inscription, on redirige vers <code>/demande-ok</code> (page de confirmation). Est-ce le comportement souhaité, ou doit-on rediriger vers <code>/connexion-idemat</code> ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">5</div>
+        <div class="q-content">
+          <strong>"J'ai oublié mon mot de passe" — passer le contrat ?</strong>
+          <span>Le lien depuis la connexion navigue vers <code>/mot-de-passe-oublie</code> sans le paramètre <code>:contrat</code>. Faut-il le passer (<code>/mot-de-passe-oublie/test</code>) pour charger le bon logo enseigne ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">6</div>
+        <div class="q-content">
+          <strong>Ville (dropdown ou libre) pour les professionnels</strong>
+          <span>Pour les particuliers, la ville est un dropdown depuis les communes du contrat. Pour les professionnels, une entreprise peut être hors du périmètre. Doit-on laisser un champ texte libre pour les pros ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">7</div>
+        <div class="q-content">
+          <strong>Options d'achat de passages — viennent du BO ?</strong>
+          <span>L'écran "Recharger mon compte" affiche des options (nombre de passages + tarif). Ces options sont-elles configurées dans le BO par enseigne, ou sont-elles fixes côté front ?</span>
+        </div>
+      </li>
+      <li>
+        <div class="q-num">8</div>
+        <div class="q-content">
+          <strong>Suppression de compte</strong>
+          <span>Le bouton "Supprimer le compte" existe dans l'écran Paramètres mais la confirmation et l'appel API ne sont pas implémentés (TODO). À préciser : flux de confirmation, délai de grâce, etc.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CHOIX TECHNIQUES NOTABLES -->
+  <h2>Choix techniques notables</h2>
+  <div class="card">
+    <ul class="tech-list">
+      <li><strong>Services agents mockés</strong> — tous les appels API IDemat sont dans <code>src/services/agents/idemat/</code> avec <code>of(mockData).pipe(delay(...))</code>. Le remplacement par de vrais appels HTTP sera localisé dans ces fichiers uniquement.</li>
+      <li><strong>Client OpenAPI idbatv7 conservé</strong> — <code>src/core/api/</code> contient le client auto-généré pour le futur BO IDemat. Ne pas supprimer.</li>
+      <li><strong>Hauteur mat-form-field</strong> — Angular Material fixe les champs à 56px par défaut. Pour les réduire à 44px sans casser les labels flottants, le pattern <code>::ng-deep .mdc-text-field--outlined { height: 44px } + repositionnement mdc-floating-label</code> est nécessaire (voir <code>modification-profil.component.scss</code>).</li>
+      <li><strong>Inscription — composant unique</strong> — un seul <code>InscriptionComponent</code> gère particuliers et professionnels via le paramètre de route <code>/:type</code>. Les sections conditionnelles (Civilité, Carte d'identité, Justificatif pour les particuliers ; Société + SIRET pour les pros) sont contrôlées par <code>type()</code>.</li>
+      <li><strong>Autofill navigateur</strong> — le bouton "Se connecter" n'est pas désactivé sur <code>form.invalid</code> pour éviter le problème d'autofill (Angular ne détecte pas les valeurs remplies automatiquement). La validation est faite côté <code>onLogin()</code>.</li>
+      <li><strong>Nettoyage skeleton</strong> — 49 fichiers legacy idbatv7 BO supprimés (services agents, modèles, composants shared dialogs). Les intercepteurs <code>error.interceptor</code> et <code>loader.service</code> ont été simplifiés.</li>
+    </ul>
+  </div>
+
+  <p style="margin-top: 32px; color: #999; font-size: 0.8rem; text-align: center;">
+    idemat-front · branch <code>feature/idemat-portal-v1</code> · PR #11 · AlteaTech/idemat-front
+  </p>
+
+</div>
+</body>
+</html>
