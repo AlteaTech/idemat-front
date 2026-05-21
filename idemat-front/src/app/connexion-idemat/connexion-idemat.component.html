@@ -32,7 +32,7 @@
         <p class="erreur">Ce compte a été supprimé à votre demande</p>
       }
 
-      <button type="submit" class="btn-connexion" [disabled]="form.invalid || enCours()">
+      <button type="submit" class="btn-connexion" [disabled]="enCours()">
         @if (enCours()) {
           <mat-progress-spinner diameter="20" mode="indeterminate" />
         } @else {
