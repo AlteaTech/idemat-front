@@ -59,14 +59,15 @@ export class InscriptionComponent implements OnInit {
     civilite: new FormControl('', {nonNullable: true}),
     // Commun
     nom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    prenom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    prenom: new FormControl('', {nonNullable: true}),
     adresse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    codePostal: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     ville: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
     telephone: new FormControl('', {nonNullable: true}),
     cartePhysique: new FormControl(false, {nonNullable: true}),
     carteDematerialisee: new FormControl(false, {nonNullable: true}),
-    mentionsLegales: new FormControl(false, {nonNullable: true}),
+    mentionsLegales: new FormControl(false, {nonNullable: true, validators: [Validators.requiredTrue]}),
     // Véhicule
     immatriculation: new FormControl('', {nonNullable: true}),
     zoneJ1: new FormControl('', {nonNullable: true}),
@@ -91,16 +92,19 @@ export class InscriptionComponent implements OnInit {
     const siretCtrl = this.form.controls.siret;
     const societeCtrl = this.form.controls.societe;
     const civiliteCtrl = this.form.controls.civilite;
+    const prenomCtrl = this.form.controls.prenom;
     if (isPro) {
       siretCtrl.addValidators(Validators.required);
       societeCtrl.addValidators(Validators.required);
+      prenomCtrl.addValidators(Validators.required);
       civiliteCtrl.clearValidators();
     } else {
       civiliteCtrl.addValidators(Validators.required);
       siretCtrl.clearValidators();
       societeCtrl.clearValidators();
+      prenomCtrl.clearValidators();
     }
-    [siretCtrl, societeCtrl, civiliteCtrl].forEach(c => c.updateValueAndValidity());
+    [siretCtrl, societeCtrl, civiliteCtrl, prenomCtrl].forEach(c => c.updateValueAndValidity());
   }
 
   protected retour(): void {
@@ -142,7 +146,6 @@ export class InscriptionComponent implements OnInit {
     this.erreurEmail.set('');
 
     if (this.form.invalid) return;
-    if (!this.form.getRawValue().mentionsLegales) return;
 
     let hasError = false;
     if (isPart && !this.fileCarteIdentite()) { this.erreurCarteIdentite.set(true); hasError = true; }
@@ -158,7 +161,7 @@ export class InscriptionComponent implements OnInit {
       siret: raw.siret || undefined,
       civilite: raw.civilite || undefined,
       nom: raw.nom, prenom: raw.prenom,
-      adresse: raw.adresse, ville: raw.ville,
+      adresse: raw.adresse, codePostal: raw.codePostal, ville: raw.ville,
       email: raw.email, telephone: raw.telephone,
       cartePhysique: raw.cartePhysique,
       carteDematerialisee: raw.carteDematerialisee,

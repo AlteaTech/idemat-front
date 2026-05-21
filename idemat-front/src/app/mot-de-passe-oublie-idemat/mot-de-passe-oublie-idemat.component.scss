@@ -5,7 +5,7 @@
 .page {
   flex: 1;
   min-height: 100vh;
-  background: linear-gradient(150deg, #FBCAB6 0%, #F09878 30%, #ED6E57 60%, #C94535 100%);
+  background: #{$primary-gradient};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,12 +82,12 @@
   padding: 12px 20px;
   font-size: 0.95rem;
   font-family: inherit;
-  color: #333;
+  color: $text-color-dark;
   width: 100%;
   box-sizing: border-box;
   outline: none;
   transition: background 0.15s;
-  &::placeholder { color: #aaa; }
+  &::placeholder { color: $text-color-placeholder-light; }
   &:focus { background: rgba(255, 255, 255, 0.95); }
 }
 

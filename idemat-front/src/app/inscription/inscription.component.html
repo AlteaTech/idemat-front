@@ -66,23 +66,30 @@
               <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
               <mat-error>Champ obligatoire</mat-error>
             </mat-form-field>
-            @if (contrat()!.communes.length) {
+            <div class="row-cp-ville">
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Code postal, Ville</mat-label>
-                <mat-select formControlName="ville">
-                  @for (commune of contrat()!.communes; track commune) {
-                    <mat-option [value]="commune">{{ commune }}</mat-option>
-                  }
-                </mat-select>
+                <mat-label>Code postal</mat-label>
+                <input matInput formControlName="codePostal" placeholder="ex. 75000" />
                 <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
-            } @else {
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Code postal, Ville</mat-label>
-                <input matInput formControlName="ville" placeholder="ex. 75000 Paris" />
-                <mat-error>Champ obligatoire</mat-error>
-              </mat-form-field>
-            }
+              @if (contrat()!.communes.length) {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ville</mat-label>
+                  <mat-select formControlName="ville">
+                    @for (commune of contrat()!.communes; track commune) {
+                      <mat-option [value]="commune">{{ commune }}</mat-option>
+                    }
+                  </mat-select>
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              } @else {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ville</mat-label>
+                  <input matInput formControlName="ville" placeholder="ex. Paris" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              }
+            </div>
           </div>
 
           <div class="row-2">
@@ -234,7 +241,7 @@
 
         <!-- Bouton envoi -->
         <button type="submit" class="btn-valider"
-                [disabled]="form.invalid || !form.getRawValue().mentionsLegales || enCours()">
+                [disabled]="form.invalid || enCours()">
           @if (enCours()) {
             <mat-progress-spinner diameter="20" mode="indeterminate" />
           } @else {

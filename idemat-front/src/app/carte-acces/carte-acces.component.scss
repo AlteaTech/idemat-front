@@ -40,6 +40,6 @@
 .qr-image { width: 200px; height: 200px; }
 
 .info-ligne { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; }
-.info-label { font-size: 0.8rem; font-weight: 700; color: #333; }
+.info-label { font-size: 0.8rem; font-weight: 700; color: $text-color-dark; }
 .info-valeur { font-size: 0.9rem; color: $text-color-secondary; }
 .separateur { border: none; border-top: 1px solid $border-color-light; margin: 4px 0; }

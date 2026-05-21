@@ -12,10 +12,4 @@ export interface UsagerIdematModel {
   immatriculations?: string[];
 }
 
-export interface ProfilIdematUpdateModel {
-  nomPrenom: string;
-  adresse: string;
-  telephone: string;
-  codePostal: string;
-  ville: string;
-}
+export type {ProfilIdematUpdateModel} from './profil-idemat-update.model';

@@ -11,6 +11,13 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
 
+const CHART_COLORS = {
+  barEmpty: '#e8e8e8',
+  barHigh: '#ED6E57',
+  barLow: '#f4b8ad',
+  tickText: '#888',
+} as const;
+
 @Component({
   selector: 'app-dechetterie-detail',
   imports: [CommonModule, MatIconModule, MatProgressSpinnerModule],
@@ -61,7 +68,7 @@ export class DechetterieDetailComponent implements OnInit {
         datasets: [{
           data: valeurs,
           backgroundColor: valeurs.map(v =>
-            v === 0 ? '#e8e8e8' : v > max / 2 ? '#ED6E57' : '#f4b8ad'
+            v === 0 ? CHART_COLORS.barEmpty : v > max / 2 ? CHART_COLORS.barHigh : CHART_COLORS.barLow
           ),
           borderRadius: 8,
           borderSkipped: false,
@@ -77,7 +84,7 @@ export class DechetterieDetailComponent implements OnInit {
           x: {
             grid: {display: false},
             border: {display: false},
-            ticks: {font: {size: 11, weight: 'bold'}, color: '#888'}
+            ticks: {font: {size: 11, weight: 'bold'}, color: CHART_COLORS.tickText}
           },
           y: {display: false, min: 0, max: 100}
         }

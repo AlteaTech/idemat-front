@@ -8,15 +8,8 @@ import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-ide
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
+import {TuileMenu} from '../../models/tuile-menu.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
-
-interface TuileMenu {
-  icon: string;
-  label: string;
-  subtitle: string;
-  route: string;
-  visible: boolean;
-}
 
 @Component({
   selector: 'app-home',

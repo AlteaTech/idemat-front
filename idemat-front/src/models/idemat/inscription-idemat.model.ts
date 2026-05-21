@@ -12,6 +12,7 @@ export interface InscriptionIdematModel {
   nom: string;
   prenom: string;
   adresse: string;
+  codePostal: string;
   ville: string;
   email: string;
   telephone: string;

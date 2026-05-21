@@ -57,7 +57,7 @@
   background: none; border: none; cursor: pointer;
   display: flex; align-items: center; color: $primary-color;
   padding: 6px; border-radius: 50%; transition: background 0.15s;
-  &:hover { background: #fef2ef; }
+  &:hover { background: $primary-color-background; }
   mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 

@@ -1,13 +1,7 @@
-export interface HoraireJour {
-  ouvert: boolean;
-  matin: string;
-  apresMidi: string;
-}
-
-export interface AffluenceJour {
-  jour: string;
-  valeur: number;
-}
+export type {HoraireJour} from './horaire-jour.model';
+export type {AffluenceJour} from './affluence-jour.model';
+import {HoraireJour} from './horaire-jour.model';
+import {AffluenceJour} from './affluence-jour.model';
 
 export interface DechetterieIdematModel {
   id: number;

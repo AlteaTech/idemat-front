@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .login-container {
   display: flex;
   width: 100%;
@@ -10,7 +12,7 @@
   width: 50%;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #fca5a5 0%, #f87171 50%, #fdba74 100%);
+  background: $connexion-gradient;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -110,14 +112,14 @@
   font-size: 3rem;
   width: 3rem;
   height: 3rem;
-  color: #374151;
+  color: $connexion-text-medium;
   margin-bottom: 1rem;
 }
 
 .form-header h2 {
   font-size: 1.875rem;
   font-weight: bold;
-  color: #1f2937;
+  color: $connexion-text-dark;
   margin: 0;
 }
 
@@ -131,7 +133,7 @@
 .field-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #1f2937;
+  color: $connexion-text-dark;
 }
 
 .full-width-field {
@@ -152,18 +154,18 @@
 
 .forgot-password a {
   font-size: 0.75rem;
-  color: #f87171;
+  color: $connexion-link;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .forgot-password a:hover {
-  color: #dc2626;
+  color: $connexion-link-hover;
 }
 
 ::ng-deep .custom-toggle-group {
   width: 100%;
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid $connexion-border !important;
   border-radius: 9999px !important;
   height: 48px;
   display: flex;
@@ -179,12 +181,12 @@
   border: none !important;
   border-radius: 9999px !important;
   font-weight: 500;
-  color: #4b5563;
+  color: $connexion-text-light;
   text-align: center;
 }
 
 ::ng-deep .mat-button-toggle-checked {
-  background-color: #ED6E57 !important;
+  background-color: $primary-color !important;
   color: white !important;
   box-shadow: 0 2px 4px rgba(237, 110, 87, 0.3);
 }
@@ -199,12 +201,12 @@
   padding: 1.5rem !important;
   font-size: 1.125rem !important;
   border-radius: 0.75rem !important;
-  background-color: #ED6E57 !important;
+  background-color: $primary-color !important;
   color: white !important;
 }
 
 .submit-btn:hover {
-  background-color: #d65d48 !important;
+  background-color: $primary-color-darker !important;
 }
 
 .google-container {
@@ -217,7 +219,7 @@
 }
 
 .google-hint {
-  color: #4b5563;
+  color: $connexion-text-light;
   text-align: center;
 }
 

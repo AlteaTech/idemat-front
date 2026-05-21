@@ -1,7 +1,5 @@
-export interface AchatPassagesModel {
-  date: string;
-  nbPassages: number;
-}
+export type {AchatPassagesModel} from './achat-passages.model';
+import {AchatPassagesModel} from './achat-passages.model';
 
 export interface PassagesInfoModel {
   passagesRestants: number;
