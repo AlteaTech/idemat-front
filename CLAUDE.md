@@ -36,9 +36,11 @@ src/
 │   └── *.service.ts           # Services utilitaires
 ├── models/
 │   ├── idemat/                # Interfaces/modèles spécifiques IDemat
+│   ├── forms/                 # Interfaces TypedFormGroup (FormGroup<XxxFormModel>)
 │   └── *.model.ts             # Interfaces génériques
 ├── mocks/                     # Données de test
-├── constantes/
+├── constantes/                # Routes, couleurs, grids, constantes métier
+├── validateurs/               # Validateurs custom de formulaires
 ├── interceptors/
 ├── core/api/                  # ⛔ Client OpenAPI idbatv7 — ne pas modifier
 └── environments/
@@ -81,6 +83,65 @@ Toutes les couleurs sont dans `src/_variables.scss`. Aucune valeur hex dans un `
 ```
 
 Si la couleur manque dans `_variables.scss`, l'y ajouter avec un nom sémantique avant de l'utiliser.
+
+### 4. FormGroups toujours typés — interface dans models/forms/
+
+Chaque `FormGroup` doit être typé via une interface dédiée dans `src/models/forms/`.
+
+```typescript
+// ✅ src/models/forms/connexion-idemat-form.model.ts
+export interface ConnexionIdematFormModel {
+  login: FormControl<string>;
+  motdepasse: FormControl<string>;
+}
+
+// ✅ composant
+protected form = new FormGroup<ConnexionIdematFormModel>({ ... });
+
+// ❌ INTERDIT
+protected form = new FormGroup({ login: new FormControl(''), ... });
+```
+
+Un fichier par interface FormModel, suffixe `-form.model.ts`.
+
+### 5. Constantes arrays/objets dans src/constantes/
+
+Toute constante déclarée dans un composant (tableau, objet) doit être externalisée dans `src/constantes/`.
+
+```typescript
+// ✅ src/constantes/inscription.constantes.ts
+export const CIVILITES = ['M.', 'Mme', 'Autre'] as const;
+
+// ✅ src/constantes/couleurs.constantes.ts
+export const CHART_COLORS = { barHigh: '#ED6E57', ... } as const;
+
+// ❌ INTERDIT — dans le composant
+const CIVILITES = ['M.', 'Mme', 'Autre'];
+```
+
+### 6. Validateurs custom dans src/validateurs/
+
+Toute fonction de validation custom doit aller dans `src/validateurs/`, jamais inline dans un composant.
+
+```typescript
+// ✅ src/validateurs/passwords-match.validator.ts
+export function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null { ... }
+
+// ❌ INTERDIT — déclaré dans modification-mot-de-passe.component.ts
+function passwordsMatchValidator(...) { ... }
+```
+
+### 7. Zéro code mort — supprimer, ne pas commenter
+
+Routes, constantes, imports inutilisés → supprimer directement. Ne jamais laisser du code commenté dans `app.routes.ts` ou `routes.constantes.ts`.
+
+```typescript
+// ❌ INTERDIT
+// {path: routesConstantes.dechetteries, component: DechetteriesComponent},
+
+// ❌ INTERDIT dans routes.constantes.ts
+resetMotDePasse: 'reset-password',  // jamais utilisé
+```
 
 ### 3. Commit et push uniquement sur validation explicite de Ronald
 
