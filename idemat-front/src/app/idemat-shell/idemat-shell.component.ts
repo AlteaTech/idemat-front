@@ -12,13 +12,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
-
-interface LienNav {
-  icon: string;
-  label: string;
-  route: string;
-  visible: boolean;
-}
+import {LienNav} from '../../models/lien-nav.model';
 
 @Component({
   selector: 'app-idemat-shell',

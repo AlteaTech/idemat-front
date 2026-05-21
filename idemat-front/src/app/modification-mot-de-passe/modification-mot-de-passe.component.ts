@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -8,12 +8,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {routesConstantes} from '../../constantes/routes.constantes';
-
-function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
-  const nouveau = control.get('nouveauMotDePasse')?.value;
-  const confirmation = control.get('confirmation')?.value;
-  return nouveau && confirmation && nouveau !== confirmation ? {passwordsMismatch: true} : null;
-}
+import {passwordsMatchValidator} from '../../validateurs/passwords-match.validator';
+import {ModificationMotDePasseFormModel} from '../../models/forms/modification-mot-de-passe-form.model';
 
 @Component({
   selector: 'app-modification-mot-de-passe',
@@ -28,7 +24,7 @@ export class ModificationMotDePasseComponent {
 
   protected enCours = signal(false);
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<ModificationMotDePasseFormModel>({
     ancienMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     nouveauMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(8)]}),
     confirmation: new FormControl('', {nonNullable: true, validators: [Validators.required]}),

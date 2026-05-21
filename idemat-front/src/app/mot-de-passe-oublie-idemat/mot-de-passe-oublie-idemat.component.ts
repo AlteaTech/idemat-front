@@ -6,6 +6,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
 import {routesConstantes} from '../../constantes/routes.constantes';
+import {MotDePasseOublieIdematFormModel} from '../../models/forms/mot-de-passe-oublie-idemat-form.model';
 
 @Component({
   selector: 'app-mot-de-passe-oublie-idemat',
@@ -25,7 +26,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   protected succes = signal(false);
   protected erreurEmail = signal(false);
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<MotDePasseOublieIdematFormModel>({
     email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
   });
 

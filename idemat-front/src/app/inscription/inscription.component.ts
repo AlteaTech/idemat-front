@@ -13,9 +13,8 @@ import {InscriptionIdematServiceAgents} from '../../services/agents/idemat/inscr
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
-
-const CIVILITES = ['M.', 'Mme', 'Autre'];
-const ZONES_J1 = ['MTL', 'MTT1', 'MTT2', 'TM', 'QM', 'CYCL', 'CL', 'VP', 'TCP', 'CTTE'];
+import {CIVILITES, ZONES_J1} from '../../constantes/inscription.constantes';
+import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-form.model';
 
 @Component({
   selector: 'app-inscription',
@@ -51,7 +50,7 @@ export class InscriptionComponent implements OnInit {
   readonly civilites = CIVILITES;
   readonly zonesJ1 = ZONES_J1;
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<InscriptionIdematFormModel>({
     // Pro
     societe: new FormControl('', {nonNullable: true}),
     siret: new FormControl('', {nonNullable: true}),

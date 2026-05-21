@@ -8,15 +8,9 @@ import {Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip} f
 import {DechetteriesIdematServiceAgents} from '../../services/agents/idemat/dechetteries-idemat-service-agents';
 import {DechetterieIdematModel} from '../../models/idemat/dechetterie-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
+import {CHART_COLORS} from '../../constantes/couleurs.constantes';
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
-
-const CHART_COLORS = {
-  barEmpty: '#e8e8e8',
-  barHigh: '#ED6E57',
-  barLow: '#f4b8ad',
-  tickText: '#888',
-} as const;
 
 @Component({
   selector: 'app-dechetterie-detail',

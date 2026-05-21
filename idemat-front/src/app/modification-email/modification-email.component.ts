@@ -8,6 +8,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {routesConstantes} from '../../constantes/routes.constantes';
+import {ModificationEmailFormModel} from '../../models/forms/modification-email-form.model';
 
 @Component({
   selector: 'app-modification-email',
@@ -22,7 +23,7 @@ export class ModificationEmailComponent {
 
   protected enCours = signal(false);
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<ModificationEmailFormModel>({
     email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],

@@ -13,6 +13,9 @@ import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-i
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
+import {ZONES_J1} from '../../constantes/inscription.constantes';
+import {ModificationProfilFormModel} from '../../models/forms/modification-profil-form.model';
+import {VehiculeFormModel} from '../../models/forms/vehicule-form.model';
 
 @Component({
   selector: 'app-modification-profil',
@@ -33,9 +36,9 @@ export class ModificationProfilComponent implements OnInit {
   protected erreurCG = signal(false);
   protected selectedFile = signal<File | null>(null);
 
-  readonly zonesJ1 = ['MTL', 'MTT1', 'MTT2', 'TM', 'QM', 'CYCL', 'CL', 'VP', 'TCP', 'CTTE'];
+  readonly zonesJ1 = ZONES_J1;
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<ModificationProfilFormModel>({
     nomPrenom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     adresse: new FormControl('', {nonNullable: true}),
     telephone: new FormControl('', {nonNullable: true}),
@@ -43,7 +46,7 @@ export class ModificationProfilComponent implements OnInit {
     ville: new FormControl('', {nonNullable: true}),
   });
 
-  protected vehiculeForm = new FormGroup({
+  protected vehiculeForm = new FormGroup<VehiculeFormModel>({
     immatriculation: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     zoneJ1: new FormControl('', {nonNullable: true}),
     zoneF3: new FormControl('', {nonNullable: true, validators: [Validators.pattern('^[0-9]+$')]}),

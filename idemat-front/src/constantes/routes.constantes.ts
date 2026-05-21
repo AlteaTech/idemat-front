@@ -1,10 +1,7 @@
 export const routesConstantes = {
-  profile: 'logged',
   home: 'home',
   login: 'connexion',
   motDePasseOublie: 'mot-de-passe-oublie',
-  resetMotDePasse: 'reset-password',
-  mocks: 'mocks',
 
   // --- ROUTES IDEMAT (portail usager) ---
   connexionIdemat: 'connexion-idemat',

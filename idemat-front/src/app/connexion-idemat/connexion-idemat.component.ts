@@ -3,6 +3,8 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+import {ConnexionIdematFormModel} from '../../models/forms/connexion-idemat-form.model';
+
 import {AuthService} from '../../services/auth/auth.service';
 import {AuthenticationServiceAgents} from '../../services/agents/authentication-service-agents';
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
@@ -29,7 +31,7 @@ export class ConnexionIdematComponent implements OnInit {
   protected erreurMotdepasse = signal(false);
   protected erreurCompteSupprime = signal(false);
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<ConnexionIdematFormModel>({
     login: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     motdepasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
   });

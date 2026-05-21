@@ -3,7 +3,6 @@ import {ConnexionComponent} from './connexion/connexion.component';
 import {ConnexionIdematComponent} from './connexion-idemat/connexion-idemat.component';
 import {IdematShellComponent} from './idemat-shell/idemat-shell.component';
 import {HomeComponent} from './home/home.component';
-import {LoggedComponent} from './logged/logged.component';
 import {routesConstantes} from '../constantes/routes.constantes';
 import {CarteAccesComponent} from './carte-acces/carte-acces.component';
 import {DechetteriesComponent} from './dechetteries/dechetteries.component';
@@ -20,7 +19,6 @@ import {MotDePasseOublieIdematComponent} from './mot-de-passe-oublie-idemat/mot-
 import {InscriptionTypeComponent} from './inscription-type/inscription-type.component';
 import {InscriptionComponent} from './inscription/inscription.component';
 import {DemandOkIdematComponent} from './demande-ok-idemat/demande-ok-idemat.component';
-import {MocksComponent} from '../mocks/mocks.component';
 import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -42,8 +40,6 @@ export const routes: Routes = [
     children: [
       {path: '', redirectTo: routesConstantes.home, pathMatch: 'full'},
       {path: routesConstantes.home, component: HomeComponent},
-      {path: routesConstantes.profile, component: LoggedComponent},
-      {path: routesConstantes.mocks, component: MocksComponent},
 
       {path: routesConstantes.carteAcces, component: CarteAccesComponent},
       {path: routesConstantes.dechetteries, component: DechetteriesComponent},
@@ -56,12 +52,6 @@ export const routes: Routes = [
       {path: routesConstantes.modificationEmail, component: ModificationEmailComponent},
       {path: routesConstantes.modificationMotDePasseIdemat, component: ModificationMotDePasseComponent},
       {path: routesConstantes.modificationProfil, component: ModificationProfilComponent},
-      // IDEMAT - à compléter au fil des issues
-      // {path: routesConstantes.dechetteries, component: DechetteriesComponent},
-      // {path: routesConstantes.consultationSolde, component: ConsultationSoldeComponent},
-      // {path: routesConstantes.achatPassages, component: AchatPassagesComponent},
-      // {path: routesConstantes.informationsPersonnelles, component: InformationsPersonnellesComponent},
-      // {path: routesConstantes.mentionsLegales, component: MentionsLegalesComponent},
     ]
   },
 
