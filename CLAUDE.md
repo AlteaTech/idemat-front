@@ -96,6 +96,28 @@ Ne jamais lancer `git commit` ni `git push` sans que Ronald ait dit explicitemen
 - **inject()** pour les dépendances
 - Pattern spécifique mat-form-field : `::ng-deep .mdc-text-field--outlined { height: 44px }` + repositionnement `mdc-floating-label`
 
+## Routes API backend IDemat (port 8101)
+
+Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>` en kebab-case.
+
+**Endpoints livrés (PR #177) :**
+| Route | Controller | Statut |
+|---|---|---|
+| `POST /api/inscription` | `InscriptionIdmController` | ✅ |
+| `POST /api/auth/login` | `AuthIdmController` | ✅ |
+| `POST /api/mot-de-passe` | `MotDePasseIdmController` | ✅ |
+
+**Endpoints à venir :**
+| Route | Controller |
+|---|---|
+| `GET /api/contrat/by-url/{url}` | `ContratIdmController` |
+| `GET /api/usager/me` | `UsagerIdmController` |
+| `GET /api/dechetterie` | `DechetterieIdmController` |
+| `GET /api/passage/info` | `PassageIdmController` |
+| `GET /api/achat-passage/options` | `AchatPassageIdmController` |
+
+Branchement sur la vraie API = modifier uniquement `src/services/agents/idemat/` — zéro composant à toucher.
+
 ## Statut PR en cours
 
 - **PR #11** (`feature/idemat-portal-v1`) — portail v1 complet, en attente de review lead
