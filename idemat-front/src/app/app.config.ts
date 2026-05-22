@@ -2,7 +2,7 @@ import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {BASE_PATH} from '../core/api';
+import {BASE_PATH, Configuration} from '../core/api';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {authInterceptor} from '../core/interceptors/auth.interceptor';
@@ -24,7 +24,16 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
 
-    {provide: BASE_PATH, useValue: environment.apiUrl},
+    {
+      provide: Configuration,
+      useFactory: () => {
+        const config = new Configuration({basePath: environment.apiUrl});
+        // Les services générés utilisent Accept: */* → Angular traite la réponse comme Blob.
+        // On force application/json pour que les réponses soient correctement parsées.
+        config.selectHeaderAccept = () => 'application/json';
+        return config;
+      },
+    },
 
 
     {provide: MatPaginatorIntl, useClass: MatPaginatorIntlFr},
