@@ -43,7 +43,7 @@
       <hr class="separateur" />
 
       <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
-      <button type="button" class="btn-inscription" (click)="onSInscrire()">
+      <button type="button" class="btn-inscription" (click)="onSInscrire()" [disabled]="!contrat()">
         S'inscrire
       </button>
 

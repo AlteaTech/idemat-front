@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
+import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 
@@ -15,7 +15,7 @@ import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 export class InscriptionTypeComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly contratService = inject(ContratIdematServiceAgents);
+  private readonly contratService = inject(ContratControllerService);
 
   protected contrat = signal<string | null>(null);
   protected logoUrl = signal('');
@@ -25,13 +25,18 @@ export class InscriptionTypeComponent implements OnInit {
       const contrat = params.get('contrat');
       this.contrat.set(contrat);
       if (contrat) {
-        this.contratService.getContratByUrl(contrat).subscribe(c => this.logoUrl.set(c.logoUrl));
+        this.contratService.getByUrl(contrat).subscribe(c => {
+          if (c.logoBase64 && c.logoMime) {
+            this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
+          }
+        });
       }
     });
   }
 
   protected choisir(type: TypeInscription): void {
-    const contrat = this.contrat() ?? 'default';
+    const contrat = this.contrat();
+    if (!contrat) return;
     const typePath = type === 'Part' ? 'particulier' : 'professionnel';
     this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}/${typePath}`]);
   }

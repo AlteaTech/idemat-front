@@ -8,9 +8,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 
-import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
-import {InscriptionIdematServiceAgents} from '../../services/agents/idemat/inscription-idemat-service-agents';
-import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
+import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
+import {InscriptionControllerService} from '../../core/api/api/inscription-controller.service';
+import {ContratIdmResponse} from '../../core/api/model/contrat-idm-response';
 import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {CIVILITES, ZONES_J1} from '../../constantes/inscription.constantes';
@@ -27,10 +27,10 @@ import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-
 export class InscriptionComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly contratService = inject(ContratIdematServiceAgents);
-  private readonly inscriptionService = inject(InscriptionIdematServiceAgents);
+  private readonly contratService = inject(ContratControllerService);
+  private readonly inscriptionService = inject(InscriptionControllerService);
 
-  protected contrat = signal<ContratIdematModel | null>(null);
+  protected contrat = signal<ContratIdmResponse | null>(null);
   protected contratUrl = signal('');
   protected type = signal<TypeInscription>('Part');
   protected enCours = signal(false);
@@ -81,7 +81,7 @@ export class InscriptionComponent implements OnInit {
       this.type.set(typePath === 'professionnel' ? 'Pro' : 'Part');
       this.updateValidators();
       if (contratUrl) {
-        this.contratService.getContratByUrl(contratUrl).subscribe(c => this.contrat.set(c));
+        this.contratService.getByUrl(contratUrl).subscribe(c => this.contrat.set(c));
       }
     });
   }
@@ -153,21 +153,21 @@ export class InscriptionComponent implements OnInit {
 
     this.enCours.set(true);
     const raw = this.form.getRawValue();
-    this.inscriptionService.inscrire({
-      type: this.type(),
-      contrat: this.contratUrl(),
-      societe: raw.societe || undefined,
-      siret: raw.siret || undefined,
-      civilite: raw.civilite || undefined,
-      nom: raw.nom, prenom: raw.prenom,
-      adresse: raw.adresse, codePostal: raw.codePostal, ville: raw.ville,
-      email: raw.email, telephone: raw.telephone,
-      cartePhysique: raw.cartePhysique,
-      carteDematerialisee: raw.carteDematerialisee,
-      mentionsLegales: raw.mentionsLegales,
-      carteIdentite: this.fileCarteIdentite() ?? undefined,
-      justificatifDomicile: this.fileJustificatif() ?? undefined,
-    }).subscribe({
+    this.inscriptionService.inscrire(
+      this.type(), this.contratUrl(),
+      raw.nom, raw.prenom,
+      raw.adresse, raw.ville,
+      raw.email, raw.telephone,
+      raw.cartePhysique, raw.carteDematerialisee, raw.mentionsLegales,
+      raw.civilite || undefined,
+      raw.societe || undefined,
+      raw.siret || undefined,
+      undefined,
+      raw.zoneJ1 || undefined,
+      raw.zoneF3 ? Number(raw.zoneF3) : undefined,
+      this.fileCarteIdentite() ?? undefined,
+      this.fileJustificatif() ?? undefined,
+    ).subscribe({
       next: () => this.router.navigate(['/' + routesConstantes.demandeOk]),
       error: (err) => {
         this.enCours.set(false);

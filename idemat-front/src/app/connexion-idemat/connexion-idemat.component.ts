@@ -6,8 +6,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ConnexionIdematFormModel} from '../../models/forms/connexion-idemat-form.model';
 
 import {AuthService} from '../../services/auth/auth.service';
-import {AuthenticationServiceAgents} from '../../services/agents/authentication-service-agents';
-import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
+import {AuthIdmControllerService} from '../../core/api/api/auth-idm-controller.service';
+import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
 import {routesConstantes} from '../../constantes/routes.constantes';
 
 @Component({
@@ -21,8 +21,8 @@ export class ConnexionIdematComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly apiService = inject(AuthenticationServiceAgents);
-  private readonly contratService = inject(ContratIdematServiceAgents);
+  private readonly apiService = inject(AuthIdmControllerService);
+  private readonly contratService = inject(ContratControllerService);
 
   protected contrat = signal<string | null>(null);
   protected logoUrl = signal('');
@@ -44,8 +44,10 @@ export class ConnexionIdematComponent implements OnInit {
       const contrat = params.get('contrat');
       this.contrat.set(contrat);
       if (contrat) {
-        this.contratService.getContratByUrl(contrat).subscribe(c => {
-          this.logoUrl.set(c.logoUrl);
+        this.contratService.getByUrl(contrat).subscribe(c => {
+          if (c.logoBase64 && c.logoMime) {
+            this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
+          }
         });
       }
     });
@@ -58,7 +60,7 @@ export class ConnexionIdematComponent implements OnInit {
     if (this.form.invalid) return;
     this.enCours.set(true);
     const {login, motdepasse} = this.form.getRawValue();
-    this.apiService.authenticateUser(login, motdepasse).subscribe({
+    this.apiService.login({courriel: login, motDePasse: motdepasse}).subscribe({
       next: (resp) => {
         this.authService.loginSuccess({
           sub: 'ext-' + Math.random(),
@@ -66,7 +68,7 @@ export class ConnexionIdematComponent implements OnInit {
           email: login,
           picture: '',
           idGoogle: '',
-          jwt: resp,
+          jwt: resp.token,
         });
         this.router.navigate(['/' + routesConstantes.home]);
       },
@@ -87,7 +89,8 @@ export class ConnexionIdematComponent implements OnInit {
   }
 
   protected onSInscrire(): void {
-    const contrat = this.contrat() ?? 'default';
+    const contrat = this.contrat();
+    if (!contrat) return;
     this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}`]);
   }
 }
