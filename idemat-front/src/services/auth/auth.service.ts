@@ -32,7 +32,7 @@ export class AuthService {
     this.router.navigate(['/' + routesConstantes.connexionIdemat]);
   }
 
-  private clearSession(): void {
+  clearSession(): void {
     this.user.set(null);
     this.isLoggedIn.set(false);
     localStorage.removeItem(storagesConstantes.userSession);

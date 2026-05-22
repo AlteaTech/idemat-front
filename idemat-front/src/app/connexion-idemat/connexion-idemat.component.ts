@@ -38,7 +38,7 @@ export class ConnexionIdematComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.authService.logout();
+      this.authService.clearSession();
     }
     this.route.paramMap.subscribe(params => {
       const contrat = params.get('contrat');
