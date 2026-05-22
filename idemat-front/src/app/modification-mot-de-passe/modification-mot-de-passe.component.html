@@ -36,6 +36,10 @@
       </mat-form-field>
     </div>
 
+    @if (erreur()) {
+      <p class="erreur-msg">{{ erreur() }}</p>
+    }
+
     <button type="submit" class="btn-valider" [disabled]="form.invalid || enCours()">
       @if (enCours()) {
         <mat-spinner diameter="20" color="accent"></mat-spinner>

@@ -39,7 +39,8 @@ export class ModificationProfilComponent implements OnInit {
   readonly zonesJ1 = ZONES_J1;
 
   protected form = new FormGroup<ModificationProfilFormModel>({
-    nomPrenom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    nom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    prenom: new FormControl('', {nonNullable: true}),
     adresse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     telephone: new FormControl('', {nonNullable: true}),
     codePostal: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
@@ -60,12 +61,14 @@ export class ModificationProfilComponent implements OnInit {
       this.usager.set(usager);
       this.contrat.set(contrat);
       this.form.patchValue({
-        nomPrenom: `${usager.nom} ${usager.prenom}`,
+        nom: usager.nom ?? '',
+        prenom: usager.prenom ?? '',
         adresse: usager.adresse ?? '',
         telephone: usager.telephone ?? '',
         codePostal: usager.codePostal ?? '',
         ville: usager.ville ?? '',
       });
+      if (contrat.communes.length > 0) this.form.controls.codePostal.disable();
       if (contrat.demandeZoneJ1F3) {
         this.vehiculeForm.controls.zoneJ1.addValidators(Validators.required);
         this.vehiculeForm.controls.zoneF3.addValidators(Validators.required);
@@ -73,6 +76,11 @@ export class ModificationProfilComponent implements OnInit {
         this.vehiculeForm.controls.zoneF3.updateValueAndValidity();
       }
     });
+  }
+
+  protected onVilleChange(nom: string): void {
+    const commune = this.contrat()?.communes.find(c => c.nom === nom);
+    if (commune) this.form.controls.codePostal.setValue(commune.codePostal);
   }
 
   protected retour(): void {

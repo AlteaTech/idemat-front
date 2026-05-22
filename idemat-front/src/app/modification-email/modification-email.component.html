@@ -7,6 +7,16 @@
     <h1>Modifier l'e-mail</h1>
   </div>
 
+  @if (succes()) {
+    <div class="succes-bloc">
+      <mat-icon class="succes-icone">check_circle</mat-icon>
+      <h2 class="succes-titre">E-mail modifié</h2>
+      <p class="succes-texte">
+        Votre nouvel e-mail a bien été enregistré.<br>
+        Vous serez déconnecté dans <strong>{{ decompte() }}</strong> seconde{{ decompte() !== 1 ? 's' : '' }}.
+      </p>
+    </div>
+  } @else {
   <form class="contenu" [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="bloc">
@@ -31,4 +41,5 @@
     </button>
 
   </form>
+  }
 </div>

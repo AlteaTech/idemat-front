@@ -42,6 +42,8 @@
   .mdc-notched-outline__trailing { border-radius: 0 12px 12px 0 !important; }
 }
 
+.erreur-msg { font-size: 0.875rem; color: $error-color; margin: 0; }
+
 .btn-valider {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 14px 24px;

@@ -26,6 +26,7 @@ export class ConnexionIdematComponent implements OnInit {
 
   protected contrat = signal<string | null>(null);
   protected logoUrl = signal('');
+  protected nomContrat = signal('');
   protected enCours = signal(false);
   protected erreurLogin = signal(false);
   protected erreurMotdepasse = signal(false);
@@ -45,6 +46,7 @@ export class ConnexionIdematComponent implements OnInit {
       this.contrat.set(contrat);
       if (contrat) {
         this.contratService.getByUrl(contrat).subscribe(c => {
+          this.nomContrat.set(c.nom);
           if (c.logoBase64 && c.logoMime) {
             this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
           }

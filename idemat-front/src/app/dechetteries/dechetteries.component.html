@@ -16,6 +16,8 @@
           <span class="liste-item-nom">{{ d.nom }}</span>
           <mat-icon class="liste-item-chevron">chevron_right</mat-icon>
         </button>
+      } @empty {
+        <p class="liste-vide">Aucune déchetterie disponible pour votre contrat.</p>
       }
     </div>
   </div>

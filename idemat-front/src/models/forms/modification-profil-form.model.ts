@@ -1,7 +1,8 @@
 import {FormControl} from '@angular/forms';
 
 export interface ModificationProfilFormModel {
-  nomPrenom: FormControl<string>;
+  nom: FormControl<string>;
+  prenom: FormControl<string>;
   adresse: FormControl<string>;
   telephone: FormControl<string>;
   codePostal: FormControl<string>;

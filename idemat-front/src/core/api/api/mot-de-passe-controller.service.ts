@@ -17,7 +17,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { ResetPasswordIdmRequest } from '../model/reset-password-idm-request';
+import { ResetPasswordDioRequest } from '../model/reset-password-dio-request';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -37,16 +37,16 @@ export class MotDePasseControllerService extends BaseService {
 
     /**
      * @endpoint post /api/mot-de-passe
-     * @param resetPasswordIdmRequest 
+     * @param resetPasswordDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (resetPasswordIdmRequest === null || resetPasswordIdmRequest === undefined) {
-            throw new Error('Required parameter resetPasswordIdmRequest was null or undefined when calling demanderReset.');
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (resetPasswordDioRequest === null || resetPasswordDioRequest === undefined) {
+            throw new Error('Required parameter resetPasswordDioRequest was null or undefined when calling demanderReset.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -90,7 +90,7 @@ export class MotDePasseControllerService extends BaseService {
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: resetPasswordIdmRequest,
+                body: resetPasswordDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

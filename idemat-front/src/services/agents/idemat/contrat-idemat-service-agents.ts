@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
 import {ContratIdematModel} from '../../../models/idemat/contrat-idemat.model';
 import {ContratControllerService} from '../../../core/api/api/contrat-controller.service';
-import {ContratIdmResponse} from '../../../core/api/model/contrat-idm-response';
+import {ContratDio} from '../../../core/api/model/contrat-dio';
 
 @Injectable({providedIn: 'root'})
 export class ContratIdematServiceAgents {
@@ -16,7 +16,7 @@ export class ContratIdematServiceAgents {
     return this.contratService.getCurrent().pipe(map(r => this.toModel(r)));
   }
 
-  private toModel(r: ContratIdmResponse): ContratIdematModel {
+  private toModel(r: ContratDio): ContratIdematModel {
     const logoUrl = r.logoBase64 && r.logoMime
       ? `data:${r.logoMime};base64,${r.logoBase64}`
       : '';

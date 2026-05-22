@@ -22,6 +22,8 @@
       <div class="qr-container">
         @if (qrCodeUrl()) {
           <img [src]="qrCodeUrl()" alt="QR code d'accès" class="qr-image"/>
+        } @else {
+          <p class="no-carte">Aucune carte attribuée</p>
         }
       </div>
     </div>

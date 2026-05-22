@@ -43,6 +43,19 @@
   .mdc-notched-outline__trailing { border-radius: 0 12px 12px 0 !important; }
 }
 
+.succes-bloc {
+  max-width: 480px;
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 40px 24px;
+  box-shadow: $bloc-shadow;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  text-align: center;
+}
+.succes-icone { font-size: 56px; width: 56px; height: 56px; color: $primary-color; }
+.succes-titre { font-size: 1.3rem; font-weight: 700; color: $text-color-primary; margin: 0; }
+.succes-texte { font-size: 0.95rem; color: $text-color-secondary; line-height: 1.5; margin: 0; }
+
 .btn-valider {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   width: 100%; padding: 14px 24px;

@@ -17,13 +17,13 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { UpdateEmailIdmRequest } from '../model/update-email-idm-request';
+import { UpdateEmailDioRequest } from '../model/update-email-dio-request';
 // @ts-ignore
-import { UpdateMotDePasseIdmRequest } from '../model/update-mot-de-passe-idm-request';
+import { UpdateMotDePasseDioRequest } from '../model/update-mot-de-passe-dio-request';
 // @ts-ignore
-import { UpdateProfilIdmRequest } from '../model/update-profil-idm-request';
+import { UpdateProfilDioRequest } from '../model/update-profil-dio-request';
 // @ts-ignore
-import { UsagerMeIdmResponse } from '../model/usager-me-idm-response';
+import { UsagerMeDio } from '../model/usager-me-dio';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -98,9 +98,9 @@ export class UsagerControllerService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMe(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<UsagerMeIdmResponse>;
-    public getMe(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UsagerMeIdmResponse>>;
-    public getMe(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UsagerMeIdmResponse>>;
+    public getMe(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<UsagerMeDio>;
+    public getMe(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UsagerMeDio>>;
+    public getMe(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UsagerMeDio>>;
     public getMe(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
@@ -133,7 +133,7 @@ export class UsagerControllerService extends BaseService {
 
         let localVarPath = `/api/usager/me`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<UsagerMeIdmResponse>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<UsagerMeDio>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -148,16 +148,16 @@ export class UsagerControllerService extends BaseService {
 
     /**
      * @endpoint put /api/usager/email
-     * @param updateEmailIdmRequest 
+     * @param updateEmailDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateEmail(updateEmailIdmRequest: UpdateEmailIdmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public updateEmail(updateEmailIdmRequest: UpdateEmailIdmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public updateEmail(updateEmailIdmRequest: UpdateEmailIdmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public updateEmail(updateEmailIdmRequest: UpdateEmailIdmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (updateEmailIdmRequest === null || updateEmailIdmRequest === undefined) {
-            throw new Error('Required parameter updateEmailIdmRequest was null or undefined when calling updateEmail.');
+    public updateEmail(updateEmailDioRequest: UpdateEmailDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public updateEmail(updateEmailDioRequest: UpdateEmailDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public updateEmail(updateEmailDioRequest: UpdateEmailDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public updateEmail(updateEmailDioRequest: UpdateEmailDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (updateEmailDioRequest === null || updateEmailDioRequest === undefined) {
+            throw new Error('Required parameter updateEmailDioRequest was null or undefined when calling updateEmail.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -201,7 +201,7 @@ export class UsagerControllerService extends BaseService {
         return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateEmailIdmRequest,
+                body: updateEmailDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -214,16 +214,16 @@ export class UsagerControllerService extends BaseService {
 
     /**
      * @endpoint put /api/usager/mot-de-passe
-     * @param updateMotDePasseIdmRequest 
+     * @param updateMotDePasseDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateMotDePasse(updateMotDePasseIdmRequest: UpdateMotDePasseIdmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public updateMotDePasse(updateMotDePasseIdmRequest: UpdateMotDePasseIdmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public updateMotDePasse(updateMotDePasseIdmRequest: UpdateMotDePasseIdmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public updateMotDePasse(updateMotDePasseIdmRequest: UpdateMotDePasseIdmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (updateMotDePasseIdmRequest === null || updateMotDePasseIdmRequest === undefined) {
-            throw new Error('Required parameter updateMotDePasseIdmRequest was null or undefined when calling updateMotDePasse.');
+    public updateMotDePasse(updateMotDePasseDioRequest: UpdateMotDePasseDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public updateMotDePasse(updateMotDePasseDioRequest: UpdateMotDePasseDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public updateMotDePasse(updateMotDePasseDioRequest: UpdateMotDePasseDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public updateMotDePasse(updateMotDePasseDioRequest: UpdateMotDePasseDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (updateMotDePasseDioRequest === null || updateMotDePasseDioRequest === undefined) {
+            throw new Error('Required parameter updateMotDePasseDioRequest was null or undefined when calling updateMotDePasse.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -267,7 +267,7 @@ export class UsagerControllerService extends BaseService {
         return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateMotDePasseIdmRequest,
+                body: updateMotDePasseDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -280,16 +280,16 @@ export class UsagerControllerService extends BaseService {
 
     /**
      * @endpoint put /api/usager/profil
-     * @param updateProfilIdmRequest 
+     * @param updateProfilDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateProfil(updateProfilIdmRequest: UpdateProfilIdmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public updateProfil(updateProfilIdmRequest: UpdateProfilIdmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public updateProfil(updateProfilIdmRequest: UpdateProfilIdmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public updateProfil(updateProfilIdmRequest: UpdateProfilIdmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (updateProfilIdmRequest === null || updateProfilIdmRequest === undefined) {
-            throw new Error('Required parameter updateProfilIdmRequest was null or undefined when calling updateProfil.');
+    public updateProfil(updateProfilDioRequest: UpdateProfilDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public updateProfil(updateProfilDioRequest: UpdateProfilDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public updateProfil(updateProfilDioRequest: UpdateProfilDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public updateProfil(updateProfilDioRequest: UpdateProfilDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (updateProfilDioRequest === null || updateProfilDioRequest === undefined) {
+            throw new Error('Required parameter updateProfilDioRequest was null or undefined when calling updateProfil.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -333,7 +333,7 @@ export class UsagerControllerService extends BaseService {
         return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateProfilIdmRequest,
+                body: updateProfilDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

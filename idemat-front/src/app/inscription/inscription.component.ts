@@ -10,7 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 
 import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
 import {InscriptionControllerService} from '../../core/api/api/inscription-controller.service';
-import {ContratIdmResponse} from '../../core/api/model/contrat-idm-response';
+import {ContratDio} from '../../core/api/model/contrat-dio';
 import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {CIVILITES, ZONES_J1} from '../../constantes/inscription.constantes';
@@ -30,7 +30,7 @@ export class InscriptionComponent implements OnInit {
   private readonly contratService = inject(ContratControllerService);
   private readonly inscriptionService = inject(InscriptionControllerService);
 
-  protected contrat = signal<ContratIdmResponse | null>(null);
+  protected contrat = signal<ContratDio | null>(null);
   protected contratUrl = signal('');
   protected type = signal<TypeInscription>('Part');
   protected enCours = signal(false);
@@ -81,7 +81,10 @@ export class InscriptionComponent implements OnInit {
       this.type.set(typePath === 'professionnel' ? 'Pro' : 'Part');
       this.updateValidators();
       if (contratUrl) {
-        this.contratService.getByUrl(contratUrl).subscribe(c => this.contrat.set(c));
+        this.contratService.getByUrl(contratUrl).subscribe(c => {
+          this.contrat.set(c);
+          if (c.communes.length > 0) this.form.controls.codePostal.disable();
+        });
       }
     });
   }
@@ -104,6 +107,11 @@ export class InscriptionComponent implements OnInit {
       prenomCtrl.clearValidators();
     }
     [siretCtrl, societeCtrl, civiliteCtrl, prenomCtrl].forEach(c => c.updateValueAndValidity());
+  }
+
+  protected onVilleChange(nom: string): void {
+    const commune = this.contrat()?.communes.find(c => c.nom === nom);
+    if (commune) this.form.controls.codePostal.setValue(commune.codePostal);
   }
 
   protected retour(): void {
@@ -165,6 +173,7 @@ export class InscriptionComponent implements OnInit {
       undefined,
       raw.zoneJ1 || undefined,
       raw.zoneF3 ? Number(raw.zoneF3) : undefined,
+      raw.codePostal || undefined,
       this.fileCarteIdentite() ?? undefined,
       this.fileJustificatif() ?? undefined,
     ).subscribe({

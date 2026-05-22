@@ -63,10 +63,10 @@
           } @else {
             <span class="mobile-enseigne">{{ contrat()?.nomEnseigne }}</span>
           }
-          <div class="mobile-user">
+          <button class="mobile-user" (click)="naviguer(routesConstantes.informationsPersonnelles)">
             <mat-icon>person_outline</mat-icon>
             <span>{{ usager()?.prenom }}</span>
-          </div>
+          </button>
         </header>
       }
 

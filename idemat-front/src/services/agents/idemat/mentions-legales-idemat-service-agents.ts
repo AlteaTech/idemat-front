@@ -7,6 +7,6 @@ export class MentionsLegalesIdematServiceAgents {
   private readonly contratService = inject(ContratControllerService);
 
   getMentionsLegales(): Observable<string> {
-    return this.contratService.getMentionsLegales().pipe(map(r => r ?? ''));
+    return this.contratService.getMentionsLegales('body', false, {httpHeaderAccept: 'text/plain' as '*/*'}).pipe(map(r => r ?? ''));
   }
 }

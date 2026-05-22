@@ -161,21 +161,21 @@ Ne jamais lancer `git commit` ni `git push` sans que Ronald ait dit explicitemen
 
 Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>` en kebab-case.
 
-**Endpoints livrés (PR #177) :**
+**Endpoints livrés (PR #177 + PR #178 + feature/idemat-bloc2) :**
 | Route | Controller | Statut |
 |---|---|---|
-| `POST /api/inscription` | `InscriptionIdmController` | ✅ |
-| `POST /api/auth/login` | `AuthIdmController` | ✅ |
-| `POST /api/mot-de-passe` | `MotDePasseIdmController` | ✅ |
-
-**Endpoints à venir :**
-| Route | Controller |
-|---|---|
-| `GET /api/contrat/by-url/{url}` | `ContratIdmController` |
-| `GET /api/usager/me` | `UsagerIdmController` |
-| `GET /api/dechetterie` | `DechetterieIdmController` |
-| `GET /api/passage/info` | `PassageIdmController` |
-| `GET /api/achat-passage/options` | `AchatPassageIdmController` |
+| `POST /api/inscription` | `InscriptionController` | ✅ |
+| `POST /api/auth/login` | `AuthController` | ✅ |
+| `POST /api/mot-de-passe` | `MotDePasseController` | ✅ |
+| `GET /api/contrat/by-url/{url}` | `ContratController` | ✅ |
+| `GET /api/usager/me` | `UsagerController` | ✅ |
+| `PUT /api/usager/profil` | `UsagerController` | ✅ |
+| `PUT /api/usager/email` | `UsagerController` | ✅ |
+| `PUT /api/usager/mot-de-passe` | `UsagerController` | ✅ |
+| `GET /api/dechetterie` | `DechetterieController` | ✅ |
+| `GET /api/dechetterie/{id}` | `DechetterieController` | ✅ |
+| `POST /api/vehicule` | `VehiculeController` | ✅ |
+| `DELETE /api/vehicule/{immat}` | `VehiculeController` | ✅ |
 
 Branchement sur la vraie API = modifier uniquement `src/services/agents/idemat/` — zéro composant à toucher.
 

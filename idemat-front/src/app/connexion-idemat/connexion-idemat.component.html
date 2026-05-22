@@ -1,6 +1,8 @@
 <div class="page">
   @if (logoUrl()) {
     <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+  } @else if (nomContrat()) {
+    <p class="nom-contrat">{{ nomContrat() }}</p>
   }
 
   <div class="card">
@@ -42,10 +44,14 @@
 
       <hr class="separateur" />
 
-      <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
-      <button type="button" class="btn-inscription" (click)="onSInscrire()" [disabled]="!contrat()">
-        S'inscrire
-      </button>
+      @if (contrat()) {
+        <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
+        <button type="button" class="btn-inscription" (click)="onSInscrire()">
+          S'inscrire
+        </button>
+      } @else {
+        <p class="pas-de-compte">Pour créer un compte, utilisez le lien fourni par votre collectivité.</p>
+      }
 
     </form>
   </div>

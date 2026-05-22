@@ -53,3 +53,18 @@
 tr.ferme td { color: $icon-color-muted; }
 
 .chart-container { height: 120px; position: relative; }
+
+.chart-no-data {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8px;
+  pointer-events: none;
+  span {
+    font-size: 0.8rem;
+    color: $text-color-muted;
+    font-style: italic;
+  }
+}

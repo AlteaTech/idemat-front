@@ -42,6 +42,13 @@
   @media (max-width: 600px) { grid-template-columns: 1fr; }
 }
 
+.row-civ {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr;
+  gap: 0 16px;
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
 .full-width { width: 100%; }
 
 .row-cp-ville {

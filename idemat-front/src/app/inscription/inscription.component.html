@@ -34,8 +34,8 @@
             </div>
           }
 
-          <div class="row-2">
-            @if (type() === 'Part') {
+          @if (type() === 'Part') {
+            <div class="row-civ">
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Civilité</mat-label>
                 <mat-select formControlName="civilite">
@@ -45,20 +45,30 @@
                 </mat-select>
                 <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
-            }
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Nom, Prénom</mat-label>
-              <input matInput formControlName="nom" placeholder="ex. Dupont Julie" />
-              <mat-error>Champ obligatoire</mat-error>
-            </mat-form-field>
-            @if (type() === 'Pro') {
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="nom" placeholder="ex. Dupont" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="prenom" placeholder="ex. Julie" />
+              </mat-form-field>
+            </div>
+          } @else {
+            <div class="row-2">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nom du contact</mat-label>
+                <input matInput formControlName="nom" placeholder="ex. Dupont" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Prénom</mat-label>
                 <input matInput formControlName="prenom" placeholder="ex. Julie" />
                 <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
-            }
-          </div>
+            </div>
+          }
 
           <div class="row-2">
             <mat-form-field appearance="outline" class="full-width">
@@ -75,9 +85,9 @@
               @if (contrat()!.communes.length) {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Ville</mat-label>
-                  <mat-select formControlName="ville">
-                    @for (commune of contrat()!.communes; track commune) {
-                      <mat-option [value]="commune">{{ commune }}</mat-option>
+                  <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
+                    @for (commune of contrat()!.communes; track commune.nom) {
+                      <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
                     }
                   </mat-select>
                   <mat-error>Champ obligatoire</mat-error>

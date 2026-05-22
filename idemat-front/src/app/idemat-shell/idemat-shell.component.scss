@@ -128,5 +128,8 @@ $sidenav-width: 220px;
 .mobile-enseigne { color: $text-color-primary; font-weight: 700; font-size: 0.95rem; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mobile-user {
   display: flex; align-items: center; gap: 4px; color: $text-color-secondary; font-size: 0.85rem;
-  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  background: none; border: none; cursor: pointer; padding: 4px 8px;
+  border-radius: 8px; transition: background 0.15s, color 0.15s;
+  &:hover { background: $primary-color-background; color: $primary-color; mat-icon { color: $primary-color; } }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; transition: color 0.15s; }
 }

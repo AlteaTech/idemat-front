@@ -21,19 +21,24 @@
             <span class="bloc-titre">Informations personnelles</span>
           </div>
 
-          <!-- Ligne 1 : Nom, Prénom | Adresse -->
+          <!-- Ligne 1 : Nom | Prénom -->
           <div class="row-2">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Nom, Prénom</mat-label>
-              <input matInput formControlName="nomPrenom" placeholder="ex. Dupont Julie" />
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="nom" placeholder="ex. Dupont" />
               <mat-error>Champ obligatoire</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Adresse</mat-label>
-              <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
-              <mat-error>Champ obligatoire</mat-error>
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="prenom" placeholder="ex. Julie" />
             </mat-form-field>
           </div>
+          <!-- Ligne 2 : Adresse -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Adresse</mat-label>
+            <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
+            <mat-error>Champ obligatoire</mat-error>
+          </mat-form-field>
 
           <!-- Ligne 2 : Téléphone | Code postal | Ville -->
           <div class="row-tel">
@@ -49,9 +54,9 @@
             @if (contrat()!.communes.length) {
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Ville</mat-label>
-                <mat-select formControlName="ville">
-                  @for (commune of contrat()!.communes; track commune) {
-                    <mat-option [value]="commune">{{ commune }}</mat-option>
+                <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
+                  @for (commune of contrat()!.communes; track commune.nom) {
+                    <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
                   }
                 </mat-select>
                 <mat-error>Champ obligatoire</mat-error>

@@ -23,6 +23,7 @@ export class ModificationMotDePasseComponent {
   private readonly usagerService = inject(UsagerIdematServiceAgents);
 
   protected enCours = signal(false);
+  protected erreur = signal('');
 
   protected form = new FormGroup<ModificationMotDePasseFormModel>({
     ancienMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
@@ -37,10 +38,14 @@ export class ModificationMotDePasseComponent {
   protected onSubmit(): void {
     if (this.form.invalid) return;
     this.enCours.set(true);
+    this.erreur.set('');
     const {ancienMotDePasse, nouveauMotDePasse} = this.form.getRawValue();
     this.usagerService.updateMotDePasse(ancienMotDePasse, nouveauMotDePasse).subscribe({
       next: () => this.router.navigate(['/' + routesConstantes.parametresCompte]),
-      error: () => this.enCours.set(false),
+      error: (err) => {
+        this.enCours.set(false);
+        this.erreur.set(err?.error?.message ?? 'Une erreur est survenue, veuillez réessayer.');
+      },
     });
   }
 }
