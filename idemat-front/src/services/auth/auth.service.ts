@@ -29,7 +29,7 @@ export class AuthService {
 
   logout(): void {
     this.clearSession();
-    this.router.navigate(['/' + routesConstantes.login]);
+    this.router.navigate(['/' + routesConstantes.connexionIdemat]);
   }
 
   private clearSession(): void {
