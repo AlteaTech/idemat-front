@@ -17,7 +17,9 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { ResetPasswordIdmRequest } from '../model/reset-password-idm-request';
+import { LoginIdmRequest } from '../model/login-idm-request';
+// @ts-ignore
+import { LoginIdmResponse } from '../model/login-idm-response';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -29,24 +31,24 @@ import { BaseService } from '../api.base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MotDePasseControllerService extends BaseService {
+export class AuthIdmControllerService extends BaseService {
 
     constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string|string[], @Optional() configuration?: Configuration) {
         super(basePath, configuration);
     }
 
     /**
-     * @endpoint post /api/mot-de-passe
-     * @param resetPasswordIdmRequest 
+     * @endpoint post /api/auth/login
+     * @param loginIdmRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public demanderReset(resetPasswordIdmRequest: ResetPasswordIdmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (resetPasswordIdmRequest === null || resetPasswordIdmRequest === undefined) {
-            throw new Error('Required parameter resetPasswordIdmRequest was null or undefined when calling demanderReset.');
+    public login(loginIdmRequest: LoginIdmRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<LoginIdmResponse>;
+    public login(loginIdmRequest: LoginIdmRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<LoginIdmResponse>>;
+    public login(loginIdmRequest: LoginIdmRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<LoginIdmResponse>>;
+    public login(loginIdmRequest: LoginIdmRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (loginIdmRequest === null || loginIdmRequest === undefined) {
+            throw new Error('Required parameter loginIdmRequest was null or undefined when calling login.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -55,6 +57,7 @@ export class MotDePasseControllerService extends BaseService {
         localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            '*/*'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -85,12 +88,12 @@ export class MotDePasseControllerService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/mot-de-passe`;
+        let localVarPath = `/api/auth/login`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<LoginIdmResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: resetPasswordIdmRequest,
+                body: loginIdmRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
