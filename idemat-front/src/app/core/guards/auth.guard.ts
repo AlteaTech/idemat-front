@@ -5,8 +5,11 @@ import {routesConstantes} from '../../../constantes/routes.constantes';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const authService = inject(AuthService)
-  authService.restoreSession();
+  const authService = inject(AuthService);
+
+  if (!authService.isLoggedIn()) {
+    authService.restoreSession();
+  }
 
   if (authService.isLoggedIn()) {
     return true;
