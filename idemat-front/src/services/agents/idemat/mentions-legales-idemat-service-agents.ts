@@ -1,19 +1,12 @@
-import {Injectable} from '@angular/core';
-import {delay, Observable, of} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {ContratControllerService} from '../../../core/api/api/contrat-controller.service';
 
 @Injectable({providedIn: 'root'})
 export class MentionsLegalesIdematServiceAgents {
+  private readonly contratService = inject(ContratControllerService);
 
-  // TODO: remplacer par appel HTTP GET /api/idemat/contrat/mentions-legales
   getMentionsLegales(): Observable<string> {
-    return of(`
-      <p>Pour finaliser votre préinscription, vous devez accepter le règlement intérieur
-      de la déchetterie qui vous a été remis lors de votre passage en déchetterie.
-      Pour ce faire, acceptez les conditions générales.</p>
-      <p>Les informations recueillies font l'objet d'un traitement informatique destiné
-      à la gestion de votre accès aux déchetteries. Conformément à la loi Informatique
-      et Libertés, vous disposez d'un droit d'accès et de rectification aux informations
-      qui vous concernent.</p>
-    `).pipe(delay(300));
+    return this.contratService.getMentionsLegales().pipe(map(r => r ?? ''));
   }
 }

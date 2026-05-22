@@ -1,28 +1,36 @@
-import {Injectable} from '@angular/core';
-import {delay, Observable, of} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
 import {ContratIdematModel} from '../../../models/idemat/contrat-idemat.model';
+import {ContratControllerService} from '../../../core/api/api/contrat-controller.service';
+import {ContratIdmResponse} from '../../../core/api/model/contrat-idm-response';
 
 @Injectable({providedIn: 'root'})
 export class ContratIdematServiceAgents {
+  private readonly contratService = inject(ContratControllerService);
 
-  // TODO: remplacer par appel HTTP GET /api/idemat/contrat/by-url/{url}
   getContratByUrl(urlContrat: string): Observable<ContratIdematModel> {
-    return of({
-      idEnseigne: 'ENS001',
-      urlEnseigne: urlContrat,
-      nomEnseigne: 'Communauté de Communes Test',
-      logoUrl: '',
-      allowAchatPassages: true,
-      allowCarteDematerialisee: true,
-      allowCartePhysique: false,
-      allowImmatriculations: true,
-      demandeZoneJ1F3: false,
-      communes: ['Lyon', 'Villeurbanne', 'Bron', 'Vénissieux', 'Saint-Priest', 'Décines-Charpieu'],
-    }).pipe(delay(300));
+    return this.contratService.getByUrl(urlContrat).pipe(map(r => this.toModel(r)));
   }
 
-  // TODO: remplacer par appel HTTP GET /api/idemat/contrat/current (depuis le token JWT)
   getContratForCurrentUser(): Observable<ContratIdematModel> {
-    return this.getContratByUrl('test');
+    return this.contratService.getCurrent().pipe(map(r => this.toModel(r)));
+  }
+
+  private toModel(r: ContratIdmResponse): ContratIdematModel {
+    const logoUrl = r.logoBase64 && r.logoMime
+      ? `data:${r.logoMime};base64,${r.logoBase64}`
+      : '';
+    return {
+      idEnseigne: String(r.id),
+      urlEnseigne: r.urlIdemat,
+      nomEnseigne: r.nom,
+      logoUrl,
+      communes: r.communes,
+      allowCartePhysique: r.allowCartePhysique,
+      allowCarteDematerialisee: r.allowCarteDematerialisee,
+      allowImmatriculations: r.allowImmatriculations,
+      demandeZoneJ1F3: r.demandeZoneJ1F3,
+      allowAchatPassages: r.allowAchatPassages,
+    };
   }
 }
