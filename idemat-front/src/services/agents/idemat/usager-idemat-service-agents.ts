@@ -47,6 +47,10 @@ export class UsagerIdematServiceAgents {
     return this.vehiculeService.supprimerVehicule(immat);
   }
 
+  deleteAccount(): Observable<void> {
+    return this.usagerService.deleteAccount();
+  }
+
   demanderResetPassword(email: string): Observable<void> {
     return this.motDePasseService.demanderReset({courriel: email});
   }

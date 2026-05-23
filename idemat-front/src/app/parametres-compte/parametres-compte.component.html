@@ -45,9 +45,13 @@
     </div>
 
     <!-- SUPPRIMER LE COMPTE -->
-    <button class="btn-supprimer" (click)="supprimerCompte()">
-      <span>Supprimer le compte</span>
-      <mat-icon>chevron_right</mat-icon>
+    <button class="btn-supprimer" (click)="supprimerCompte()" [disabled]="enCours()">
+      @if (enCours()) {
+        <mat-progress-spinner diameter="20" mode="indeterminate" />
+      } @else {
+        <span>Supprimer le compte</span>
+        <mat-icon>chevron_right</mat-icon>
+      }
     </button>
     </div>
 
