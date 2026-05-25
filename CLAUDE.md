@@ -11,8 +11,9 @@ Backend correspondant : module `api-idemat` dans `../idbatv7/` (port 8101)
 
 ```bash
 cd idemat-front
-npm start       # Serveur dev sur :4201
-npm run build   # Build prod
+npm run generate-client-local   # Regénère les services Angular depuis l'OpenAPI local (:8101)
+npm start                        # Serveur dev sur :4200
+npm run build                    # Build prod
 ```
 
 ---
@@ -21,8 +22,9 @@ npm run build   # Build prod
 
 - Angular 20, **standalone components**, **OnPush**, **Signals**, **inject()**
 - Angular Material
-- Services agents **mockés** dans `src/services/agents/idemat/` — API backend IDemat pas encore connectée
-- Branchement sur la vraie API = modifier uniquement les fichiers `services/agents/idemat/`, zéro composant à toucher
+- Services agents dans `src/services/agents/idemat/` — **connectés à l'API réelle** (backend :8101)
+- Branchement/adaptation API = modifier uniquement ces fichiers, zéro composant à toucher
+- Icônes : SVG personnalisés dans `public/` (Gauche.svg, Droite.svg, Immatriculation.svg, Picto corbeille.svg, Picto crayon.svg, User.svg, Code barres.svg, Autres cartes.svg…). Pas de mat-icon sauf icônes dynamiques (nav shell, logout, badge)
 
 ---
 
@@ -176,12 +178,13 @@ Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>`
 | `GET /api/dechetterie/{id}` | `DechetterieController` | ✅ |
 | `POST /api/vehicule` | `VehiculeController` | ✅ |
 | `DELETE /api/vehicule/{immat}` | `VehiculeController` | ✅ |
+| `PUT /api/vehicule/{immat}` | `VehiculeController` | ❌ manquant — bloque le bouton "crayon" (ticket #182) |
 
-Branchement sur la vraie API = modifier uniquement `src/services/agents/idemat/` — zéro composant à toucher.
+Branchement/adaptation API = modifier uniquement `src/services/agents/idemat/` — zéro composant à toucher.
 
 ## Statut PR en cours
 
-- **PR #11** (`feature/idemat-portal-v1`) — portail v1 complet, en attente de review lead
+- **PR #11** (`feature/idemat-portal-v1`) — portail complet blocs 1 & 2 + refonte maquette, en attente de review lead
 
 ## Workflow git
 
