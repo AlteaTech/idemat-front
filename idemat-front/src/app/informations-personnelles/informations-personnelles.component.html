@@ -3,7 +3,7 @@
   <!-- TITRE -->
   <div class="page-title">
     <button class="btn-retour" (click)="retour()">
-      <mat-icon>arrow_back</mat-icon>
+      <img src="Gauche.svg" alt="" class="btn-retour-img" />
     </button>
     <h1>Mon compte</h1>
   </div>
@@ -12,18 +12,18 @@
   <div class="liste">
     <button class="liste-item" (click)="naviguer(routesConstantes.modificationProfil)">
       <span class="liste-item-label">Modifier le profil</span>
-      <mat-icon class="liste-item-chevron">chevron_right</mat-icon>
+      <img src="Droite.svg" alt="" class="liste-item-chevron-img" />
     </button>
     <button class="liste-item" (click)="naviguer(routesConstantes.parametresCompte)">
       <span class="liste-item-label">Paramètres du compte</span>
-      <mat-icon class="liste-item-chevron">chevron_right</mat-icon>
+      <img src="Droite.svg" alt="" class="liste-item-chevron-img" />
     </button>
   </div>
 
   <!-- DÉCONNEXION -->
   <button class="btn-deconnexion" (click)="deconnecter()">
     <span>Déconnexion</span>
-    <mat-icon>chevron_right</mat-icon>
+    <img src="Droite.svg" alt="" class="btn-chevron-img" />
   </button>
 
 </div>

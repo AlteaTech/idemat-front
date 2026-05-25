@@ -23,6 +23,8 @@
   mat-icon { font-size: 22px; width: 22px; height: 22px; }
 }
 
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
 .contenu {
   max-width: 480px;
   display: flex;
@@ -61,6 +63,8 @@
   mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 
+.btn-edit-img { width: 18px; height: 18px; object-fit: contain; }
+
 .separateur { border: none; border-top: 1px solid $border-color-light; margin: 8px 0; }
 
 .btn-supprimer {
@@ -75,3 +79,5 @@
   &:hover { opacity: 0.9; }
   mat-icon { font-size: 20px; width: 20px; height: 20px; }
 }
+
+.btn-chevron-img { width: 20px; height: 20px; object-fit: contain; filter: brightness(0) invert(1); }

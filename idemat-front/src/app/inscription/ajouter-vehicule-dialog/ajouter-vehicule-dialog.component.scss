@@ -1,0 +1,109 @@
+@use 'variables' as *;
+
+.dialog-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 480px;
+  background: $background-white;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+
+  .dialog-icon { color: $primary-color; font-size: 24px; width: 24px; height: 24px; }
+  .dialog-icon-img { width: 24px; height: 24px; object-fit: contain; }
+  .dialog-title { font-size: 1.3rem; font-weight: 700; color: $text-color-primary; margin: 0; }
+}
+
+.dialog-form { display: flex; flex-direction: column; gap: 16px; }
+
+.full-width { width: 100%; }
+
+.cg-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.cg-label { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
+
+.btn-cg {
+  display: flex; align-items: center; justify-content: center;
+  width: fit-content;
+  padding: 10px 24px;
+  background: $text-color-primary;
+  border: none; border-radius: 30px;
+  font-size: 0.9rem; font-weight: 600; font-family: inherit;
+  color: white; cursor: pointer; transition: opacity 0.15s;
+  &:hover { opacity: 0.9; }
+}
+
+.file-hidden { display: none; }
+
+.cg-placeholder { font-size: 0.85rem; color: $text-color-muted; text-align: center; font-style: italic; }
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  @media (max-width: 480px) { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.field-error { font-size: 0.75rem; color: $error-color; margin-top: -8px; margin-bottom: 4px; }
+
+.actions-row { display: flex; gap: 12px; margin-top: 12px; }
+
+.btn-annuler {
+  flex: 1;
+  background: $background-hover-neutral;
+  border: none; border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 0.95rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; color: $text-color-secondary; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+}
+
+.btn-valider {
+  flex: 1;
+  background: $primary-color; color: white;
+  border: none; border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 0.95rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  &:hover:not(:disabled) { background: $primary-color-darker; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+::ng-deep {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 16px !important;
+    .mdc-dialog__surface {
+      padding: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+  }
+
+  .mat-mdc-form-field {
+    margin-bottom: 4px;
+    .mdc-text-field--outlined { height: 44px !important; }
+    .mat-mdc-form-field-infix {
+      padding-top: 0 !important; padding-bottom: 0 !important;
+      min-height: 44px !important;
+      display: flex !important; align-items: center !important;
+    }
+    .mat-mdc-select { display: flex !important; align-items: center !important; }
+    .mdc-floating-label { top: 22px !important; transform: translateY(-50%) !important; }
+    .mdc-floating-label--float-above { top: 0px !important; transform: translateY(-50%) scale(0.75) !important; }
+    .mdc-notched-outline__leading { border-radius: 12px 0 0 12px !important; }
+    .mdc-notched-outline__trailing { border-radius: 0 12px 12px 0 !important; }
+  }
+}

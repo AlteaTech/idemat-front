@@ -47,7 +47,7 @@
         <div class="top-bar">
           <button class="top-bar-user" (click)="naviguer(routesConstantes.informationsPersonnelles)">
             {{ usager()?.prenom }} {{ usager()?.nom }}
-            <mat-icon>person_outline</mat-icon>
+            <img src="User.svg" alt="" class="top-bar-user-icon" />
           </button>
         </div>
       }
@@ -64,7 +64,7 @@
             <span class="mobile-enseigne">{{ contrat()?.nomEnseigne }}</span>
           }
           <button class="mobile-user" (click)="naviguer(routesConstantes.informationsPersonnelles)">
-            <mat-icon>person_outline</mat-icon>
+            <img src="User.svg" alt="" class="mobile-user-icon" />
             <span>{{ usager()?.prenom }}</span>
           </button>
         </header>

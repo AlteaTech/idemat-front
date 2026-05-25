@@ -1,7 +1,7 @@
 <div class="page-container">
   <div class="page-title">
     <button type="button" class="btn-retour" (click)="retour()">
-      <mat-icon>arrow_back</mat-icon>
+      <img src="Gauche.svg" alt="" class="btn-retour-img" />
     </button>
     <h1>Modifier mon profil</h1>
   </div>
@@ -33,7 +33,8 @@
               <input matInput formControlName="prenom" placeholder="ex. Julie" />
             </mat-form-field>
           </div>
-          <!-- Ligne 2 : Adresse -->
+
+          <!-- Ligne 2 : Adresse pleine largeur -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Adresse</mat-label>
             <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
@@ -71,84 +72,29 @@
           </div>
         </div>
 
-        <!-- Bloc Véhicules enregistrés (conditionnel) -->
-        @if (contrat()!.allowImmatriculations && usager()!.immatriculations?.length) {
+        <!-- Bloc Véhicules enregistrés (conditionnel sur allowImmatriculations) -->
+        @if (contrat()!.allowImmatriculations) {
           <div class="bloc">
             <div class="bloc-header">
-              <mat-icon class="bloc-icon">directions_car</mat-icon>
+              <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
               <span class="bloc-titre">Véhicules enregistrés</span>
             </div>
-            @for (immat of usager()!.immatriculations!; track immat) {
+
+            @for (immat of usager()!.immatriculations ?? []; track immat) {
               <div class="vehicule-item">
+                <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(immat)" title="Supprimer">
+                  <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
+                </button>
                 <span class="vehicule-immat">{{ immat }}</span>
-                <button type="button" class="btn-supprimer-vehicule" (click)="onSupprimerVehicule(immat)" title="Supprimer">
-                  <mat-icon>delete</mat-icon>
+                <button type="button" class="btn-vehicule-action" title="Modifier">
+                  <img src="Picto crayon.svg" alt="Modifier" class="btn-vehicule-img" />
                 </button>
               </div>
             }
-          </div>
-        }
 
-        <!-- Bloc Ajouter un véhicule (conditionnel) -->
-        @if (contrat()!.allowImmatriculations) {
-          <div class="bloc" [formGroup]="vehiculeForm">
-            <!-- Ligne titre en grid : titre col gauche, "Carte grise" col droite -->
-            <div class="row-2 row-vehicule-header">
-              <div class="bloc-header">
-                <mat-icon class="bloc-icon">directions_car</mat-icon>
-                <span class="bloc-titre">Ajouter un véhicule</span>
-              </div>
-              <span class="field-label">Carte grise</span>
-            </div>
-
-            <!-- Ligne saisie : champ col gauche, bouton centré col droite -->
-            <div class="row-2">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Immatriculation du véhicule</mat-label>
-                <input matInput formControlName="immatriculation" placeholder="ex. AB-123-CD" />
-                <mat-error>Champ obligatoire</mat-error>
-              </mat-form-field>
-              <div class="file-picker file-picker-align">
-                <label class="btn-carte-grise" for="carteGriseInput">Ajouter la carte grise</label>
-                <input type="file" id="carteGriseInput" accept=".pdf,.jpg,.jpeg,.gif,.png"
-                       class="file-input-hidden" (change)="onFileSelected($event)" />
-                <span class="file-placeholder">{{ selectedFile()?.name ?? 'Aucun fichier sélectionné' }}</span>
-              </div>
-            </div>
-            @if (erreurCG()) {
-              <span class="field-error">Vous devez joindre votre carte grise</span>
-            }
-
-            <button
-              type="button"
-              class="btn-ajouter-vehicule"
-              [disabled]="vehiculeForm.invalid || ajoutEnCours()"
-              (click)="onAjouterVehicule()">
-              @if (ajoutEnCours()) {
-                <mat-progress-spinner diameter="16" mode="indeterminate" />
-              }
+            <button type="button" class="btn-ajouter-vehicule" (click)="onOuvrirDialogVehicule()">
               Ajouter le véhicule
             </button>
-
-            @if (contrat()!.demandeZoneJ1F3) {
-              <div class="row-2">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Zone J.1 (genre national)</mat-label>
-                  <mat-select formControlName="zoneJ1">
-                    @for (zone of zonesJ1; track zone) {
-                      <mat-option [value]="zone">{{ zone }}</mat-option>
-                    }
-                  </mat-select>
-                  <mat-error>Champ obligatoire</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Zone F.3 (poids en kg)</mat-label>
-                  <input matInput formControlName="zoneF3" type="text" inputmode="numeric"
-                         placeholder="ex. 1200" />
-                  <mat-error>Nombre entier requis</mat-error>
-                </mat-form-field>
-              </div>
-            }
           </div>
         }
 

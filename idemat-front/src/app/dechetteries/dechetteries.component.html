@@ -6,7 +6,7 @@
   <div class="page-container">
     <div class="page-title">
       <button class="btn-retour" (click)="retour()">
-        <mat-icon>arrow_back</mat-icon>
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
       </button>
       <h1>Déchetteries</h1>
     </div>
@@ -14,7 +14,7 @@
       @for (d of dechetteries(); track d.id) {
         <button class="liste-item" (click)="voirDetail(d.id)">
           <span class="liste-item-nom">{{ d.nom }}</span>
-          <mat-icon class="liste-item-chevron">chevron_right</mat-icon>
+          <img src="Droite.svg" alt="" class="liste-item-chevron-img" />
         </button>
       } @empty {
         <p class="liste-vide">Aucune déchetterie disponible pour votre contrat.</p>

@@ -86,8 +86,11 @@ export class ConnexionIdematComponent implements OnInit {
   }
 
   protected onMotDePasseOublie(): void {
-    // TODO #122 : naviguer vers l'écran mot de passe oublié IDemat
-    this.router.navigate(['/' + routesConstantes.motDePasseOublie]);
+    const contrat = this.contrat();
+    const path = contrat
+      ? `/${routesConstantes.motDePasseOublie}/${contrat}`
+      : `/${routesConstantes.motDePasseOublie}`;
+    this.router.navigate([path]);
   }
 
   protected onSInscrire(): void {

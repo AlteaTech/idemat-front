@@ -7,15 +7,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialog} from '@angular/material/dialog';
 
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
-import {ZONES_J1} from '../../constantes/inscription.constantes';
 import {ModificationProfilFormModel} from '../../models/forms/modification-profil-form.model';
-import {VehiculeFormModel} from '../../models/forms/vehicule-form.model';
+import {AjouterVehiculeDialogComponent, AjouterVehiculeDialogResult} from '../inscription/ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 
 @Component({
   selector: 'app-modification-profil',
@@ -28,15 +28,11 @@ export class ModificationProfilComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly contratService = inject(ContratIdematServiceAgents);
+  private readonly dialog = inject(MatDialog);
 
   protected usager = signal<UsagerIdematModel | null>(null);
   protected contrat = signal<ContratIdematModel | null>(null);
   protected enCours = signal(false);
-  protected ajoutEnCours = signal(false);
-  protected erreurCG = signal(false);
-  protected selectedFile = signal<File | null>(null);
-
-  readonly zonesJ1 = ZONES_J1;
 
   protected form = new FormGroup<ModificationProfilFormModel>({
     nom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
@@ -45,12 +41,6 @@ export class ModificationProfilComponent implements OnInit {
     telephone: new FormControl('', {nonNullable: true}),
     codePostal: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     ville: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-  });
-
-  protected vehiculeForm = new FormGroup<VehiculeFormModel>({
-    immatriculation: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    zoneJ1: new FormControl('', {nonNullable: true}),
-    zoneF3: new FormControl('', {nonNullable: true, validators: [Validators.pattern('^[0-9]+$')]}),
   });
 
   ngOnInit(): void {
@@ -69,12 +59,6 @@ export class ModificationProfilComponent implements OnInit {
         ville: usager.ville ?? '',
       });
       if (contrat.communes.length > 0) this.form.controls.codePostal.disable();
-      if (contrat.demandeZoneJ1F3) {
-        this.vehiculeForm.controls.zoneJ1.addValidators(Validators.required);
-        this.vehiculeForm.controls.zoneF3.addValidators(Validators.required);
-        this.vehiculeForm.controls.zoneJ1.updateValueAndValidity();
-        this.vehiculeForm.controls.zoneF3.updateValueAndValidity();
-      }
     });
   }
 
@@ -96,43 +80,29 @@ export class ModificationProfilComponent implements OnInit {
     });
   }
 
-  protected onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.selectedFile.set(input.files?.[0] ?? null);
-    this.erreurCG.set(false);
-  }
-
-  protected onAjouterVehicule(): void {
-    if (this.vehiculeForm.invalid) return;
-    if (!this.selectedFile()) {
-      this.erreurCG.set(true);
-      return;
-    }
-    this.ajoutEnCours.set(true);
-    const {immatriculation, zoneJ1, zoneF3} = this.vehiculeForm.getRawValue();
-    const demandeZoneJ1F3 = this.contrat()?.demandeZoneJ1F3;
-    this.usagerService.addVehicule(
-      immatriculation,
-      this.selectedFile()!,
-      demandeZoneJ1F3 ? zoneJ1 : undefined,
-      demandeZoneJ1F3 && zoneF3 ? Number(zoneF3) : undefined,
-    ).subscribe({
-      next: () => {
-        const immatLabel = demandeZoneJ1F3 && zoneJ1 && zoneF3
-          ? `${immatriculation} (${zoneJ1}-${zoneF3} kg)`
-          : immatriculation;
-        const current = this.usager()!;
-        this.usager.set({...current, immatriculations: [...(current.immatriculations ?? []), immatLabel]});
-        this.vehiculeForm.reset();
-        this.selectedFile.set(null);
-        this.ajoutEnCours.set(false);
-      },
-      error: () => this.ajoutEnCours.set(false),
+  protected onOuvrirDialogVehicule(): void {
+    const ref = this.dialog.open(AjouterVehiculeDialogComponent, {
+      data: {contrat: this.contrat()!, isPro: false},
+    });
+    ref.afterClosed().subscribe((result: AjouterVehiculeDialogResult | undefined) => {
+      if (!result || !result.fileCarteGrise) return;
+      this.usagerService.addVehicule(
+        result.immatriculation,
+        result.fileCarteGrise,
+        result.zoneJ1 || undefined,
+        result.zoneF3 ? Number(result.zoneF3) : undefined,
+      ).subscribe({
+        next: () => {
+          const current = this.usager()!;
+          this.usager.set({...current, immatriculations: [...(current.immatriculations ?? []), result.label]});
+        },
+      });
     });
   }
 
   protected onSupprimerVehicule(immat: string): void {
-    this.usagerService.deleteVehicule(immat).subscribe({
+    const immatKey = immat.split(' (')[0];
+    this.usagerService.deleteVehicule(immatKey).subscribe({
       next: () => {
         const current = this.usager()!;
         this.usager.set({

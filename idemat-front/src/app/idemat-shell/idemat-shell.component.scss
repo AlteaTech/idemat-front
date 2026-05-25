@@ -89,13 +89,13 @@ $sidenav-width: 220px;
   display: flex;
   flex-direction: column;
   background-color: $background-page;
-  router-outlet ~ * { flex: 1; overflow: auto; }
+  overflow-x: hidden !important;
+  router-outlet ~ * { flex: 1; overflow-y: auto; }
 }
 
 .top-bar {
   height: 52px;
-  background: $background-white;
-  border-bottom: 1px solid $border-color-light;
+  background: transparent;
   display: flex; justify-content: flex-end; align-items: center;
   padding: 0 28px; flex-shrink: 0;
 }
@@ -107,6 +107,10 @@ $sidenav-width: 220px;
   border-radius: 8px; transition: background 0.15s, color 0.15s;
   mat-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; transition: color 0.15s; }
   &:hover { background: $primary-color-background; color: $primary-color; mat-icon { color: $primary-color; } }
+}
+
+.top-bar-user-icon {
+  width: 20px; height: 20px; object-fit: contain;
 }
 
 .mobile-header {
@@ -132,4 +136,8 @@ $sidenav-width: 220px;
   border-radius: 8px; transition: background 0.15s, color 0.15s;
   &:hover { background: $primary-color-background; color: $primary-color; mat-icon { color: $primary-color; } }
   mat-icon { font-size: 18px; width: 18px; height: 18px; transition: color 0.15s; }
+}
+
+.mobile-user-icon {
+  width: 18px; height: 18px; object-fit: contain;
 }

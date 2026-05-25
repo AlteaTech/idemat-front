@@ -20,6 +20,8 @@
   mat-icon { font-size: 22px; width: 22px; height: 22px; }
 }
 
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
 .loading { display: flex; justify-content: center; padding: 60px 0; }
 
 .contenu { max-width: 720px; display: flex; flex-direction: column; gap: 16px; }
@@ -33,6 +35,7 @@
 
 .bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.bloc-icon-img { width: 20px; height: 20px; object-fit: contain; }
 .bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
 
 .row-2 {
@@ -42,50 +45,51 @@
   @media (max-width: 600px) { grid-template-columns: 1fr; }
 }
 
-.row-civ {
-  display: grid;
-  grid-template-columns: 150px 1fr 1fr;
-  gap: 0 16px;
-  @media (max-width: 600px) { grid-template-columns: 1fr; }
-}
-
 .full-width { width: 100%; }
 
-.row-cp-ville {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 0 12px;
-  align-items: start;
-  @media (max-width: 600px) { grid-template-columns: 1fr; }
-}
+.label-optionnel { font-size: 0.75rem; color: $text-color-muted; font-weight: 400; }
 
 .field-label { font-size: 0.8rem; color: $text-color-muted; }
 .field-error { font-size: 0.75rem; color: $error-color; margin-top: 4px; }
 
-// Toggles carte d'accès / mentions légales
 .toggle-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Pousse AUTOMATIQUEMENT le toggle au bout à droite */
+  width: 50%;                     /* Aligne strictement les deux fins de ligne à la moitié du bloc */
+  box-sizing: border-box;
+  gap: 16px;                      /* Espace de sécurité minimal (uniquement si l'écran devient minuscule) */
   padding: 8px 0;
   border-bottom: 1px solid $border-color-light;
-  &:last-child { border-bottom: none; }
+  
+  &:last-child { 
+    border-bottom: none; 
+  }
+
+  mat-slide-toggle {
+    flex-shrink: 0;
+  }
 }
 
-.toggle-label { font-size: 0.9rem; color: $text-color-secondary; }
+.toggle-fixe {
+  opacity: 0.35;
+}
+
+.toggle-label { 
+  font-size: 0.9rem; 
+  color: $text-color-secondary; 
+  flex: 1;                        /* Prend tout l'espace disponible à gauche */
+  min-width: 0;                   /* Force le texte à accepter de se réduire */
+  white-space: normal;            /* Autorise le passage à la ligne sous le texte long si nécessaire */
+}
+.toggle-label--bold { font-weight: 700; }
 
 // Véhicules
-.vehicule-header {
-  align-items: center;
-  .bloc-header { margin-bottom: 12px; }
-}
-
-.row-vehicule { align-items: start; margin-bottom: 4px; }
-
 .vehicule-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
   padding: 8px 0;
   border-bottom: 1px solid $border-color-light;
   &:last-child { border-bottom: none; }
@@ -93,52 +97,58 @@
 
 .vehicule-immat { font-weight: 600; color: $text-color-primary; font-size: 0.9rem; }
 
-.btn-supprimer-vehicule {
+.btn-vehicule-icon {
   background: none; border: none; cursor: pointer;
-  color: $error-color; padding: 4px; border-radius: 4px;
+  padding: 4px; border-radius: 4px;
   transition: background 0.15s; display: flex; align-items: center;
-  &:hover { background: $error-background; }
   mat-icon { font-size: 20px; width: 20px; height: 20px; }
 }
 
+.btn-vehicule-img { width: 20px; height: 20px; object-fit: contain; }
+
+.btn-supprimer-vehicule {
+  color: $error-color;
+  &:hover { background: $error-background; }
+}
+
 // File pickers
-.file-picker {
+.file-section {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 16px;
   padding-bottom: 12px;
 }
 
-.file-picker-align { align-self: start; height: 44px; }
-
 .btn-file {
-  display: inline-flex; align-items: center;
-  padding: 8px 16px;
-  background: $background-white;
-  border: 1px solid $border-color-medium;
-  border-radius: 6px;
-  font-size: 0.85rem; font-weight: 500; font-family: inherit;
-  color: $text-color-primary; cursor: pointer;
-  transition: background 0.15s; white-space: nowrap;
-  &:hover { background: $background-hover; }
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 calc(50% - 8px);
+  box-sizing: border-box;
+  padding: 14px 20px;
+  background: $text-color-primary;
+  border: none;
+  border-radius: 30px;
+  font-size: 0.9rem; font-weight: 700; font-family: inherit;
+  color: white; cursor: pointer;
+  transition: opacity 0.15s; white-space: nowrap;
+  &:hover { opacity: 0.85; }
 }
 
 .file-hidden { display: none; }
 
 .file-placeholder {
-  font-size: 0.8rem; color: $text-color-muted;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 160px;
+  font-size: 0.85rem; color: $text-color-muted;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
 .btn-ajouter-vehicule {
   display: flex; align-items: center; justify-content: center;
   width: calc(50% - 8px);
+  box-sizing: border-box;
   background: $text-color-primary; color: white;
-  border: none; border-radius: 8px;
-  padding: 12px 20px; font-size: 0.9rem; font-weight: 600; font-family: inherit;
+  border: none; border-radius: 30px;
+  padding: 14px 20px; font-size: 0.9rem; font-weight: 700; font-family: inherit;
   cursor: pointer; transition: opacity 0.15s;
-  margin-top: -12px; margin-bottom: 12px;
+  margin-top: 8px; margin-bottom: 4px;
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
@@ -152,6 +162,8 @@
 
 // Bouton envoi
 ::ng-deep {
+  .mat-mdc-slide-toggle .mdc-label { display: none !important; }
+
   .mat-mdc-form-field {
     .mdc-text-field--outlined { height: 44px !important; }
     .mat-mdc-form-field-infix {

@@ -22,6 +22,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   private readonly contratService = inject(ContratIdematServiceAgents);
 
   protected logoUrl = signal('');
+  protected nomContrat = signal('');
   protected enCours = signal(false);
   protected succes = signal(false);
   protected erreurEmail = signal(false);
@@ -36,6 +37,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
       if (contrat) {
         this.contratService.getContratByUrl(contrat).subscribe(c => {
           this.logoUrl.set(c.logoUrl);
+          this.nomContrat.set(c.nomEnseigne);
         });
       }
     });

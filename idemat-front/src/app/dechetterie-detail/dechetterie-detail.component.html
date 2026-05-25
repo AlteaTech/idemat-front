@@ -8,7 +8,7 @@
     <!-- TITRE -->
     <div class="page-title">
       <button class="btn-retour" (click)="retour()">
-        <mat-icon>arrow_back</mat-icon>
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
       </button>
       <h1>{{ dechetterie()!.nom }}</h1>
     </div>
@@ -30,37 +30,15 @@
     </div>
 
     <!-- HORAIRES -->
-    <div class="bloc">
-      <div class="bloc-header">
-        <mat-icon class="bloc-icon">schedule</mat-icon>
-        <span class="bloc-titre">Horaires</span>
+    @if (dechetterie()!.horaires) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <mat-icon class="bloc-icon">schedule</mat-icon>
+          <span class="bloc-titre">Horaires</span>
+        </div>
+        <p class="horaires-texte">{{ dechetterie()!.horaires }}</p>
       </div>
-      <table class="horaires-table">
-        @for (jour of jours; track jour) {
-          <tr [class.ferme]="!dechetterie()!.horaires[jour].ouvert">
-            <td class="jour-nom">{{ joursLabels[jour] }}</td>
-            <td class="plage">{{ dechetterie()!.horaires[jour].matin }}</td>
-            <td class="plage">{{ dechetterie()!.horaires[jour].apresMidi }}</td>
-          </tr>
-        }
-      </table>
-    </div>
-
-    <!-- AFFLUENCE -->
-    <div class="bloc">
-      <div class="bloc-header">
-        <mat-icon class="bloc-icon">show_chart</mat-icon>
-        <span class="bloc-titre">Affluence</span>
-      </div>
-      <div class="chart-container">
-        <canvas #chartCanvas></canvas>
-        @if (!dechetterie()!.affluence.length) {
-          <div class="chart-no-data">
-            <span>Aucune donnée d'affluence disponible</span>
-          </div>
-        }
-      </div>
-    </div>
+    }
 
   </div>
 }

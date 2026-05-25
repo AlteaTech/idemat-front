@@ -12,10 +12,18 @@ export class UsagerIdematServiceAgents {
   private readonly motDePasseService = inject(MotDePasseIdmControllerService);
 
   getUsager(): Observable<UsagerIdematModel> {
-    return this.usagerService.getMe().pipe(map(r => ({
+    return this.usagerService.getMe().pipe(map(r => {
+      let nom = r.nom ?? '';
+      let prenom = r.prenom ?? '';
+      if (!prenom && nom.includes(' ')) {
+        const idx = nom.indexOf(' ');
+        prenom = nom.slice(idx + 1);
+        nom = nom.slice(0, idx);
+      }
+      return {
       guid: String(r.id),
-      nom: r.nom ?? '',
-      prenom: r.prenom ?? '',
+      nom,
+      prenom,
       email: r.courriel,
       telephone: r.telephone,
       adresse: r.adresse,
@@ -24,7 +32,8 @@ export class UsagerIdematServiceAgents {
       hasChangedPassword: r.hasChangedPassword,
       codeBarres: r.codeBarres,
       immatriculations: r.immatriculations,
-    })));
+      };
+    }));
   }
 
   updateProfil(data: ProfilIdematUpdateModel): Observable<void> {

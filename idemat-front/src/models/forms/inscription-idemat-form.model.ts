@@ -3,10 +3,12 @@ import {FormControl} from '@angular/forms';
 export interface InscriptionIdematFormModel {
   societe: FormControl<string>;
   siret: FormControl<string>;
-  civilite: FormControl<string>;
   nom: FormControl<string>;
   prenom: FormControl<string>;
+  deuxiemeNom: FormControl<string>;
+  deuxiemePrenom: FormControl<string>;
   adresse: FormControl<string>;
+  complementAdresse: FormControl<string>;
   codePostal: FormControl<string>;
   ville: FormControl<string>;
   email: FormControl<string>;
@@ -14,7 +16,4 @@ export interface InscriptionIdematFormModel {
   cartePhysique: FormControl<boolean>;
   carteDematerialisee: FormControl<boolean>;
   mentionsLegales: FormControl<boolean>;
-  immatriculation: FormControl<string>;
-  zoneJ1: FormControl<string>;
-  zoneF3: FormControl<string>;
 }

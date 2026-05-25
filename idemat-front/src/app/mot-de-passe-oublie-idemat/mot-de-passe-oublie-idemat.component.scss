@@ -15,12 +15,18 @@
 }
 
 .logo {
-  position: absolute;
-  top: 28px;
-  left: 32px;
-  height: 48px;
+  height: 80px;
   width: auto;
   object-fit: contain;
+  margin-bottom: 24px;
+}
+
+.nom-contrat {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 28px;
+  text-align: center;
 }
 
 .card {

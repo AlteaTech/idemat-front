@@ -46,7 +46,9 @@ export class InscriptionControllerService extends BaseService {
      * @param cartePhysique 
      * @param carteDematerialisee 
      * @param mentionsLegales 
-     * @param civilite 
+     * @param deuxiemeNom 
+     * @param deuxiemePrenom 
+     * @param complementAdresse 
      * @param societe 
      * @param siret 
      * @param immatriculation 
@@ -59,10 +61,10 @@ export class InscriptionControllerService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, civilite?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, civilite?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, civilite?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, civilite?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (type === null || type === undefined) {
             throw new Error('Required parameter type was null or undefined when calling inscrire.');
         }
@@ -121,7 +123,11 @@ export class InscriptionControllerService extends BaseService {
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>mentionsLegales, 'mentionsLegales');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>civilite, 'civilite');
+          <any>deuxiemeNom, 'deuxiemeNom');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>deuxiemePrenom, 'deuxiemePrenom');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>complementAdresse, 'complementAdresse');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>societe, 'societe');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,

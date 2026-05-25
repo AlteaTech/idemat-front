@@ -23,6 +23,8 @@
   mat-icon { font-size: 22px; width: 22px; height: 22px; }
 }
 
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
 .contenu {
   background: $background-white;
   border-radius: $bloc-border-radius;

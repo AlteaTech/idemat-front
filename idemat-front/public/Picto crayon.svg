@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_151" data-name="Rectangle 151" width="20" height="20" transform="translate(-0.121)" fill="#f2664f"/>
+    </clipPath>
+  </defs>
+  <g id="Picto_crayon" data-name="Picto crayon" transform="translate(-433.629 -589)">
+    <g id="Groupe_de_masques_56" data-name="Groupe de masques 56" transform="translate(433.75 589)" clip-path="url(#clip-path)">
+      <path id="stylus_24dp_E8EAED_FILL0_wght200_GRAD0_opsz24" d="M6.657-6.653a.962.962,0,0,1-.923-.271.962.962,0,0,1-.271-.923l.851-4.117,4.46,4.46-4.117.851ZM10.774-7.5l-4.46-4.46L20.208-25.858a1.952,1.952,0,0,1,1.437-.581,1.952,1.952,0,0,1,1.437.581l1.586,1.586a1.952,1.952,0,0,1,.581,1.437,1.952,1.952,0,0,1-.581,1.437ZM21.11-24.963,8.34-12.217,11.027-9.53,23.773-22.3a.742.742,0,0,0,.219-.547.742.742,0,0,0-.219-.547L22.2-24.963a.742.742,0,0,0-.547-.219A.742.742,0,0,0,21.11-24.963Z" transform="translate(-5.439 26.507)" fill="#f2664f"/>
+    </g>
+  </g>
+</svg>

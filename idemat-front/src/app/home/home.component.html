@@ -5,30 +5,36 @@
 } @else {
   <div class="home-container">
 
-    <!-- TITRE -->
     <h1 class="bienvenue">Bienvenue {{ usager()?.prenom }} {{ usager()?.nom }}</h1>
 
-    <!-- GRILLE DE TUILES -->
-    <div class="tuiles-grid">
-      @for (tuile of tuiles(); track tuile.route) {
-        <button class="tuile" (click)="naviguer(tuile.route)">
-          <div class="tuile-texte">
-            <span class="tuile-label">{{ tuile.label }}</span>
-            <span class="tuile-subtitle">{{ tuile.subtitle }}</span>
-          </div>
-          <mat-icon class="tuile-icon">{{ tuile.icon }}</mat-icon>
-        </button>
-      }
-    </div>
-
-    <!-- BOUTON CARTE D'ACCÈS -->
     @if (showCarteAcces()) {
-      <button class="btn-acces" (click)="naviguer(routesConstantes.carteAcces)">
-        <div class="btn-acces-inner">
-          <mat-icon class="acces-icon">qr_code_2</mat-icon>
-          <span class="acces-label">Accès</span>
+      <div class="cards-wrapper">
+
+        <!-- Carte d'accès avec QR code -->
+        <div class="card-acces">
+          <div class="card-header">
+            <img src="Code barres.svg" alt="" class="card-icon-img" />
+            <span class="card-titre">Carte d'accès</span>
+          </div>
+          @if (qrCodeUrl()) {
+            <img [src]="qrCodeUrl()" alt="QR Code" class="qr-img" />
+          } @else {
+            <p class="no-qr">Aucun code-barres associé à votre compte</p>
+          }
         </div>
-      </button>
+
+        <!-- Voir tous mes accès -->
+        <div class="card-voir-acces" role="button" tabindex="0"
+             (click)="naviguer(routesConstantes.carteAcces)"
+             (keydown.enter)="naviguer(routesConstantes.carteAcces)">
+          <div class="voir-acces-content">
+            <img src="Autres cartes.svg" alt="" class="voir-acces-img" />
+            <span class="voir-acces-label">Voir tous mes accès</span>
+          </div>
+          <img src="Droite.svg" alt="" class="voir-acces-chevron-img" />
+        </div>
+
+      </div>
     }
 
   </div>

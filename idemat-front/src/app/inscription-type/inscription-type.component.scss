@@ -2,76 +2,67 @@
 
 :host { display: flex; flex: 1; min-height: 100vh; }
 
-.page {
+.overlay {
   flex: 1;
   min-height: 100vh;
-  background: #{$primary-gradient};
+  background: #808080;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  padding: 80px 20px 40px;
+  padding: 20px;
 }
 
-.logo {
-  position: absolute;
-  top: 28px; left: 32px;
-  height: 48px; width: auto; object-fit: contain;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 24px;
-  padding: 32px 40px;
+.popup {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px 28px;
   width: 100%;
   max-width: 320px;
-}
-
-.entete {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.btn-retour {
-  background: none; border: none; color: white;
-  font-size: 1.4rem; cursor: pointer; padding: 0;
-  flex-shrink: 0;
-  &:hover { opacity: 0.8; }
+  flex-direction: column;
+  gap: 0;
 }
 
 .titre {
-  color: white;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  margin: 0;
+  color: $text-color-primary;
+  margin: 0 0 20px;
 }
 
-.separateur {
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.45);
-  margin-bottom: 24px;
-}
-
-.choix {
+.toggle-row {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid $border-color-light;
+
+  &:last-of-type { border-bottom: none; }
 }
 
-.btn-choix {
-  background: white;
-  color: $primary-color;
+.toggle-label {
+  font-size: 1rem;
+  color: $text-color-primary;
+}
+
+.btn-valider {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  background: $text-color-primary;
+  color: white;
   border: none;
   border-radius: 30px;
-  padding: 14px 24px;
   font-size: 1rem;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  width: 100%;
   transition: opacity 0.15s;
-  &:hover { opacity: 0.9; }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover { opacity: 0.85; }
 }

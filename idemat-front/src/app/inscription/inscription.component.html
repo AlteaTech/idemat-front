@@ -1,7 +1,7 @@
 <div class="page-container">
   <div class="page-title">
     <button type="button" class="btn-retour" (click)="retour()">
-      <mat-icon>arrow_back</mat-icon>
+      <img src="Gauche.svg" alt="" class="btn-retour-img" />
     </button>
     <h1>Inscription {{ type() === 'Pro' ? 'professionnel' : 'particulier' }}</h1>
   </div>
@@ -15,7 +15,7 @@
         <!-- Informations personnelles -->
         <div class="bloc">
           <div class="bloc-header">
-            <mat-icon class="bloc-icon">badge</mat-icon>
+            <mat-icon class="bloc-icon">person</mat-icon>
             <span class="bloc-titre">Informations personnelles</span>
           </div>
 
@@ -34,38 +34,28 @@
             </div>
           }
 
+          <div class="row-2">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ type() === 'Pro' ? 'Nom du contact' : 'Nom' }}</mat-label>
+              <input matInput formControlName="nom" placeholder="ex. Dupont" />
+              <mat-error>Champ obligatoire</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="prenom" placeholder="ex. Julie" />
+              <mat-error>Champ obligatoire</mat-error>
+            </mat-form-field>
+          </div>
+
           @if (type() === 'Part') {
-            <div class="row-civ">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Civilité</mat-label>
-                <mat-select formControlName="civilite">
-                  @for (c of civilites; track c) {
-                    <mat-option [value]="c">{{ c }}</mat-option>
-                  }
-                </mat-select>
-                <mat-error>Champ obligatoire</mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nom</mat-label>
-                <input matInput formControlName="nom" placeholder="ex. Dupont" />
-                <mat-error>Champ obligatoire</mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Prénom</mat-label>
-                <input matInput formControlName="prenom" placeholder="ex. Julie" />
-              </mat-form-field>
-            </div>
-          } @else {
             <div class="row-2">
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nom du contact</mat-label>
-                <input matInput formControlName="nom" placeholder="ex. Dupont" />
-                <mat-error>Champ obligatoire</mat-error>
+                <mat-label>Deuxième nom <span class="label-optionnel">(optionnel)</span></mat-label>
+                <input matInput formControlName="deuxiemeNom" placeholder="ex. Dupont" />
               </mat-form-field>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Prénom</mat-label>
-                <input matInput formControlName="prenom" placeholder="ex. Julie" />
-                <mat-error>Champ obligatoire</mat-error>
+                <mat-label>Deuxième prénom <span class="label-optionnel">(optionnel)</span></mat-label>
+                <input matInput formControlName="deuxiemePrenom" placeholder="ex. Julie" />
               </mat-form-field>
             </div>
           }
@@ -76,30 +66,34 @@
               <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
               <mat-error>Champ obligatoire</mat-error>
             </mat-form-field>
-            <div class="row-cp-ville">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Complément d'adresse <span class="label-optionnel">(optionnel)</span></mat-label>
+              <input matInput formControlName="complementAdresse" placeholder="ex. Bât. B, apt. 12" />
+            </mat-form-field>
+          </div>
+
+          <div class="row-2">
+            @if (contrat()!.communes.length) {
               <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Code postal</mat-label>
-                <input matInput formControlName="codePostal" placeholder="ex. 75000" />
+                <mat-label>Ville</mat-label>
+                <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
+                  @for (commune of contrat()!.communes; track commune.nom) {
+                    <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
+                  }
+                </mat-select>
                 <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
-              @if (contrat()!.communes.length) {
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Ville</mat-label>
-                  <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
-                    @for (commune of contrat()!.communes; track commune.nom) {
-                      <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
-                    }
-                  </mat-select>
-                  <mat-error>Champ obligatoire</mat-error>
-                </mat-form-field>
-              } @else {
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Ville</mat-label>
-                  <input matInput formControlName="ville" placeholder="ex. Paris" />
-                  <mat-error>Champ obligatoire</mat-error>
-                </mat-form-field>
-              }
-            </div>
+            } @else {
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ville</mat-label>
+                <input matInput formControlName="ville" placeholder="ex. Paris" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+            }
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Téléphone <span class="label-optionnel">(optionnel)</span></mat-label>
+              <input matInput formControlName="telephone" type="tel" placeholder="ex. 06 00 00 00 00" />
+            </mat-form-field>
           </div>
 
           <div class="row-2">
@@ -108,10 +102,7 @@
               <input matInput formControlName="email" type="email" placeholder="ex. adresse@mail.com" />
               <mat-error>E-mail invalide</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Téléphone <span class="label-optionnel">(optionnel)</span></mat-label>
-              <input matInput formControlName="telephone" type="tel" placeholder="ex. 06 00 00 00 00" />
-            </mat-form-field>
+            <div></div>
           </div>
           @if (erreurEmail()) {
             <p class="field-error">{{ erreurEmail() }}</p>
@@ -134,65 +125,53 @@
             @if (contrat()!.allowCarteDematerialisee) {
               <div class="toggle-row">
                 <span class="toggle-label">Dématérialisée</span>
-                <mat-slide-toggle formControlName="carteDematerialisee" color="primary" />
+                <mat-slide-toggle formControlName="carteDematerialisee" color="primary" inert class="toggle-fixe" />
               </div>
             }
           </div>
         }
 
-        <!-- Ajouter un véhicule -->
+        <!-- Véhicules -->
         @if (contrat()!.allowImmatriculations) {
           <div class="bloc">
-            <div class="row-2 vehicule-header">
-              <div class="bloc-header">
-                <mat-icon class="bloc-icon">directions_car</mat-icon>
-                <span class="bloc-titre">Ajouter un véhicule</span>
-              </div>
-              <span class="field-label">Carte grise</span>
+            <div class="bloc-header">
+              <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
+              <span class="bloc-titre">Véhicules</span>
             </div>
 
-            @if (immatriculations().length) {
-              @for (immat of immatriculations(); track immat) {
+            @if (vehicules().length) {
+              @for (vehicule of vehicules(); track vehicule) {
                 <div class="vehicule-item">
-                  <span class="vehicule-immat">{{ immat }}</span>
-                  <button type="button" class="btn-supprimer-vehicule" (click)="onSupprimerVehicule(immat)">
-                    <mat-icon>delete</mat-icon>
+                  <button type="button" class="btn-vehicule-icon btn-supprimer-vehicule" (click)="onSupprimerVehicule(vehicule)">
+                    <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
                   </button>
+                  <span class="vehicule-immat">{{ vehicule.label }}</span>
                 </div>
               }
             }
 
-            <div class="row-2 row-vehicule">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Immatriculation du véhicule</mat-label>
-                <input matInput formControlName="immatriculation" placeholder="ex. AB-123-CD" />
-              </mat-form-field>
-              <div class="file-picker file-picker-align">
-                <label class="btn-file" for="inputCG">Ajouter la carte grise</label>
-                <input type="file" id="inputCG" accept=".pdf,.jpg,.jpeg,.gif,.png"
-                       class="file-hidden" (change)="onFileChange($event, 'cg')" />
-                <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
-              </div>
-            </div>
-
-            @if (contrat()!.demandeZoneJ1F3) {
-              <div class="row-2">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Zone J.1</mat-label>
-                  <mat-select formControlName="zoneJ1">
-                    @for (z of zonesJ1; track z) { <mat-option [value]="z">{{ z }}</mat-option> }
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Zone F.3 (kg)</mat-label>
-                  <input matInput formControlName="zoneF3" inputmode="numeric" />
-                </mat-form-field>
-              </div>
-            }
-
             <button type="button" class="btn-ajouter-vehicule" (click)="onAjouterVehicule()">
-              Ajouter le véhicule
+              Ajouter un véhicule
             </button>
+          </div>
+        }
+
+        <!-- Kbis (professionnel) -->
+        @if (type() === 'Pro') {
+          <div class="bloc">
+            <div class="bloc-header">
+              <mat-icon class="bloc-icon">description</mat-icon>
+              <span class="bloc-titre">Kbis</span>
+            </div>
+            <div class="file-section">
+              <label class="btn-file" for="inputKbis">Ajouter le Kbis</label>
+              <input type="file" id="inputKbis" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                     class="file-hidden" (change)="onFileChange($event, 'kbis')" />
+              <span class="file-placeholder">{{ fileKbis()?.name ?? 'Aucun fichier sélectionné' }}</span>
+            </div>
+            @if (erreurKbis()) {
+              <p class="field-error">Vous devez joindre votre Kbis</p>
+            }
           </div>
         }
 
@@ -203,7 +182,7 @@
               <mat-icon class="bloc-icon">badge</mat-icon>
               <span class="bloc-titre">Carte d'identité</span>
             </div>
-            <div class="file-picker">
+            <div class="file-section">
               <label class="btn-file" for="inputCI">Ajouter la carte</label>
               <input type="file" id="inputCI" accept=".pdf,.jpg,.jpeg,.gif,.png"
                      class="file-hidden" (change)="onFileChange($event, 'ci')" />
@@ -220,7 +199,7 @@
               <mat-icon class="bloc-icon">home</mat-icon>
               <span class="bloc-titre">Justificatif de domicile</span>
             </div>
-            <div class="file-picker">
+            <div class="file-section">
               <label class="btn-file" for="inputJD">Ajouter le justificatif</label>
               <input type="file" id="inputJD" accept=".pdf,.jpg,.jpeg,.gif,.png"
                      class="file-hidden" (change)="onFileChange($event, 'jd')" />
@@ -244,7 +223,7 @@
             Pour ce faire, acceptez les conditions générales.
           </p>
           <div class="toggle-row">
-            <span class="toggle-label">J'ai lu et accepté les conditions générales</span>
+            <span class="toggle-label toggle-label--bold">J'ai lu et accepté les<br>conditions générales</span>
             <mat-slide-toggle formControlName="mentionsLegales" color="primary" />
           </div>
         </div>

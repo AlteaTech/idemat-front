@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
 import {routesConstantes} from '../../constantes/routes.constantes';
@@ -7,7 +8,7 @@ import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 
 @Component({
   selector: 'app-inscription-type',
-  imports: [],
+  imports: [MatSlideToggleModule],
   templateUrl: './inscription-type.component.html',
   styleUrl: './inscription-type.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,6 +20,7 @@ export class InscriptionTypeComponent implements OnInit {
 
   protected contrat = signal<string | null>(null);
   protected logoUrl = signal('');
+  protected typeSelectionne = signal<TypeInscription | null>(null);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -34,9 +36,14 @@ export class InscriptionTypeComponent implements OnInit {
     });
   }
 
-  protected choisir(type: TypeInscription): void {
+  protected onToggle(type: TypeInscription, checked: boolean): void {
+    this.typeSelectionne.set(checked ? type : null);
+  }
+
+  protected valider(): void {
+    const type = this.typeSelectionne();
     const contrat = this.contrat();
-    if (!contrat) return;
+    if (!type || !contrat) return;
     const typePath = type === 'Part' ? 'particulier' : 'professionnel';
     this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}/${typePath}`]);
   }

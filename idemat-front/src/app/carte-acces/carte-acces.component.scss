@@ -23,6 +23,8 @@
   mat-icon { font-size: 22px; width: 22px; height: 22px; }
 }
 
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
 .bloc {
   background: $background-white;
   border-radius: $bloc-border-radius;
@@ -34,6 +36,7 @@
 
 .bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
 .bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.bloc-icon-img { width: 20px; height: 20px; object-fit: contain; }
 .bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
 
 .qr-container { display: flex; justify-content: center; padding: 8px 0 4px; }

@@ -21,6 +21,8 @@
   mat-icon { font-size: 22px; width: 22px; height: 22px; }
 }
 
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
 .contenu { max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
 
 .bloc {

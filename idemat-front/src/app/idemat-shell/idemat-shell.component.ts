@@ -69,7 +69,7 @@ export class IdematShellComponent implements OnInit {
   private buildLiens(contrat: ContratIdematModel): LienNav[] {
     return [
       {icon: 'home', label: 'Accueil', route: routesConstantes.home, visible: true},
-      {icon: 'qr_code_2', label: 'Ma carte d\'accès', route: routesConstantes.carteAcces, visible: contrat.allowCarteDematerialisee},
+      {icon: 'qr_code_2', label: 'Mes accès', route: routesConstantes.carteAcces, visible: contrat.allowCarteDematerialisee},
       {icon: 'delete_outline', label: 'Déchetteries', route: routesConstantes.dechetteries, visible: true},
       {icon: 'bar_chart', label: 'Mes passages & points', route: routesConstantes.consultationSolde, visible: true},
       {icon: 'add_circle_outline', label: 'Recharger mon compte', route: routesConstantes.achatPassages, visible: contrat.allowAchatPassages},

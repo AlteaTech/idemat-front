@@ -1,6 +1,8 @@
 <div class="page">
   @if (logoUrl()) {
     <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+  } @else if (nomContrat()) {
+    <p class="nom-contrat">{{ nomContrat() }}</p>
   }
 
   <div class="card">

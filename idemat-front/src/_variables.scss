@@ -39,6 +39,8 @@ $chart-bar-empty: #e8e8e8;
 $bloc-border-radius: 12px;
 $bloc-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 $primary-color-glow: rgba($primary-color, 0.3);
+$primary-color-glow-light: rgba($primary-color, 0.25);
+$shadow-card-hover: rgba(0, 0, 0, 0.12);
 
 // Écran connexion SSO (schéma propre à cet écran)
 $connexion-gradient: linear-gradient(135deg, #fca5a5 0%, #f87171 50%, #fdba74 100%);

@@ -23,6 +23,8 @@
   mat-icon { font-size: 22px; width: 22px; height: 22px; }
 }
 
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
 .bloc {
   background: $background-white;
   border-radius: $bloc-border-radius;
@@ -40,17 +42,13 @@
 .adresse-label { font-size: 0.75rem; font-weight: 700; color: $text-color-muted; text-transform: uppercase; letter-spacing: 0.3px; }
 .adresse-valeur { font-size: 0.9rem; color: $text-color-secondary; }
 
-.horaires-table {
-  width: 100%;
-  border-collapse: collapse;
-  tr { border-bottom: 1px solid $border-color-light; }
-  tr:last-child { border-bottom: none; }
-  td { padding: 8px 0; font-size: 0.88rem; color: $text-color-secondary; }
-  .jour-nom { font-weight: 600; width: 90px; color: $text-color-primary; }
-  .plage { padding-right: 16px; }
+.horaires-texte {
+  font-size: 0.88rem;
+  color: $text-color-secondary;
+  white-space: pre-line;
+  margin: 0;
+  line-height: 1.7;
 }
-
-tr.ferme td { color: $icon-color-muted; }
 
 .chart-container { height: 120px; position: relative; }
 
