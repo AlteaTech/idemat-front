@@ -159,6 +159,7 @@
   cursor: pointer; transition: opacity 0.15s;
   margin-top: 8px; margin-bottom: 4px;
   &:hover { opacity: 0.85; }
+  @media (max-width: 600px) { width: 100%; }
 }
 
 .btn-valider {

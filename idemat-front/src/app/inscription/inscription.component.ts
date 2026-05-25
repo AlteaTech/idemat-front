@@ -117,7 +117,8 @@ export class InscriptionComponent implements OnInit {
   protected onAjouterVehicule(): void {
     const dialogRef = this.dialog.open(AjouterVehiculeDialogComponent, {
       data: {contrat: this.contrat()!, isPro: this.type() === 'Pro'},
-      width: '480px',
+      width: '95vw',
+      maxWidth: '480px',
     });
     dialogRef.afterClosed().subscribe((result: AjouterVehiculeDialogResult | undefined) => {
       if (result) this.vehicules.update(list => [...list, result]);

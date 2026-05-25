@@ -85,6 +85,8 @@ export class ModificationProfilComponent implements OnInit {
   protected onOuvrirDialogVehicule(): void {
     const ref = this.dialog.open(AjouterVehiculeDialogComponent, {
       data: {contrat: this.contrat()!, isPro: this.usager()!.isPro},
+      width: '95vw',
+      maxWidth: '480px',
     });
     ref.afterClosed().subscribe((result: AjouterVehiculeDialogResult | undefined) => {
       if (!result) return;
@@ -110,6 +112,8 @@ export class ModificationProfilComponent implements OnInit {
   protected onModifierVehicule(vehicule: VehiculeIdematModel): void {
     const ref = this.dialog.open(ModifierVehiculeDialogComponent, {
       data: {vehicule, contrat: this.contrat()!, isPro: this.usager()!.isPro},
+      width: '95vw',
+      maxWidth: '480px',
     });
     ref.afterClosed().subscribe((result: ModifierVehiculeDialogResult | undefined) => {
       if (!result) return;
