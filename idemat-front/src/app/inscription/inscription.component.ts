@@ -10,7 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 
 import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
-import {InscriptionControllerService} from '../../core/api/api/inscription-controller.service';
+import {InscriptionIdematServiceAgents, VehiculeInscriptionParam} from '../../services/agents/idemat/inscription-idemat-service-agents';
 import {ContratDio} from '../../core/api/model/contrat-dio';
 import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
@@ -29,7 +29,7 @@ export class InscriptionComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly contratService = inject(ContratControllerService);
-  private readonly inscriptionService = inject(InscriptionControllerService);
+  private readonly inscriptionService = inject(InscriptionIdematServiceAgents);
   private readonly dialog = inject(MatDialog);
 
   protected contrat = signal<ContratDio | null>(null);
@@ -146,26 +146,33 @@ export class InscriptionComponent implements OnInit {
 
     this.enCours.set(true);
     const raw = this.form.getRawValue();
-    const premierVehicule = this.vehicules()[0];
-    this.inscriptionService.inscrire(
-      this.type(), this.contratUrl(),
-      raw.nom, raw.prenom,
-      raw.adresse, raw.ville,
-      raw.email, raw.telephone,
-      raw.cartePhysique, raw.carteDematerialisee, raw.mentionsLegales,
-      raw.deuxiemeNom || undefined,
-      raw.deuxiemePrenom || undefined,
-      raw.complementAdresse || undefined,
-      raw.societe || undefined,
-      raw.siret || undefined,
-      premierVehicule?.immatriculation || undefined,
-      premierVehicule?.zoneJ1 || undefined,
-      premierVehicule?.zoneF3 ? Number(premierVehicule.zoneF3) : undefined,
-      raw.codePostal || undefined,
-      isPart ? (this.fileCarteIdentite() ?? undefined) : (this.fileKbis() ?? undefined),
-      isPart ? (this.fileJustificatif() ?? undefined) : undefined,
-      premierVehicule?.fileCarteGrise ?? undefined,
-    ).subscribe({
+    this.inscriptionService.inscrire({
+      type: this.type(),
+      contratUrl: this.contratUrl(),
+      nom: raw.nom,
+      prenom: raw.prenom,
+      adresse: raw.adresse,
+      ville: raw.ville,
+      email: raw.email,
+      telephone: raw.telephone,
+      cartePhysique: raw.cartePhysique,
+      carteDematerialisee: raw.carteDematerialisee,
+      mentionsLegales: raw.mentionsLegales,
+      deuxiemeNom: raw.deuxiemeNom || undefined,
+      deuxiemePrenom: raw.deuxiemePrenom || undefined,
+      complementAdresse: raw.complementAdresse || undefined,
+      societe: raw.societe || undefined,
+      siret: raw.siret || undefined,
+      vehicules: this.vehicules().length ? this.vehicules().map((v): VehiculeInscriptionParam => ({
+        immatriculation: v.immatriculation,
+        zoneJ1: v.zoneJ1 || undefined,
+        zoneF3: v.zoneF3 || undefined,
+      })) : undefined,
+      codePostal: raw.codePostal || undefined,
+      carteIdentite: isPart ? (this.fileCarteIdentite() ?? undefined) : undefined,
+      justificatifDomicile: isPart ? (this.fileJustificatif() ?? undefined) : undefined,
+      kbis: isPro ? (this.fileKbis() ?? undefined) : undefined,
+    }).subscribe({
       next: () => this.router.navigate(['/' + routesConstantes.demandeOk]),
       error: (err) => {
         this.enCours.set(false);

@@ -21,11 +21,13 @@ model/dechetterie-dio.ts
 model/login-dio-request.ts
 model/login-dio.ts
 model/models.ts
+model/modifier-vehicule-dio-request.ts
 model/reset-password-dio-request.ts
 model/update-email-dio-request.ts
 model/update-mot-de-passe-dio-request.ts
 model/update-profil-dio-request.ts
 model/usager-me-dio.ts
+model/vehicule-dio.ts
 param.ts
 provide-api.ts
 variables.ts

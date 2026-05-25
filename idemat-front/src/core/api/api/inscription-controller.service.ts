@@ -51,20 +51,21 @@ export class InscriptionControllerService extends BaseService {
      * @param complementAdresse 
      * @param societe 
      * @param siret 
-     * @param immatriculation 
-     * @param zoneJ1 
-     * @param zoneF3 
+     * @param immatriculations 
+     * @param zonesJ1 
+     * @param zonesF3 
      * @param codePostal 
      * @param carteIdentite 
      * @param justificatifDomicile 
      * @param carteGrise 
+     * @param kbis 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculation?: string, zoneJ1?: string, zoneF3?: number, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, kbis?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, kbis?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, kbis?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, ville: string, courriel: string, telephone: string, cartePhysique: boolean, carteDematerialisee: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, codePostal?: string, carteIdentite?: Blob, justificatifDomicile?: Blob, carteGrise?: Blob, kbis?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (type === null || type === undefined) {
             throw new Error('Required parameter type was null or undefined when calling inscrire.');
         }
@@ -132,12 +133,24 @@ export class InscriptionControllerService extends BaseService {
           <any>societe, 'societe');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>siret, 'siret');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>immatriculation, 'immatriculation');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>zoneJ1, 'zoneJ1');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>zoneF3, 'zoneF3');
+        if (immatriculations) {
+            immatriculations.forEach((element) => {
+                localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+                  <any>element, 'immatriculations');
+            })
+        }
+        if (zonesJ1) {
+            zonesJ1.forEach((element) => {
+                localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+                  <any>element, 'zonesJ1');
+            })
+        }
+        if (zonesF3) {
+            zonesF3.forEach((element) => {
+                localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+                  <any>element, 'zonesF3');
+            })
+        }
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>codePostal, 'codePostal');
 
@@ -175,6 +188,9 @@ export class InscriptionControllerService extends BaseService {
         // use FormData to transmit files using content-type "multipart/form-data"
         // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
         localVarUseForm = canConsumeForm;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        localVarUseForm = canConsumeForm;
         if (localVarUseForm) {
             localVarFormParams = new FormData();
         } else {
@@ -189,6 +205,9 @@ export class InscriptionControllerService extends BaseService {
         }
         if (carteGrise !== undefined) {
             localVarFormParams = localVarFormParams.append('carteGrise', <any>carteGrise) as any || localVarFormParams;
+        }
+        if (kbis !== undefined) {
+            localVarFormParams = localVarFormParams.append('kbis', <any>kbis) as any || localVarFormParams;
         }
 
         let responseType_: 'text' | 'json' | 'blob' = 'json';

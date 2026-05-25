@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { VehiculeDio } from './vehicule-dio';
 
 
 export interface UsagerMeDio { 
@@ -20,6 +21,7 @@ export interface UsagerMeDio {
     ville?: string;
     hasChangedPassword: boolean;
     codeBarres?: string;
-    immatriculations: Array<string>;
+    vehicules: Array<VehiculeDio>;
+    isPro: boolean;
 }
 

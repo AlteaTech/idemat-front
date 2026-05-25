@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
 import {ProfilIdematUpdateModel, UsagerIdematModel} from '../../../models/idemat/usager-idemat.model';
+import {VehiculeIdematModel} from '../../../models/idemat/vehicule-idemat.model';
 import {UsagerControllerService} from '../../../core/api/api/usager-controller.service';
 import {VehiculeControllerService} from '../../../core/api/api/vehicule-controller.service';
 import {MotDePasseIdmControllerService} from '../../../core/api/api/mot-de-passe-idm-controller.service';
@@ -21,17 +22,22 @@ export class UsagerIdematServiceAgents {
         nom = nom.slice(0, idx);
       }
       return {
-      guid: String(r.id),
-      nom,
-      prenom,
-      email: r.courriel,
-      telephone: r.telephone,
-      adresse: r.adresse,
-      codePostal: r.codePostal,
-      ville: r.ville,
-      hasChangedPassword: r.hasChangedPassword,
-      codeBarres: r.codeBarres,
-      immatriculations: r.immatriculations,
+        guid: String(r.id),
+        nom,
+        prenom,
+        email: r.courriel,
+        telephone: r.telephone,
+        adresse: r.adresse,
+        codePostal: r.codePostal,
+        ville: r.ville,
+        hasChangedPassword: r.hasChangedPassword,
+        codeBarres: r.codeBarres,
+        isPro: r.isPro,
+        vehicules: r.vehicules.map((v): VehiculeIdematModel => ({
+          immatriculation: v.immatriculation,
+          zoneJ1: v.zoneJ1 ?? undefined,
+          zoneF3: v.zoneF3 ?? undefined,
+        })),
       };
     }));
   }
@@ -48,8 +54,12 @@ export class UsagerIdematServiceAgents {
     return this.usagerService.updateMotDePasse({ancienMotDePasse, nouveauMotDePasse});
   }
 
-  addVehicule(immat: string, carteGrise: File, zoneJ1?: string, zoneF3?: number): Observable<void> {
-    return this.vehiculeService.ajouterVehicule(immat, zoneJ1, zoneF3, carteGrise);
+  addVehicule(immat: string, carteGrise?: File | null, zoneJ1?: string, zoneF3?: number): Observable<void> {
+    return this.vehiculeService.ajouterVehicule(immat, zoneJ1, zoneF3, carteGrise ?? undefined);
+  }
+
+  updateVehicule(immatriculation: string, nouvelleImmatriculation: string, zoneJ1?: string, zoneF3?: number): Observable<void> {
+    return this.vehiculeService.modifierVehicule(immatriculation, {nouvelleImmatriculation, zoneJ1, zoneF3});
   }
 
   deleteVehicule(immat: string): Observable<void> {

@@ -7,6 +7,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {ContratDio} from '../../../core/api/model/contrat-dio';
 import {ZONES_J1} from '../../../constantes/inscription.constantes';
+import {VehiculeFormModel} from '../../../models/forms/vehicule-form.model';
 
 interface AjouterVehiculeDialogData {
   contrat: ContratDio;
@@ -38,7 +39,7 @@ export class AjouterVehiculeDialogComponent {
 
   readonly zonesJ1 = ZONES_J1;
 
-  protected form = new FormGroup({
+  protected form = new FormGroup<VehiculeFormModel>({
     immatriculation: new FormControl(this.data.immatriculation ?? '', {nonNullable: true, validators: [Validators.required]}),
     zoneJ1: new FormControl('', {nonNullable: true}),
     zoneF3: new FormControl('', {nonNullable: true, validators: [Validators.pattern('^[0-9]+$')]}),
@@ -56,10 +57,6 @@ export class AjouterVehiculeDialogComponent {
   protected onConfirmer(): void {
     if (this.form.invalid) return;
     const {immatriculation, zoneJ1, zoneF3} = this.form.getRawValue();
-    if (this.showZones && !this.fileCarteGrise()) {
-      this.erreurFichier.set(true);
-      return;
-    }
     const label = this.showZones && zoneJ1 && zoneF3
       ? `${immatriculation} (${zoneJ1}-${zoneF3} kg)`
       : immatriculation;

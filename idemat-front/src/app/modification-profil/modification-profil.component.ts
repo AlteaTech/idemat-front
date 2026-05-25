@@ -12,10 +12,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
+import {VehiculeIdematModel} from '../../models/idemat/vehicule-idemat.model';
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {ModificationProfilFormModel} from '../../models/forms/modification-profil-form.model';
 import {AjouterVehiculeDialogComponent, AjouterVehiculeDialogResult} from '../inscription/ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
+import {ModifierVehiculeDialogComponent, ModifierVehiculeDialogResult} from './modifier-vehicule-dialog/modifier-vehicule-dialog.component';
 
 @Component({
   selector: 'app-modification-profil',
@@ -82,32 +84,66 @@ export class ModificationProfilComponent implements OnInit {
 
   protected onOuvrirDialogVehicule(): void {
     const ref = this.dialog.open(AjouterVehiculeDialogComponent, {
-      data: {contrat: this.contrat()!, isPro: false},
+      data: {contrat: this.contrat()!, isPro: this.usager()!.isPro},
     });
     ref.afterClosed().subscribe((result: AjouterVehiculeDialogResult | undefined) => {
-      if (!result || !result.fileCarteGrise) return;
+      if (!result) return;
       this.usagerService.addVehicule(
         result.immatriculation,
-        result.fileCarteGrise,
+        result.fileCarteGrise ?? undefined,
         result.zoneJ1 || undefined,
         result.zoneF3 ? Number(result.zoneF3) : undefined,
       ).subscribe({
         next: () => {
           const current = this.usager()!;
-          this.usager.set({...current, immatriculations: [...(current.immatriculations ?? []), result.label]});
+          const nouveau: VehiculeIdematModel = {
+            immatriculation: result.immatriculation,
+            zoneJ1: result.zoneJ1 || undefined,
+            zoneF3: result.zoneF3 ? Number(result.zoneF3) : undefined,
+          };
+          this.usager.set({...current, vehicules: [...(current.vehicules ?? []), nouveau]});
         },
       });
     });
   }
 
-  protected onSupprimerVehicule(immat: string): void {
-    const immatKey = immat.split(' (')[0];
-    this.usagerService.deleteVehicule(immatKey).subscribe({
+  protected onModifierVehicule(vehicule: VehiculeIdematModel): void {
+    const ref = this.dialog.open(ModifierVehiculeDialogComponent, {
+      data: {vehicule, contrat: this.contrat()!, isPro: this.usager()!.isPro},
+    });
+    ref.afterClosed().subscribe((result: ModifierVehiculeDialogResult | undefined) => {
+      if (!result) return;
+      this.usagerService.updateVehicule(
+        vehicule.immatriculation,
+        result.nouvelleImmatriculation,
+        result.zoneJ1,
+        result.zoneF3,
+      ).subscribe({
+        next: () => {
+          const current = this.usager()!;
+          const modifie: VehiculeIdematModel = {
+            immatriculation: result.nouvelleImmatriculation,
+            zoneJ1: result.zoneJ1,
+            zoneF3: result.zoneF3,
+          };
+          this.usager.set({
+            ...current,
+            vehicules: (current.vehicules ?? []).map(v =>
+              v.immatriculation === vehicule.immatriculation ? modifie : v
+            ),
+          });
+        },
+      });
+    });
+  }
+
+  protected onSupprimerVehicule(vehicule: VehiculeIdematModel): void {
+    this.usagerService.deleteVehicule(vehicule.immatriculation).subscribe({
       next: () => {
         const current = this.usager()!;
         this.usager.set({
           ...current,
-          immatriculations: (current.immatriculations ?? []).filter(i => i !== immat),
+          vehicules: (current.vehicules ?? []).filter(v => v.immatriculation !== vehicule.immatriculation),
         });
       },
     });

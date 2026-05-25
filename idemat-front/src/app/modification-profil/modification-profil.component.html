@@ -80,13 +80,13 @@
               <span class="bloc-titre">Véhicules enregistrés</span>
             </div>
 
-            @for (immat of usager()!.immatriculations ?? []; track immat) {
+            @for (vehicule of usager()!.vehicules ?? []; track vehicule.immatriculation) {
               <div class="vehicule-item">
-                <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(immat)" title="Supprimer">
+                <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(vehicule)" title="Supprimer">
                   <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
                 </button>
-                <span class="vehicule-immat">{{ immat }}</span>
-                <button type="button" class="btn-vehicule-action" title="Modifier">
+                <span class="vehicule-immat">{{ vehicule.immatriculation }}</span>
+                <button type="button" class="btn-vehicule-action" (click)="onModifierVehicule(vehicule)" title="Modifier">
                   <img src="Picto crayon.svg" alt="Modifier" class="btn-vehicule-img" />
                 </button>
               </div>

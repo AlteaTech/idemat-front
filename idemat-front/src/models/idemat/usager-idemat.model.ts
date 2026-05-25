@@ -1,3 +1,5 @@
+import {VehiculeIdematModel} from './vehicule-idemat.model';
+
 export interface UsagerIdematModel {
   guid: string;
   nom: string;
@@ -9,7 +11,8 @@ export interface UsagerIdematModel {
   ville?: string;
   hasChangedPassword: boolean;
   codeBarres?: string;
-  immatriculations?: string[];
+  vehicules?: VehiculeIdematModel[];
+  isPro: boolean;
 }
 
 export type {ProfilIdematUpdateModel} from './profil-idemat-update.model';
