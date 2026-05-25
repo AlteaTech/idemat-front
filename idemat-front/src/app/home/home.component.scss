@@ -10,17 +10,23 @@
   padding: 48px 80px 64px;
   flex: 1;
   background: $background-page;
-  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   @media (max-width: 900px) { padding: 32px 32px 48px; }
 }
 
-.bienvenue { font-size: 1.8rem; font-weight: 800; color: $text-color-primary; margin: 0 0 28px; }
+.bienvenue {
+  font-size: 1.8rem; font-weight: 800; color: $text-color-primary; margin: 0 0 28px;
+  width: 100%; max-width: 700px;
+}
 
 .tuiles-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin-bottom: 20px;
+  width: 100%;
   max-width: 700px;
   @media (max-width: 480px) { grid-template-columns: 1fr; }
 }

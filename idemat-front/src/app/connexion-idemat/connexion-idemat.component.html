@@ -44,14 +44,10 @@
 
       <hr class="separateur" />
 
-      @if (contrat()) {
-        <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
-        <button type="button" class="btn-inscription" (click)="onSInscrire()">
-          S'inscrire
-        </button>
-      } @else {
-        <p class="pas-de-compte">Pour créer un compte, utilisez le lien fourni par votre collectivité.</p>
-      }
+      <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
+      <button type="button" class="btn-inscription" (click)="onSInscrire()">
+        S'inscrire
+      </button>
 
     </form>
   </div>
