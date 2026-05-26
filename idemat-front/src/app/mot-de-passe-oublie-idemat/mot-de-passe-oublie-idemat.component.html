@@ -1,8 +1,19 @@
-<div class="page">
-  @if (logoUrl()) {
-    <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
-  } @else if (nomContrat()) {
-    <p class="nom-contrat">{{ nomContrat() }}</p>
+<div class="page" [class.page--mobile]="!isDesktop()">
+
+  @if (!isDesktop()) {
+    <div class="mobile-header-inset">
+      @if (logoUrl()) {
+        <img [src]="logoUrl()" alt="Logo" class="mobile-logo" />
+      } @else if (nomContrat()) {
+        <span class="mobile-nom-contrat">{{ nomContrat() }}</span>
+      }
+    </div>
+  } @else {
+    @if (logoUrl()) {
+      <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+    } @else if (nomContrat()) {
+      <p class="nom-contrat">{{ nomContrat() }}</p>
+    }
   }
 
   <div class="card">

@@ -14,11 +14,45 @@
   padding: 80px 20px 40px;
 }
 
+.page--mobile {
+  justify-content: flex-start;
+  padding: 0 0 40px;
+
+  .card { padding: 0 20px; box-sizing: border-box; }
+}
+
+.mobile-header-inset {
+  align-self: stretch;
+  background: white;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  margin-bottom: 48px;
+  box-shadow: $shadow-connexion-card;
+}
+
+.mobile-logo {
+  height: 40px;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+.mobile-nom-contrat {
+  font-weight: 700;
+  font-size: 1rem;
+  color: $text-color-dark;
+}
+
 .logo {
   height: 80px;
   width: auto;
+  max-width: 260px;
   object-fit: contain;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .nom-contrat {
