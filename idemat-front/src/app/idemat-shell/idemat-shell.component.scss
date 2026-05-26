@@ -6,7 +6,16 @@ $sidenav-width: 220px;
   display: flex; justify-content: center; align-items: center; height: 100vh;
 }
 
-.shell-container { height: 100vh; }
+.shell-container {
+  height: 100vh;
+}
+
+:host ::ng-deep {
+  .mat-drawer-container,
+  .mat-drawer-content {
+    background-color: $background-page !important;
+  }
+}
 
 .shell-sidenav {
   width: $sidenav-width;
@@ -88,9 +97,17 @@ $sidenav-width: 220px;
 .shell-content {
   display: flex;
   flex-direction: column;
-  background-color: $background-page;
-  overflow-x: hidden !important;
-  router-outlet ~ * { flex: 1; overflow-y: auto; }
+  overflow: hidden;
+}
+
+.content-bg {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: $background-page;
+  overflow-x: hidden;
+  overflow-y: auto;
+  router-outlet ~ * { flex: 1; overflow-x: hidden; }
 }
 
 .top-bar {
@@ -113,12 +130,30 @@ $sidenav-width: 220px;
   width: 20px; height: 20px; object-fit: contain;
 }
 
-.mobile-header {
-  height: 56px;
-  background: $background-white;
-  border-bottom: 1px solid $border-color-light;
-  display: flex; align-items: center; padding: 0 12px; gap: 12px; flex-shrink: 0;
+.mobile-header-backdrop {
+  background-color: $background-page;
+  flex-shrink: 0;
 }
+
+.mobile-header {
+  min-height: 64px;
+  background: $background-white;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow: $shadow-mobile-header;
+  display: flex; align-items: center; padding: 12px 20px;
+}
+
+.mobile-header-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.btn-back-img { width: 22px; height: 22px; object-fit: contain; }
+.btn-icon-placeholder { width: 36px; height: 36px; flex-shrink: 0; }
 
 .btn-icon {
   background: none; border: none; color: $text-color-secondary; cursor: pointer;
@@ -128,8 +163,8 @@ $sidenav-width: 220px;
   mat-icon { font-size: 24px; width: 24px; height: 24px; }
 }
 
-.mobile-logo { height: 32px; object-fit: contain; flex: 1; }
-.mobile-enseigne { color: $text-color-primary; font-weight: 700; font-size: 0.95rem; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mobile-logo { height: 40px; max-width: 100%; object-fit: contain; }
+.mobile-enseigne { color: $text-color-primary; font-weight: 700; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mobile-user {
   display: flex; align-items: center; gap: 4px; color: $text-color-secondary; font-size: 0.85rem;
   background: none; border: none; cursor: pointer; padding: 4px 8px;

@@ -41,6 +41,11 @@ $bloc-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 $primary-color-glow: rgba($primary-color, 0.3);
 $primary-color-glow-light: rgba($primary-color, 0.25);
 $shadow-card-hover: rgba(0, 0, 0, 0.12);
+$shadow-connexion-card: 0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-mobile-header: 0 8px 12px -8px rgba(0, 0, 0, 0.18);
+
+// Couleurs neutres
+$color-gray-neutral: #808080;
 
 // Écran connexion SSO (schéma propre à cet écran)
 $connexion-gradient: linear-gradient(135deg, #fca5a5 0%, #f87171 50%, #fdba74 100%);
@@ -57,3 +62,5 @@ $connexion-input-bg-focus: rgba(255, 255, 255, 0.95);
 $connexion-erreur-bg: rgba(0, 0, 0, 0.2);
 $connexion-separateur: rgba(255, 255, 255, 0.45);
 $connexion-btn-inscription-hover: rgba(255, 255, 255, 0.12);
+$connexion-text-white-soft: rgba(255, 255, 255, 0.9);
+$connexion-circle-overlay: rgba(255, 255, 255, 0.1);

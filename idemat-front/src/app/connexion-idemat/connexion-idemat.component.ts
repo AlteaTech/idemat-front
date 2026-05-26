@@ -1,7 +1,10 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {map} from 'rxjs/operators';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 import {ConnexionIdematFormModel} from '../../models/forms/connexion-idemat-form.model';
 
@@ -23,6 +26,13 @@ export class ConnexionIdematComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly apiService = inject(AuthIdmControllerService);
   private readonly contratService = inject(ContratControllerService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  protected readonly isDesktop = toSignal(
+    this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+      .pipe(map(r => r.matches)),
+    {initialValue: true}
+  );
 
   protected contrat = signal<string | null>(null);
   protected logoUrl = signal('');

@@ -5,21 +5,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {VehiculeFormModel} from '../../../models/forms/vehicule-form.model';
-import {VehiculeIdematModel} from '../../../models/idemat/vehicule-idemat.model';
 import {ZONES_J1} from '../../../constantes/inscription.constantes';
-import {ContratIdematModel} from '../../../models/idemat/contrat-idemat.model';
-
-interface ModifierVehiculeDialogData {
-  vehicule: VehiculeIdematModel;
-  contrat: ContratIdematModel;
-  isPro: boolean;
-}
-
-export interface ModifierVehiculeDialogResult {
-  nouvelleImmatriculation: string;
-  zoneJ1?: string;
-  zoneF3?: number;
-}
+import {ModifierVehiculeDialogData, ModifierVehiculeDialogResult} from '../../../models/idemat/modifier-vehicule-dialog.model';
 
 @Component({
   selector: 'app-modifier-vehicule-dialog',

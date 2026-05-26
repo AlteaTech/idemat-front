@@ -2,6 +2,8 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
+// ─── DESKTOP ────────────────────────────────────────────────────────────────
+
 .page-container {
   padding: 40px 80px 48px;
   flex: 1;
@@ -63,25 +65,19 @@
   border-bottom: 1px solid $border-color-light;
   @media (max-width: 480px) { width: 100%; }
 
-  &:last-child {
-    border-bottom: none;
-  }
+  &:last-child { border-bottom: none; }
 
-  mat-slide-toggle {
-    flex-shrink: 0;
-  }
+  mat-slide-toggle { flex-shrink: 0; }
 }
 
-.toggle-fixe {
-  opacity: 0.35;
-}
+.toggle-fixe { opacity: 0.35; }
 
-.toggle-label { 
-  font-size: 0.9rem; 
-  color: $text-color-secondary; 
-  flex: 1;                        /* Prend tout l'espace disponible à gauche */
-  min-width: 0;                   /* Force le texte à accepter de se réduire */
-  white-space: normal;            /* Autorise le passage à la ligne sous le texte long si nécessaire */
+.toggle-label {
+  font-size: 0.9rem;
+  color: $text-color-secondary;
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
 }
 .toggle-label--bold { font-weight: 700; }
 
@@ -96,7 +92,8 @@
   &:last-child { border-bottom: none; }
 }
 
-.vehicule-immat { font-weight: 600; color: $text-color-primary; font-size: 0.9rem; }
+.vehicule-immat { font-weight: 600; color: $text-color-primary; font-size: 0.9rem; flex: 1; }
+.vehicule-icon-small { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
 
 .btn-vehicule-icon {
   background: none; border: none; cursor: pointer;
@@ -164,7 +161,20 @@
   margin-bottom: 12px;
 }
 
-// Bouton envoi
+// Bouton envoi desktop
+.btn-valider {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  align-self: center;
+  padding: 14px 40px;
+  background: $primary-color; color: white;
+  border: none; border-radius: 30px;
+  font-size: 1rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  &:hover:not(:disabled) { background: $primary-color-darker; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
 ::ng-deep {
   .mat-mdc-slide-toggle .mdc-label { display: none !important; }
 
@@ -183,15 +193,174 @@
   }
 }
 
-.btn-valider {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  align-self: center;
-  padding: 14px 40px;
-  background: $primary-color; color: white;
-  border: none; border-radius: 30px;
-  font-size: 1rem; font-weight: 600; font-family: inherit;
-  cursor: pointer; transition: background 0.15s, opacity 0.15s;
-  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+// ─── MOBILE WIZARD ──────────────────────────────────────────────────────────
+
+.mobile-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: $background-page;
+}
+
+.mobile-header-card {
+  background: $background-white;
+  border-radius: 0 0 20px 20px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: $bloc-shadow;
+  min-height: 64px;
+}
+
+.btn-retour-mobile {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.btn-retour-mobile-img { width: 20px; height: 20px; object-fit: contain; }
+
+.mobile-logo {
+  height: 40px;
+  max-width: 160px;
+  object-fit: contain;
+}
+
+.mobile-nom-contrat {
+  font-weight: 700;
+  font-size: 1rem;
+  color: $text-color-primary;
+}
+
+.mobile-content {
+  padding: 20px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.mobile-titre {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: $text-color-primary;
+  margin: 0;
+}
+
+// Stepper
+.mobile-stepper {
+  display: flex;
+  align-items: center;
+}
+
+.stepper-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $border-color-medium;
+  flex-shrink: 0;
+  transition: background 0.25s;
+
+  &.active { background: $text-color-primary; }
+}
+
+.stepper-line {
+  flex: 1;
+  height: 2px;
+  background: $border-color-medium;
+  transition: background 0.25s;
+
+  &.done { background: $text-color-primary; }
+}
+
+// Step card
+.mobile-step-card {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 20px 16px 16px;
+  box-shadow: $bloc-shadow;
+  display: flex;
+  flex-direction: column;
+
+  // Overrides pour le contexte mobile (pas de contrainte de largeur 50%)
+  .toggle-row { width: 100%; }
+  .btn-ajouter-vehicule { width: 100%; }
+  .file-section { flex-direction: column; align-items: stretch; }
+  .btn-file { flex: none; width: 100%; }
+}
+
+.step-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.step-section-header--mt { margin-top: 20px; }
+
+.step-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.step-icon-img { width: 20px; height: 20px; object-fit: contain; }
+.step-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
+
+// Navigation mobile
+.mobile-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.btn-nav-gauche {
+  flex: 1;
+  background: none;
+  border: 1.5px solid $border-color-medium;
+  border-radius: 30px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: $text-color-secondary;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover { background: $background-hover-neutral; }
+}
+
+.btn-nav-suivant {
+  flex: 1;
+  background: $text-color-primary;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.85; }
+}
+
+.btn-nav-valider {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: $primary-color;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
   &:hover:not(:disabled) { background: $primary-color-darker; }
-  &:disabled { opacity: 0.6; cursor: not-allowed; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
 }

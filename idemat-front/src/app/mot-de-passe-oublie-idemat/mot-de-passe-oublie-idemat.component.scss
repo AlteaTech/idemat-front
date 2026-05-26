@@ -62,7 +62,7 @@
 }
 
 .sous-titre {
-  color: rgba(255, 255, 255, 0.9);
+  color: $connexion-text-white-soft;
   font-size: 0.85rem;
   margin: 0;
   line-height: 1.4;
@@ -82,7 +82,7 @@
 }
 
 .input {
-  background: rgba(255, 255, 255, 0.82);
+  background: $connexion-input-bg;
   border: none;
   border-radius: 30px;
   padding: 12px 20px;
@@ -94,12 +94,12 @@
   outline: none;
   transition: background 0.15s;
   &::placeholder { color: $text-color-placeholder-light; }
-  &:focus { background: rgba(255, 255, 255, 0.95); }
+  &:focus { background: $connexion-input-bg-focus; }
 }
 
 .erreur {
   color: white;
-  background: rgba(0, 0, 0, 0.2);
+  background: $connexion-erreur-bg;
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 0.85rem;
@@ -130,7 +130,7 @@
 
 .separateur {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  border-top: 1px solid $connexion-separateur;
   margin-bottom: 22px;
 }
 
@@ -153,7 +153,7 @@
   cursor: pointer;
   width: 100%;
   transition: background 0.15s;
-  &:hover { background: rgba(255, 255, 255, 0.12); }
+  &:hover { background: $connexion-btn-inscription-hover; }
 }
 
 .succes {
@@ -171,7 +171,7 @@
 }
 
 .succes-texte {
-  color: rgba(255, 255, 255, 0.9);
+  color: $connexion-text-white-soft;
   font-size: 0.9rem;
   line-height: 1.5;
   margin: 0 0 16px;

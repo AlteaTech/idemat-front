@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -8,6 +8,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {interval, take} from 'rxjs';
 
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
+import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {AuthService} from '../../services/auth/auth.service';
 import {COUNTDOWN_DECONNEXION_SECONDES} from '../../constantes/ui.constantes';
 import {routesConstantes} from '../../constantes/routes.constantes';
@@ -20,12 +21,13 @@ import {ModificationEmailFormModel} from '../../models/forms/modification-email-
   styleUrl: './modification-email.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModificationEmailComponent {
+export class ModificationEmailComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly authService = inject(AuthService);
   private readonly cdr = inject(ChangeDetectorRef);
 
+  protected usager = signal<UsagerIdematModel | null>(null);
   protected enCours = signal(false);
   protected succes = signal(false);
   protected decompte = signal(COUNTDOWN_DECONNEXION_SECONDES);
@@ -36,6 +38,10 @@ export class ModificationEmailComponent {
       validators: [Validators.required, Validators.email],
     })
   });
+
+  ngOnInit(): void {
+    this.usagerService.getUsager().subscribe(u => this.usager.set(u));
+  }
 
   protected retour(): void {
     this.router.navigate(['/' + routesConstantes.parametresCompte]);

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewChild} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule, MatSidenav} from '@angular/material/sidenav';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -25,6 +25,7 @@ export class IdematShellComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   private readonly router = inject(Router);
+  private readonly location = inject(Location);
   private readonly authService = inject(AuthService);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly contratService = inject(ContratIdematServiceAgents);
@@ -62,6 +63,10 @@ export class IdematShellComponent implements OnInit {
     }
   }
 
+  protected goBack(): void {
+    this.location.back();
+  }
+
   protected deconnecter(): void {
     this.authService.logout();
   }
@@ -71,8 +76,9 @@ export class IdematShellComponent implements OnInit {
       {icon: 'home', label: 'Accueil', route: routesConstantes.home, visible: true},
       {icon: 'qr_code_2', label: 'Mes accès', route: routesConstantes.carteAcces, visible: contrat.allowCarteDematerialisee},
       {icon: 'delete_outline', label: 'Déchetteries', route: routesConstantes.dechetteries, visible: true},
-      {icon: 'bar_chart', label: 'Mes passages & points', route: routesConstantes.consultationSolde, visible: true},
+      {icon: 'bar_chart', label: 'Mes passages', route: routesConstantes.consultationSolde, visible: true},
       {icon: 'add_circle_outline', label: 'Recharger mon compte', route: routesConstantes.achatPassages, visible: contrat.allowAchatPassages},
+      {icon: 'person', label: 'Mon compte', route: routesConstantes.informationsPersonnelles, visible: true, mobileOnly: true},
       {icon: 'gavel', label: 'Mentions légales', route: routesConstantes.mentionsLegales, visible: true},
     ].filter(l => l.visible);
   }

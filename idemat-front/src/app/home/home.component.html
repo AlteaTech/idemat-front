@@ -5,7 +5,8 @@
 } @else {
   <div class="home-container">
 
-    <h1 class="bienvenue">Bienvenue {{ usager()?.prenom }} {{ usager()?.nom }}</h1>
+    <h1 class="bienvenue">Bienvenue</h1>
+    <p class="bienvenue-nom">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
 
     @if (showCarteAcces()) {
       <div class="cards-wrapper">

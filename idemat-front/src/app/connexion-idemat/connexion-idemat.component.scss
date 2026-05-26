@@ -14,6 +14,41 @@
   padding: 80px 20px 40px;
 }
 
+// Mobile : démarre en haut, pas centré verticalement
+.page--mobile {
+  justify-content: flex-start;
+  padding: 0 0 40px;
+
+  .card { padding: 0 20px; box-sizing: border-box; }
+}
+
+// Bandeau logo blanc collé en haut, coins inférieurs arrondis
+.mobile-header-inset {
+  align-self: stretch;
+  background: white;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  margin-bottom: 48px;
+  box-shadow: $shadow-connexion-card;
+}
+
+.mobile-logo {
+  height: 40px;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+.mobile-nom-contrat {
+  font-weight: 700;
+  font-size: 1rem;
+  color: $text-color-dark;
+}
+
 .nom-contrat {
   font-size: 1.1rem;
   font-weight: 700;

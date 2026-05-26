@@ -5,23 +5,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
-import {ContratDio} from '../../../core/api/model/contrat-dio';
 import {ZONES_J1} from '../../../constantes/inscription.constantes';
 import {VehiculeFormModel} from '../../../models/forms/vehicule-form.model';
-
-interface AjouterVehiculeDialogData {
-  contrat: ContratDio;
-  isPro: boolean;
-  immatriculation?: string;
-}
-
-export interface AjouterVehiculeDialogResult {
-  label: string;
-  immatriculation: string;
-  zoneJ1: string;
-  zoneF3: string;
-  fileCarteGrise: File | null;
-}
+import {AjouterVehiculeDialogData, AjouterVehiculeDialogResult} from '../../../models/idemat/ajouter-vehicule-dialog.model';
 
 @Component({
   selector: 'app-ajouter-vehicule-dialog',

@@ -4,7 +4,10 @@
     <button class="btn-retour" (click)="retour()">
       <img src="Gauche.svg" alt="" class="btn-retour-img" />
     </button>
-    <h1>Modifier le mot de passe</h1>
+    <div>
+      <h1>Modifier le mot de passe</h1>
+      <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+    </div>
   </div>
 
   <form class="contenu" [formGroup]="form" (ngSubmit)="onSubmit()">

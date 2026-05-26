@@ -16,8 +16,10 @@ import {VehiculeIdematModel} from '../../models/idemat/vehicule-idemat.model';
 import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {ModificationProfilFormModel} from '../../models/forms/modification-profil-form.model';
-import {AjouterVehiculeDialogComponent, AjouterVehiculeDialogResult} from '../inscription/ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
-import {ModifierVehiculeDialogComponent, ModifierVehiculeDialogResult} from './modifier-vehicule-dialog/modifier-vehicule-dialog.component';
+import {AjouterVehiculeDialogComponent} from '../inscription/ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
+import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
+import {ModifierVehiculeDialogComponent} from './modifier-vehicule-dialog/modifier-vehicule-dialog.component';
+import {ModifierVehiculeDialogResult} from '../../models/idemat/modifier-vehicule-dialog.model';
 
 @Component({
   selector: 'app-modification-profil',
