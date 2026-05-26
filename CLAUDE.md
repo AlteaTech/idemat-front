@@ -1,5 +1,13 @@
 # CLAUDE.md — idemat-front (Portail usager IDemat)
 
+## ⛔ RÈGLES ABSOLUES — violations bloquantes
+
+1. **Toujours demander explicitement avant de `git commit` ou `git push`.** Poser la question ("Je commit/push ?") et attendre une réponse explicite : "oui", "ok", "go", "valide". "On code" ou "vas-y" ne valent pas pour le commit.
+2. **Jamais de fichier de migration Flyway (`VXX__xxx.sql`) sans autorisation explicite.** Une migration = `CREATE`/`ALTER TABLE` réel en base au prochain démarrage — irréversible en prod.
+3. **Jamais de publication GitHub (issue, PR, commentaire) sans montrer le draft et attendre validation.**
+
+---
+
 Portail Angular citoyen/usager **IDemat** — permet aux usagers de s'inscrire, se connecter, consulter leur carte d'accès, leurs passages, les déchetteries, gérer leur compte.
 
 Distinct du BO (`idbatv7-front`) qui est pour les agents/superviseurs.
@@ -200,6 +208,16 @@ Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA
 ## Statut PR en cours
 
 - **PR #11** (`feature/idemat-portal-v1`) — portail complet blocs 1 & 2 + refonte maquette + shell mobile + METHODO, en attente de review lead
+
+## Convention commentaire sur les issues GitHub
+
+Après chaque livraison (branche pushée), commenter l'issue avec :
+
+1. **Branche livrée** — nom complet
+2. **Ce qui est livré** — RG par RG si le ticket en contient (✅/⚠️ par point), sinon par composant/écran
+3. **Ce qui reste** — arbitrages non résolus, endpoints manquants, points à valider
+4. **Questions d'arbitrage** — décisions en attente (lead / BRI / MO), formulées explicitement avec le contexte
+5. **Mode opératoire de test** si nécessaire — URL, slug de test, identifiants, étapes pas à pas
 
 ## Workflow git
 
