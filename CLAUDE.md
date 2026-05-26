@@ -22,7 +22,7 @@ npm run build                    # Build prod
 
 - Angular 20, **standalone components**, **OnPush**, **Signals**, **inject()**
 - Angular Material
-- Services agents dans `src/services/agents/idemat/` — **connectés à l'API réelle** (backend :8101)
+- Services agents dans `src/services/agents/idemat/` — connectés à l'API réelle (backend :8101). Certains endpoints complexes (multipart multi-fichiers, tableaux parallèles) utilisent `HttpClient` direct plutôt que le client OpenAPI généré — ne pas régénérer ces méthodes sans vérification
 - Branchement/adaptation API = modifier uniquement ces fichiers, zéro composant à toucher
 - Icônes : SVG personnalisés dans `public/` (Gauche.svg, Droite.svg, Immatriculation.svg, Picto corbeille.svg, Picto crayon.svg, User.svg, Code barres.svg, Autres cartes.svg…). Pas de mat-icon sauf icônes dynamiques (nav shell, logout, badge)
 
@@ -178,13 +178,28 @@ Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>`
 | `GET /api/dechetterie/{id}` | `DechetterieController` | ✅ |
 | `POST /api/vehicule` | `VehiculeController` | ✅ |
 | `DELETE /api/vehicule/{immat}` | `VehiculeController` | ✅ |
-| `PUT /api/vehicule/{immat}` | `VehiculeController` | ❌ manquant — bloque le bouton "crayon" (ticket #182) |
+| `PUT /api/vehicule/{immat}` | `VehiculeController` | ✅ livré 2026-05-25 (#182) |
+| `DELETE /api/usager` | `UsagerController` | ✅ |
 
 Branchement/adaptation API = modifier uniquement `src/services/agents/idemat/` — zéro composant à toucher.
 
+## Conventions shell mobile
+
+- Bouton retour ← : `<button (click)="goBack()">` dans `idemat-shell.component.html`, masqué sur home via `@if (!isActive(routesConstantes.home))`
+- `div.btn-icon-placeholder` (36px) pour symétrie quand le bouton retour est absent
+- `LienNav.mobileOnly?: boolean` — items filtrés dans le shell quand `isDesktop()` (960px+)
+- `.btn-retour` des composants (bouton "Retour" dans le contenu de la page) : masqué globalement sur mobile via `styles.scss` (`@media (max-width: 959px) { .btn-retour { display: none !important; } }`)
+- Sous-titres utilisateur : `<p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>` sous le `<h1>` des pages de compte
+
+## Conventions dialog Angular Material
+
+Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA`) doivent être dans `src/models/idemat/`, jamais inline dans le composant :
+- `models/idemat/modifier-vehicule-dialog.model.ts` → `ModifierVehiculeDialogData` + `ModifierVehiculeDialogResult`
+- `models/idemat/ajouter-vehicule-dialog.model.ts` → `AjouterVehiculeDialogData` + `AjouterVehiculeDialogResult`
+
 ## Statut PR en cours
 
-- **PR #11** (`feature/idemat-portal-v1`) — portail complet blocs 1 & 2 + refonte maquette, en attente de review lead
+- **PR #11** (`feature/idemat-portal-v1`) — portail complet blocs 1 & 2 + refonte maquette + shell mobile + METHODO, en attente de review lead
 
 ## Workflow git
 
