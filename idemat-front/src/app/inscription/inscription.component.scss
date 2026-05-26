@@ -1,44 +1,14 @@
 @use 'variables' as *;
+@use 'common' as *;
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-// ─── DESKTOP ────────────────────────────────────────────────────────────────
-
-.page-container {
-  padding: 40px 80px 48px;
-  flex: 1;
-  background: $background-page;
-  @media (max-width: 900px) { padding: 24px 20px 40px; }
-}
-
-.page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
-.page-title h1 { font-size: 1.5rem; font-weight: 700; color: $text-color-primary; margin: 0; }
-
-.btn-retour {
-  background: none; border: none; cursor: pointer;
-  display: flex; align-items: center; color: $text-color-secondary;
-  padding: 4px; border-radius: 50%; transition: background 0.15s;
-  &:hover { background: $border-color-medium; }
-  mat-icon { font-size: 22px; width: 22px; height: 22px; }
-}
-
-.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+.bloc { padding-bottom: 12px; }
+.bloc-header { margin-bottom: 12px; }
 
 .loading { display: flex; justify-content: center; padding: 60px 0; }
 
 .contenu { max-width: 720px; display: flex; flex-direction: column; gap: 16px; }
-
-.bloc {
-  background: $background-white;
-  border-radius: $bloc-border-radius;
-  padding: 20px 24px 12px;
-  box-shadow: $bloc-shadow;
-}
-
-.bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
-.bloc-icon-img { width: 20px; height: 20px; object-fit: contain; }
-.bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
 
 .row-2 {
   display: grid;
@@ -46,8 +16,6 @@
   gap: 0 16px;
   @media (max-width: 600px) { grid-template-columns: 1fr; }
 }
-
-.full-width { width: 100%; }
 
 .label-optionnel { font-size: 0.75rem; color: $text-color-muted; font-weight: 400; }
 
@@ -64,9 +32,7 @@
   padding: 8px 0;
   border-bottom: 1px solid $border-color-light;
   @media (max-width: 480px) { width: 100%; }
-
   &:last-child { border-bottom: none; }
-
   mat-slide-toggle { flex-shrink: 0; }
 }
 
@@ -81,7 +47,6 @@
 }
 .toggle-label--bold { font-weight: 700; }
 
-// Véhicules
 .vehicule-item {
   display: flex;
   align-items: center;
@@ -109,7 +74,6 @@
   &:hover { background: $error-background; }
 }
 
-// File pickers
 .file-section {
   display: flex;
   align-items: center;
@@ -153,7 +117,6 @@
   @media (max-width: 480px) { width: 100%; }
 }
 
-// Conditions générales
 .cg-texte {
   font-size: 0.85rem;
   color: $text-color-secondary;
@@ -161,7 +124,6 @@
   margin-bottom: 12px;
 }
 
-// Bouton envoi desktop
 .btn-valider {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   align-self: center;
@@ -177,20 +139,6 @@
 
 ::ng-deep {
   .mat-mdc-slide-toggle .mdc-label { display: none !important; }
-
-  .mat-mdc-form-field {
-    .mdc-text-field--outlined { height: 44px !important; }
-    .mat-mdc-form-field-infix {
-      padding-top: 0 !important; padding-bottom: 0 !important;
-      min-height: 44px !important;
-      display: flex !important; align-items: center !important;
-    }
-    .mat-mdc-select { display: flex !important; align-items: center !important; }
-    .mdc-floating-label { top: 22px !important; transform: translateY(-50%) !important; }
-    .mdc-floating-label--float-above { top: 0px !important; transform: translateY(-50%) scale(0.75) !important; }
-    .mdc-notched-outline__leading { border-radius: 12px 0 0 12px !important; }
-    .mdc-notched-outline__trailing { border-radius: 0 12px 12px 0 !important; }
-  }
 }
 
 // ─── MOBILE WIZARD ──────────────────────────────────────────────────────────
@@ -252,7 +200,6 @@
   margin: 0;
 }
 
-// Stepper
 .mobile-stepper {
   display: flex;
   align-items: center;
@@ -265,7 +212,6 @@
   background: $border-color-medium;
   flex-shrink: 0;
   transition: background 0.25s;
-
   &.active { background: $text-color-primary; }
 }
 
@@ -274,11 +220,9 @@
   height: 2px;
   background: $border-color-medium;
   transition: background 0.25s;
-
   &.done { background: $text-color-primary; }
 }
 
-// Step card
 .mobile-step-card {
   background: $background-white;
   border-radius: $bloc-border-radius;
@@ -287,7 +231,6 @@
   display: flex;
   flex-direction: column;
 
-  // Overrides pour le contexte mobile (pas de contrainte de largeur 50%)
   .toggle-row { width: 100%; }
   .btn-ajouter-vehicule { width: 100%; }
   .file-section { flex-direction: column; align-items: stretch; }
@@ -307,7 +250,6 @@
 .step-icon-img { width: 20px; height: 20px; object-fit: contain; }
 .step-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
 
-// Navigation mobile
 .mobile-nav {
   display: flex;
   gap: 12px;
