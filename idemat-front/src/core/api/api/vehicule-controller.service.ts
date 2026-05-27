@@ -40,25 +40,16 @@ export class VehiculeControllerService extends BaseService {
      * @param immatriculation 
      * @param zoneJ1 
      * @param zoneF3 
-     * @param carteGrise 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, carteGrise?: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, carteGrise?: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, carteGrise?: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, carteGrise?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (immatriculation === null || immatriculation === undefined) {
             throw new Error('Required parameter immatriculation was null or undefined when calling ajouterVehicule.');
         }
-
-        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>immatriculation, 'immatriculation');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>zoneJ1, 'zoneJ1');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>zoneF3, 'zoneF3');
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -85,17 +76,20 @@ export class VehiculeControllerService extends BaseService {
         let localVarFormParams: { append(param: string, value: any): any; };
         let localVarUseForm = false;
         let localVarConvertFormParamsToString = false;
-        // use FormData to transmit files using content-type "multipart/form-data"
-        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-        localVarUseForm = canConsumeForm;
         if (localVarUseForm) {
             localVarFormParams = new FormData();
         } else {
             localVarFormParams = new HttpParams({encoder: this.encoder});
         }
 
-        if (carteGrise !== undefined) {
-            localVarFormParams = localVarFormParams.append('carteGrise', <any>carteGrise) as any || localVarFormParams;
+        if (immatriculation !== undefined) {
+            localVarFormParams = localVarFormParams.append('immatriculation', <any>immatriculation) as any || localVarFormParams;
+        }
+        if (zoneJ1 !== undefined) {
+            localVarFormParams = localVarFormParams.append('zoneJ1', <any>zoneJ1) as any || localVarFormParams;
+        }
+        if (zoneF3 !== undefined) {
+            localVarFormParams = localVarFormParams.append('zoneF3', <any>zoneF3) as any || localVarFormParams;
         }
 
         let responseType_: 'text' | 'json' | 'blob' = 'json';
@@ -115,7 +109,6 @@ export class VehiculeControllerService extends BaseService {
             {
                 context: localVarHttpContext,
                 body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
-                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

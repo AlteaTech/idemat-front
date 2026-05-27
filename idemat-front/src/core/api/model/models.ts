@@ -11,3 +11,4 @@ export * from './update-mot-de-passe-dio-request';
 export * from './update-profil-dio-request';
 export * from './usager-me-dio';
 export * from './vehicule-dio';
+export * from './vehicule-inscription-dio-request';
