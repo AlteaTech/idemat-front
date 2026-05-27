@@ -26,6 +26,13 @@ $sidenav-width: 220px;
   flex-direction: column;
 }
 
+@media (max-width: 959px) {
+  .shell-sidenav {
+    border-right: none;
+    border-left: 1px solid $border-color-light;
+  }
+}
+
 .sidenav-header {
   padding: 24px 20px 20px;
   border-bottom: 1px solid $border-color-light;

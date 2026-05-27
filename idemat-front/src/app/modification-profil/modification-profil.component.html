@@ -11,7 +11,7 @@
       <mat-progress-spinner mode="indeterminate" diameter="40" />
     </div>
   } @else {
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
       <div class="contenu">
 
         <!-- Bloc Informations personnelles -->
@@ -97,16 +97,6 @@
             </button>
           </div>
         }
-
-        <!-- Bouton Valider -->
-        <button type="submit" class="btn-valider" [disabled]="form.invalid || enCours()">
-          @if (enCours()) {
-            <mat-progress-spinner diameter="20" mode="indeterminate" />
-          } @else {
-            <mat-icon>check_circle_outline</mat-icon>
-          }
-          Valider les informations
-        </button>
 
       </div>
     </form>

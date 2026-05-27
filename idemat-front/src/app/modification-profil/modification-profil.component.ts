@@ -62,7 +62,7 @@ export class ModificationProfilComponent implements OnInit {
         codePostal: usager.codePostal ?? '',
         ville: usager.ville ?? '',
       });
-      if (contrat.communes.length > 0) this.form.controls.codePostal.disable();
+      this.form.disable();
     });
   }
 
