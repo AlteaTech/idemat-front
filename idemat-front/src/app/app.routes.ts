@@ -19,6 +19,7 @@ import {MotDePasseOublieIdematComponent} from './mot-de-passe-oublie-idemat/mot-
 import {InscriptionTypeComponent} from './inscription-type/inscription-type.component';
 import {InscriptionComponent} from './inscription/inscription.component';
 import {DemandOkIdematComponent} from './demande-ok-idemat/demande-ok-idemat.component';
+import {NouveauMotDePasseComponent} from './nouveau-mot-de-passe/nouveau-mot-de-passe.component';
 import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -31,6 +32,7 @@ export const routes: Routes = [
   {path: `${routesConstantes.creationCompte}/:contrat`, component: InscriptionTypeComponent},
   {path: `${routesConstantes.creationCompte}/:contrat/:type`, component: InscriptionComponent},
   {path: routesConstantes.demandeOk, component: DemandOkIdematComponent},
+  {path: `${routesConstantes.nouveauMotDePasse}/:contrat`, component: NouveauMotDePasseComponent},
 
   // --- ROUTES PROTÉGÉES (shell IDemat) ---
   {

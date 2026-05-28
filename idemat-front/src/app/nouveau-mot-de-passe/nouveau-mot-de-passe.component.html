@@ -1,0 +1,67 @@
+<div class="page" [class.page--mobile]="!isDesktop()">
+
+  @if (!isDesktop()) {
+    <div class="mobile-header-inset">
+      @if (logoUrl()) {
+        <img [src]="logoUrl()" alt="Logo" class="mobile-logo" />
+      } @else if (nomContrat()) {
+        <span class="mobile-nom-contrat">{{ nomContrat() }}</span>
+      }
+    </div>
+  } @else {
+    @if (logoUrl()) {
+      <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+    } @else if (nomContrat()) {
+      <p class="nom-contrat">{{ nomContrat() }}</p>
+    }
+  }
+
+  <div class="card">
+    @if (succes()) {
+      <div class="succes">
+        <p class="succes-titre">Mot de passe modifié !</p>
+        <p class="succes-texte">Votre nouveau mot de passe est actif. Vous pouvez maintenant vous connecter.</p>
+        <button type="button" class="btn-principal" (click)="retourConnexion()">Se connecter</button>
+      </div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="entete">
+          <button type="button" class="btn-retour" (click)="retourConnexion()">←</button>
+          <div>
+            <h1 class="titre">Nouveau mot de passe</h1>
+            <p class="sous-titre">Choisissez votre nouveau mot de passe de connexion.</p>
+          </div>
+        </div>
+
+        <div class="champ">
+          <label class="label" for="nouveauMotDePasse">Nouveau mot de passe</label>
+          <input id="nouveauMotDePasse" type="password" class="input"
+                 formControlName="nouveauMotDePasse" placeholder="Mot de passe" autocomplete="new-password" />
+        </div>
+
+        <div class="champ">
+          <label class="label" for="confirmation">Confirmer le mot de passe</label>
+          <input id="confirmation" type="password" class="input"
+                 formControlName="confirmation" placeholder="Confirmation" autocomplete="new-password" />
+          @if (form.hasError('passwordsMismatch') && form.controls.confirmation.touched) {
+            <span class="erreur-champ">Les mots de passe ne correspondent pas</span>
+          }
+        </div>
+
+        @if (erreur()) {
+          <p class="erreur">{{ erreur() }}</p>
+        }
+
+        <button type="submit" class="btn-principal" [disabled]="form.invalid || enCours()">
+          @if (enCours()) {
+            <mat-progress-spinner diameter="20" mode="indeterminate" />
+          } @else {
+            Enregistrer le nouveau mot de passe
+          }
+        </button>
+
+      </form>
+    }
+  </div>
+</div>

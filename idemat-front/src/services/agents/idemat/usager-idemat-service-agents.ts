@@ -82,4 +82,8 @@ export class UsagerIdematServiceAgents {
   demanderResetPassword(email: string): Observable<void> {
     return this.motDePasseService.demanderReset({courriel: email});
   }
+
+  confirmerResetPassword(token: string, nouveauMotDePasse: string): Observable<void> {
+    return this.http.post<void>(`${this.config.basePath}/api/mot-de-passe/confirmer`, {token, nouveauMotDePasse});
+  }
 }
