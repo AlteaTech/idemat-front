@@ -10,6 +10,7 @@
 
 
 export interface CommuneDio { 
+    id: number;
     nom: string;
     codePostal: string;
 }

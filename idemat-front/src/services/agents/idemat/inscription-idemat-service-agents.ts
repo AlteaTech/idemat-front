@@ -16,18 +16,16 @@ export class InscriptionIdematServiceAgents {
     fd.append('nom', params.nom);
     fd.append('prenom', params.prenom);
     fd.append('adresse', params.adresse);
-    fd.append('ville', params.ville);
+    fd.append('communeContratId', String(params.communeContratId));
     fd.append('courriel', params.email);
     fd.append('telephone', params.telephone);
     fd.append('cartePhysique', String(params.cartePhysique));
-    fd.append('carteDematerialisee', String(params.carteDematerialisee));
     fd.append('mentionsLegales', String(params.mentionsLegales));
     if (params.deuxiemeNom) fd.append('deuxiemeNom', params.deuxiemeNom);
     if (params.deuxiemePrenom) fd.append('deuxiemePrenom', params.deuxiemePrenom);
     if (params.complementAdresse) fd.append('complementAdresse', params.complementAdresse);
     if (params.societe) fd.append('societe', params.societe);
     if (params.siret) fd.append('siret', params.siret);
-    if (params.codePostal) fd.append('codePostal', params.codePostal);
 
     params.vehicules?.forEach(v => {
       fd.append('immatriculations', v.immatriculation);

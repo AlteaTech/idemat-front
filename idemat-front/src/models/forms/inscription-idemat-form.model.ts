@@ -9,11 +9,9 @@ export interface InscriptionIdematFormModel {
   deuxiemePrenom: FormControl<string>;
   adresse: FormControl<string>;
   complementAdresse: FormControl<string>;
-  codePostal: FormControl<string>;
-  ville: FormControl<string>;
+  communeContratId: FormControl<number | null>;
   email: FormControl<string>;
   telephone: FormControl<string>;
   cartePhysique: FormControl<boolean>;
-  carteDematerialisee: FormControl<boolean>;
   mentionsLegales: FormControl<boolean>;
 }

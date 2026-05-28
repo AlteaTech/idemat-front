@@ -6,11 +6,10 @@ export interface InscriptionIdematParams {
   nom: string;
   prenom: string;
   adresse: string;
-  ville: string;
+  communeContratId: number;
   email: string;
   telephone: string;
   cartePhysique: boolean;
-  carteDematerialisee: boolean;
   mentionsLegales: boolean;
   deuxiemeNom?: string;
   deuxiemePrenom?: string;
@@ -18,7 +17,6 @@ export interface InscriptionIdematParams {
   societe?: string;
   siret?: string;
   vehicules?: VehiculeInscriptionParam[];
-  codePostal?: string;
   carteIdentite?: File;
   justificatifDomicile?: File;
   carteGrise?: File;

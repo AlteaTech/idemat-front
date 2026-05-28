@@ -4,7 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {map} from 'rxjs/operators';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule, MatSelectChange} from '@angular/material/select';
+import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
@@ -69,12 +69,10 @@ export class InscriptionComponent implements OnInit {
     deuxiemePrenom: new FormControl('', {nonNullable: true}),
     adresse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     complementAdresse: new FormControl('', {nonNullable: true}),
-    codePostal: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    ville: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    communeContratId: new FormControl<number | null>(null, {validators: [Validators.required]}),
     email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
     telephone: new FormControl('', {nonNullable: true}),
     cartePhysique: new FormControl(false, {nonNullable: true}),
-    carteDematerialisee: new FormControl(true, {nonNullable: true}),
     mentionsLegales: new FormControl(false, {nonNullable: true, validators: [Validators.requiredTrue]}),
   });
 
@@ -103,10 +101,7 @@ export class InscriptionComponent implements OnInit {
       this.type.set(typePath === 'professionnel' ? 'Pro' : 'Part');
       this.updateValidators();
       if (contratUrl) {
-        this.contratService.getByUrl(contratUrl).subscribe(c => {
-          this.contrat.set(c);
-          this.form.controls.codePostal.disable();
-        });
+        this.contratService.getByUrl(contratUrl).subscribe(c => this.contrat.set(c));
       }
     });
   }
@@ -123,11 +118,6 @@ export class InscriptionComponent implements OnInit {
       societeCtrl.clearValidators();
     }
     [siretCtrl, societeCtrl].forEach(c => c.updateValueAndValidity());
-  }
-
-  protected onCommuneSelected(event: MatSelectChange): void {
-    const commune = this.contrat()?.communes.find(c => c.nom === event.value);
-    if (commune) this.form.controls.codePostal.setValue(commune.codePostal);
   }
 
   protected retour(): void {
@@ -161,7 +151,7 @@ export class InscriptionComponent implements OnInit {
     const step = this.steps()[this.currentStep()];
     if (step === 'infos') {
       const c = this.form.controls;
-      const toCheck = [c.nom, c.prenom, c.adresse, c.ville, c.email];
+      const toCheck = [c.nom, c.prenom, c.adresse, c.communeContratId, c.email];
       if (this.type() === 'Pro') toCheck.push(c.societe, c.siret);
       toCheck.forEach(ctrl => ctrl.markAsTouched());
       if (toCheck.some(ctrl => ctrl.invalid)) return;
@@ -210,11 +200,10 @@ export class InscriptionComponent implements OnInit {
       nom: raw.nom,
       prenom: raw.prenom,
       adresse: raw.adresse,
-      ville: raw.ville,
+      communeContratId: raw.communeContratId!,
       email: raw.email,
       telephone: raw.telephone,
       cartePhysique: raw.cartePhysique,
-      carteDematerialisee: raw.carteDematerialisee,
       mentionsLegales: raw.mentionsLegales,
       deuxiemeNom: raw.deuxiemeNom || undefined,
       deuxiemePrenom: raw.deuxiemePrenom || undefined,
@@ -226,7 +215,6 @@ export class InscriptionComponent implements OnInit {
         zoneJ1: v.zoneJ1 || undefined,
         zoneF3: v.zoneF3 || undefined,
       })) : undefined,
-      codePostal: raw.codePostal || undefined,
       carteIdentite: isPart ? (this.fileCarteIdentite() ?? undefined) : undefined,
       justificatifDomicile: isPart ? (this.fileJustificatif() ?? undefined) : undefined,
       carteGrise: this.fileCarteGrise() ?? undefined,
