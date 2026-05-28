@@ -37,15 +37,17 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   protected succes = signal(false);
   protected erreurEmail = signal(false);
 
+  private contratSlug = '';
+
   protected form = new FormGroup<MotDePasseOublieIdematFormModel>({
     email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
   });
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const contrat = params.get('contrat');
-      if (contrat) {
-        this.contratService.getContratByUrl(contrat).subscribe(c => {
+      this.contratSlug = params.get('contrat') ?? '';
+      if (this.contratSlug) {
+        this.contratService.getContratByUrl(this.contratSlug).subscribe(c => {
           this.logoUrl.set(c.logoUrl);
           this.nomContrat.set(c.nomEnseigne);
         });
@@ -54,7 +56,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   }
 
   protected retour(): void {
-    this.router.navigate(['/' + routesConstantes.connexionIdemat]);
+    this.router.navigate([`/${routesConstantes.connexionIdemat}/${this.contratSlug}`]);
   }
 
   protected onSubmit(): void {
