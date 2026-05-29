@@ -9,4 +9,5 @@ export interface ContratIdematModel {
   allowImmatriculations: boolean;
   demandeZoneJ1F3: boolean;
   communes: { nom: string; codePostal: string }[];
+  mentionsLegales?: string;
 }

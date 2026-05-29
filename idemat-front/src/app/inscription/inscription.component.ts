@@ -11,10 +11,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
+import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
+import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {InscriptionIdematServiceAgents} from '../../services/agents/idemat/inscription-idemat-service-agents';
 import {VehiculeInscriptionParam} from '../../models/idemat/vehicule-inscription-param.model';
-import {ContratDio} from '../../core/api/model/contrat-dio';
 import {TypeInscription} from '../../models/idemat/inscription-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-form.model';
@@ -32,7 +32,7 @@ import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-
 export class InscriptionComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly contratService = inject(ContratControllerService);
+  private readonly contratService = inject(ContratIdematServiceAgents);
   private readonly inscriptionService = inject(InscriptionIdematServiceAgents);
   private readonly dialog = inject(MatDialog);
   private readonly breakpointObserver = inject(BreakpointObserver);
@@ -43,7 +43,7 @@ export class InscriptionComponent implements OnInit {
     {initialValue: true}
   );
 
-  protected contrat = signal<ContratDio | null>(null);
+  protected contrat = signal<ContratIdematModel | null>(null);
   protected contratUrl = signal('');
   protected type = signal<TypeInscription>('Part');
   protected enCours = signal(false);
@@ -75,11 +75,7 @@ export class InscriptionComponent implements OnInit {
     mentionsLegales: new FormControl(false, {nonNullable: true, validators: [Validators.requiredTrue]}),
   });
 
-  protected readonly logoUrl = computed(() => {
-    const c = this.contrat();
-    if (c?.logoBase64 && c?.logoMime) return `data:${c.logoMime};base64,${c.logoBase64}`;
-    return null;
-  });
+  protected readonly logoUrl = computed(() => this.contrat()?.logoUrl || null);
 
   protected readonly steps = computed((): string[] => {
     const c = this.contrat();
@@ -100,7 +96,7 @@ export class InscriptionComponent implements OnInit {
       this.type.set(typePath === 'professionnel' ? 'Pro' : 'Part');
       this.updateValidators();
       if (contratUrl) {
-        this.contratService.getByUrl(contratUrl).subscribe(c => this.contrat.set(c));
+        this.contratService.getContratByUrl(contratUrl).subscribe(c => this.contrat.set(c));
       }
     });
   }

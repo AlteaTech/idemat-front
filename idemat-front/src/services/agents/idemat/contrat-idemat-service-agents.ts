@@ -31,6 +31,7 @@ export class ContratIdematServiceAgents {
       allowImmatriculations: r.allowImmatriculations,
       demandeZoneJ1F3: r.demandeZoneJ1F3,
       allowAchatPassages: r.allowAchatPassages,
+      mentionsLegales: r.mentionsLegales ?? undefined,
     };
   }
 }
