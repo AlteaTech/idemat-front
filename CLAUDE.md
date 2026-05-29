@@ -215,6 +215,7 @@ Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>`
 | `POST /api/inscription` | `InscriptionController` | ✅ |
 | `POST /api/auth/login` | `AuthController` | ✅ |
 | `POST /api/mot-de-passe` | `MotDePasseController` | ✅ |
+| `POST /api/mot-de-passe/confirmer` | `MotDePasseController` | ✅ livré 2026-05-28 (#122) — public, sans JWT |
 | `GET /api/contrat/by-url/{url}` | `ContratController` | ✅ |
 | `GET /api/usager/me` | `UsagerController` | ✅ |
 | `PUT /api/usager/profil` | `UsagerController` | ✅ |
@@ -228,6 +229,29 @@ Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>`
 | `DELETE /api/usager` | `UsagerController` | ✅ |
 
 Branchement/adaptation API = modifier uniquement `src/services/agents/idemat/` — zéro composant à toucher.
+
+## Pages publiques (sans JWT) — pattern slug
+
+Les pages publiques IDemat (`connexion-idemat`, `mot-de-passe-oublie`, `nouveau-mot-de-passe`, `inscription`) suivent toutes le même pattern de route : `<nom-page>/:contrat`. Le slug est lu depuis `this.route.paramMap` dans `ngOnInit()` et stocké dans `private contratSlug = ''`. **Toujours utiliser `this.contratSlug` dans toutes les navigations** (retour connexion, succès, etc.) — l'oublier = redirection vers `/connexion-idemat` sans slug.
+
+```typescript
+// ✅ Pattern correct
+private contratSlug = '';
+
+ngOnInit(): void {
+  this.route.paramMap.subscribe(params => {
+    this.contratSlug = params.get('contrat') ?? '';
+  });
+}
+
+protected retourConnexion(): void {
+  this.router.navigate([`/${routesConstantes.connexionIdemat}/${this.contratSlug}`]);
+}
+```
+
+## Intercepteur HTTP — comportement sur 401
+
+`error.interceptor.ts` appelle `authService.logout()` sur tout 401, ce qui navigue vers `/connexion-idemat` **sans slug**. Conséquence : tout endpoint public appelé sans JWT doit être dans le `permitAll` de `SecurityConfig` côté back (`/api/mot-de-passe/**`, `/api/inscription`, etc.), sinon l'utilisateur est redirigé sans slug.
 
 ## Conventions shell mobile
 
@@ -246,6 +270,18 @@ Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA
 ## Statut PR en cours
 
 - **PR #11** (`feature/idemat-portal-v1`) — portail complet blocs 1 & 2 + refonte maquette + shell mobile + METHODO, en attente de review lead
+- **PR #14** (`feature/inscription-staging`) — inscription staging (#182) + mot de passe oublié (#122) + fix slug demande-ok
+
+## Livraisons récentes (2026-05-29)
+
+- `DemandOkIdematComponent` : fix `retourConnexion()` — slug contrat propagé via `router.lastSuccessfulNavigation?.extras?.state?.['contratUrl']` ou `history.state?.contratUrl`
+- `inscription.component.ts` : passage du `contratUrl` dans le state de navigation vers `demande-ok` (`{ state: { contratUrl } }`)
+- `vehicule-inscription-param.model.ts` : ajout `fileCarteGrise?: File`
+- `inscription-idemat-service-agents.ts` : corrections envoi véhicules + kbis
+
+## TODO prod (avant mise en production)
+
+- Remplacer les adresses email hardcodées de test (`rrosier@altea-si.com`) par les vraies adresses dans le backend (`InscriptionIdmService.inscrire()` et `DemandeInscriptionService.valider()`)
 
 ## Convention commentaire sur les issues GitHub
 

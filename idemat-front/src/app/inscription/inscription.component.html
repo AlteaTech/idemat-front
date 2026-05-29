@@ -151,22 +151,6 @@
             </div>
           }
 
-          <!-- Carte grise (si véhicule(s)) -->
-          @if (contrat()!.allowImmatriculations && vehicules().length > 0) {
-            <div class="bloc">
-              <div class="bloc-header">
-                <mat-icon class="bloc-icon">directions_car</mat-icon>
-                <span class="bloc-titre">Carte grise</span>
-              </div>
-              <div class="file-section">
-                <label class="btn-file" for="inputCG">Ajouter la carte grise</label>
-                <input type="file" id="inputCG" accept=".pdf,.jpg,.jpeg,.gif,.png"
-                       class="file-hidden" (change)="onFileChange($event, 'carteGrise')" />
-                <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
-              </div>
-            </div>
-          }
-
           <!-- Kbis (professionnel) -->
           @if (type() === 'Pro') {
             <div class="bloc">
@@ -461,18 +445,6 @@
                 }
               }
 
-              @if (contrat()!.allowImmatriculations && vehicules().length > 0) {
-                <div class="step-section-header step-section-header--mt">
-                  <mat-icon class="step-icon">directions_car</mat-icon>
-                  <span class="step-titre">Carte grise</span>
-                </div>
-                <div class="file-section">
-                  <label class="btn-file" for="inputCG-m">Ajouter la carte grise</label>
-                  <input type="file" id="inputCG-m" accept=".pdf,.jpg,.jpeg,.gif,.png"
-                         class="file-hidden" (change)="onFileChange($event, 'carteGrise')" />
-                  <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
-                </div>
-              }
             }
 
             @case ('cg') {

@@ -19,6 +19,5 @@ export interface InscriptionIdematParams {
   vehicules?: VehiculeInscriptionParam[];
   carteIdentite?: File;
   justificatifDomicile?: File;
-  carteGrise?: File;
   kbis?: File;
 }

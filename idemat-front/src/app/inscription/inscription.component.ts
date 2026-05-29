@@ -52,7 +52,6 @@ export class InscriptionComponent implements OnInit {
 
   protected fileCarteIdentite = signal<File | null>(null);
   protected fileJustificatif = signal<File | null>(null);
-  protected fileCarteGrise = signal<File | null>(null);
   protected fileKbis = signal<File | null>(null);
   protected erreurCarteIdentite = signal(false);
   protected erreurJustificatif = signal(false);
@@ -124,11 +123,10 @@ export class InscriptionComponent implements OnInit {
     this.router.navigate([`/${routesConstantes.creationCompte}/${this.contratUrl()}`]);
   }
 
-  protected onFileChange(event: Event, type: 'ci' | 'jd' | 'carteGrise' | 'kbis'): void {
+  protected onFileChange(event: Event, type: 'ci' | 'jd' | 'kbis'): void {
     const file = (event.target as HTMLInputElement).files?.[0] ?? null;
     if (type === 'ci') { this.fileCarteIdentite.set(file); this.erreurCarteIdentite.set(false); }
     if (type === 'jd') { this.fileJustificatif.set(file); this.erreurJustificatif.set(false); }
-    if (type === 'carteGrise') { this.fileCarteGrise.set(file); }
     if (type === 'kbis') { this.fileKbis.set(file); this.erreurKbis.set(false); }
   }
 
@@ -214,13 +212,13 @@ export class InscriptionComponent implements OnInit {
         immatriculation: v.immatriculation,
         zoneJ1: v.zoneJ1 || undefined,
         zoneF3: v.zoneF3 || undefined,
+        fileCarteGrise: v.fileCarteGrise ?? undefined,
       })) : undefined,
       carteIdentite: isPart ? (this.fileCarteIdentite() ?? undefined) : undefined,
       justificatifDomicile: isPart ? (this.fileJustificatif() ?? undefined) : undefined,
-      carteGrise: this.fileCarteGrise() ?? undefined,
       kbis: isPro ? (this.fileKbis() ?? undefined) : undefined,
     }).subscribe({
-      next: () => this.router.navigate(['/' + routesConstantes.demandeOk]),
+      next: () => this.router.navigate(['/' + routesConstantes.demandeOk], { state: { contratUrl: this.contratUrl() } }),
       error: (err) => {
         this.enCours.set(false);
         let isEmailError = false;

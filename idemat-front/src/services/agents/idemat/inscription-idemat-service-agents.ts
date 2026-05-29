@@ -27,15 +27,15 @@ export class InscriptionIdematServiceAgents {
     if (params.societe) fd.append('societe', params.societe);
     if (params.siret) fd.append('siret', params.siret);
 
-    params.vehicules?.forEach(v => {
+    params.vehicules?.forEach((v, i) => {
       fd.append('immatriculations', v.immatriculation);
       fd.append('zonesJ1', v.zoneJ1 ?? '');
       fd.append('zonesF3', v.zoneF3 ?? '');
+      if (v.fileCarteGrise) fd.append(`carteGrise_${i}`, v.fileCarteGrise);
     });
 
     if (params.carteIdentite) fd.append('carteIdentite', params.carteIdentite);
     if (params.justificatifDomicile) fd.append('justificatifDomicile', params.justificatifDomicile);
-    if (params.carteGrise) fd.append('carteGrise', params.carteGrise);
     if (params.kbis) fd.append('kbis', params.kbis);
 
     // HttpClient direct : le client généré envoie les @RequestParam en query string,

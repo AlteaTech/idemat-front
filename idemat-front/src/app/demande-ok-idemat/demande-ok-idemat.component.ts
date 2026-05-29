@@ -12,8 +12,14 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 })
 export class DemandOkIdematComponent {
   private readonly router = inject(Router);
+  private readonly contratUrl: string = this.router.lastSuccessfulNavigation?.extras?.state?.['contratUrl']
+    ?? history.state?.contratUrl
+    ?? '';
 
   protected retourConnexion(): void {
-    this.router.navigate(['/' + routesConstantes.connexionIdemat]);
+    const route = this.contratUrl
+      ? `/${routesConstantes.connexionIdemat}/${this.contratUrl}`
+      : `/${routesConstantes.connexionIdemat}`;
+    this.router.navigate([route]);
   }
 }
