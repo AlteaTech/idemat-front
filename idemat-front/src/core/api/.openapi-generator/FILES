@@ -6,6 +6,7 @@ api/api.ts
 api/auth-controller.service.ts
 api/contrat-controller.service.ts
 api/dechetterie-controller.service.ts
+api/demande-inscription-controller.service.ts
 api/inscription-controller.service.ts
 api/mot-de-passe-controller.service.ts
 api/usager-controller.service.ts
@@ -15,6 +16,7 @@ encoder.ts
 git_push.sh
 index.ts
 model/commune-dio.ts
+model/confirmer-reset-password-dio-request.ts
 model/contrat-dio.ts
 model/dechetterie-detail-dio.ts
 model/dechetterie-dio.ts

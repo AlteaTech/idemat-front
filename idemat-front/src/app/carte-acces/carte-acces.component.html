@@ -16,20 +16,62 @@
       </div>
     </div>
 
-    <!-- CARTE QR CODE -->
-    <div class="bloc">
-      <div class="bloc-header">
-        <img src="Code barres.svg" alt="" class="bloc-icon-img" />
-        <span class="bloc-titre">Carte d'accès</span>
+    <!-- CARTE DÉMATÉRIALISÉE (QR CODE) -->
+    @if (contrat()?.allowCarteDematerialisee) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <img src="Code barres.svg" alt="" class="bloc-icon-img" />
+          <span class="bloc-titre">Carte dématérialisée</span>
+        </div>
+        <div class="qr-container">
+          @if (qrCodeUrl()) {
+            <img [src]="qrCodeUrl()" alt="QR code d'accès" class="qr-image"/>
+          } @else {
+            <p class="no-carte">Aucun QR code associé à votre compte</p>
+          }
+        </div>
       </div>
-      <div class="qr-container">
-        @if (qrCodeUrl()) {
-          <img [src]="qrCodeUrl()" alt="QR code d'accès" class="qr-image"/>
+    }
+
+    <!-- CARTE PHYSIQUE (PUCE) -->
+    @if (contrat()?.allowCartePhysique) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <img src="Carte.svg" alt="" class="bloc-icon-img" />
+          <span class="bloc-titre">Carte puce</span>
+        </div>
+        @if (usager()?.numeroCarte) {
+          <div class="info-ligne">
+            <span class="info-label">Numéro de carte</span>
+            <span class="info-valeur carte-num">{{ usager()!.numeroCarte }}</span>
+          </div>
         } @else {
-          <p class="no-carte">Aucune carte attribuée</p>
+          <p class="no-carte">Aucune carte puce associée à votre compte</p>
         }
       </div>
-    </div>
+    }
+
+    <!-- IMMATRICULATIONS -->
+    @if (contrat()?.allowImmatriculations && (usager()?.vehicules?.length ?? 0) > 0) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
+          <span class="bloc-titre">Véhicules</span>
+        </div>
+        @for (v of usager()!.vehicules!; track v.immatriculation) {
+          <div class="vehicule-row">
+            <span class="vehicule-immat">{{ v.immatriculation }}</span>
+            @if (v.zoneJ1 || v.zoneF3) {
+              <span class="vehicule-zones">
+                @if (v.zoneJ1) { <span class="zone-badge">J1 : {{ v.zoneJ1 }}</span> }
+                @if (v.zoneF3) { <span class="zone-badge">F3 : {{ v.zoneF3 }}</span> }
+              </span>
+            }
+          </div>
+          @if (!$last) { <hr class="separateur" /> }
+        }
+      </div>
+    }
 
     <!-- INFORMATIONS -->
     <div class="bloc">

@@ -1,4 +1,5 @@
 export * from './commune-dio';
+export * from './confirmer-reset-password-dio-request';
 export * from './contrat-dio';
 export * from './dechetterie-detail-dio';
 export * from './dechetterie-dio';
