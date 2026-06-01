@@ -11,20 +11,41 @@ import {StorageService} from '../storage.service';
 export class AuthService {
   user = signal<UserProfileModel | null>(null);
   isLoggedIn = signal(false);
+  hasChangedPassword = signal(true);
   private storageService = inject(StorageService);
+  private readonly channel = new BroadcastChannel('idemat_auth');
 
   router = inject(Router);
 
   constructor() {
-
     this.restoreSession();
+    this.channel.onmessage = (event) => {
+      if (event.data?.type === 'PASSWORD_CHANGED') {
+        this.hasChangedPassword.set(true);
+      }
+    };
   }
 
   loginSuccess(profile: UserProfileModel): void {
+    this.hasChangedPassword.set(profile.hasChangedPassword !== false);
     this.user.set(profile);
     this.isLoggedIn.set(true);
-
     this.storageService.setLocalStorage(storagesConstantes.userSession, JSON.stringify(profile));
+  }
+
+  updateHasChangedPassword(value: boolean): void {
+    const profile = this.user();
+    if (profile) {
+      const updated = {...profile, hasChangedPassword: value};
+      this.user.set(updated);
+      this.storageService.setLocalStorage(storagesConstantes.userSession, JSON.stringify(updated));
+    }
+    this.hasChangedPassword.set(value);
+  }
+
+  markPasswordChanged(): void {
+    this.updateHasChangedPassword(true);
+    this.channel.postMessage({type: 'PASSWORD_CHANGED'});
   }
 
   logout(): void {
@@ -50,6 +71,7 @@ export class AuthService {
         }
         this.user.set(userProfile);
         this.isLoggedIn.set(true);
+        this.hasChangedPassword.set(userProfile.hasChangedPassword !== false);
         return;
       } catch (e) {
 

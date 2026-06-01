@@ -11,6 +11,7 @@ import {ConnexionIdematFormModel} from '../../models/forms/connexion-idemat-form
 import {AuthService} from '../../services/auth/auth.service';
 import {AuthIdmControllerService} from '../../core/api/api/auth-idm-controller.service';
 import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
+import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {routesConstantes} from '../../constantes/routes.constantes';
 
 @Component({
@@ -26,6 +27,7 @@ export class ConnexionIdematComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly apiService = inject(AuthIdmControllerService);
   private readonly contratService = inject(ContratControllerService);
+  private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly breakpointObserver = inject(BreakpointObserver);
 
   protected readonly isDesktop = toSignal(
@@ -74,15 +76,27 @@ export class ConnexionIdematComponent implements OnInit {
     const {login, motdepasse} = this.form.getRawValue();
     this.apiService.login({courriel: login, motDePasse: motdepasse}).subscribe({
       next: (resp) => {
-        this.authService.loginSuccess({
+        const profile = {
           sub: 'ext-' + Math.random(),
           name: 'Utilisateur Idemat',
           email: login,
           picture: '',
           idGoogle: '',
           jwt: resp.token,
+          hasChangedPassword: true,
+        };
+        this.authService.loginSuccess(profile);
+        this.usagerService.getUsager().subscribe({
+          next: (u) => {
+            if (!u.hasChangedPassword) {
+              this.authService.updateHasChangedPassword(false);
+            }
+            this.router.navigate(['/' + routesConstantes.home]);
+          },
+          error: () => {
+            this.router.navigate(['/' + routesConstantes.home]);
+          },
         });
-        this.router.navigate(['/' + routesConstantes.home]);
       },
       error: (err) => {
         this.enCours.set(false);

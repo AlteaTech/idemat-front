@@ -8,6 +8,6 @@ export interface ContratIdematModel {
   allowCartePhysique: boolean;
   allowImmatriculations: boolean;
   demandeZoneJ1F3: boolean;
-  communes: { nom: string; codePostal: string }[];
+  communes: { id: number; nom: string; codePostal: string }[];
   mentionsLegales?: string;
 }

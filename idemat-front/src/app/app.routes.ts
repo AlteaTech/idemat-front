@@ -21,6 +21,7 @@ import {InscriptionComponent} from './inscription/inscription.component';
 import {DemandOkIdematComponent} from './demande-ok-idemat/demande-ok-idemat.component';
 import {NouveauMotDePasseComponent} from './nouveau-mot-de-passe/nouveau-mot-de-passe.component';
 import {authGuard} from './core/guards/auth.guard';
+import {passwordChangedGuard} from './core/guards/password-changed.guard';
 
 export const routes: Routes = [
   // --- ROUTES PUBLIQUES ---
@@ -41,19 +42,19 @@ export const routes: Routes = [
     component: IdematShellComponent,
     children: [
       {path: '', redirectTo: routesConstantes.home, pathMatch: 'full'},
-      {path: routesConstantes.home, component: HomeComponent},
-
-      {path: routesConstantes.carteAcces, component: CarteAccesComponent},
-      {path: routesConstantes.dechetteries, component: DechetteriesComponent},
-      {path: routesConstantes.dechetterieDetail, component: DechetterieDetailComponent},
-      {path: routesConstantes.consultationSolde, component: PassagesPointsComponent},
-      {path: routesConstantes.achatPassages, component: AchatPassagesComponent},
-      {path: routesConstantes.mentionsLegales, component: MentionsLegalesComponent},
-      {path: routesConstantes.informationsPersonnelles, component: InformationsPersonnellesComponent},
-      {path: routesConstantes.parametresCompte, component: ParametresCompteComponent},
-      {path: routesConstantes.modificationEmail, component: ModificationEmailComponent},
       {path: routesConstantes.modificationMotDePasseIdemat, component: ModificationMotDePasseComponent},
-      {path: routesConstantes.modificationProfil, component: ModificationProfilComponent},
+
+      {path: routesConstantes.home, component: HomeComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.carteAcces, component: CarteAccesComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.dechetteries, component: DechetteriesComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.dechetterieDetail, component: DechetterieDetailComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.consultationSolde, component: PassagesPointsComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.achatPassages, component: AchatPassagesComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.mentionsLegales, component: MentionsLegalesComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.informationsPersonnelles, component: InformationsPersonnellesComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.parametresCompte, component: ParametresCompteComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.modificationEmail, component: ModificationEmailComponent, canActivate: [passwordChangedGuard]},
+      {path: routesConstantes.modificationProfil, component: ModificationProfilComponent, canActivate: [passwordChangedGuard]},
     ]
   },
 

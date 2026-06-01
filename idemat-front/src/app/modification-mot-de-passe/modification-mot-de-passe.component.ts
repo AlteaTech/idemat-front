@@ -8,6 +8,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
+import {AuthService} from '../../services/auth/auth.service';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {passwordsMatchValidator} from '../../validateurs/passwords-match.validator';
 import {ModificationMotDePasseFormModel} from '../../models/forms/modification-mot-de-passe-form.model';
@@ -22,6 +23,7 @@ import {ModificationMotDePasseFormModel} from '../../models/forms/modification-m
 export class ModificationMotDePasseComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
+  private readonly authService = inject(AuthService);
 
   protected usager = signal<UsagerIdematModel | null>(null);
   protected enCours = signal(false);
@@ -47,7 +49,10 @@ export class ModificationMotDePasseComponent implements OnInit {
     this.erreur.set('');
     const {ancienMotDePasse, nouveauMotDePasse} = this.form.getRawValue();
     this.usagerService.updateMotDePasse(ancienMotDePasse, nouveauMotDePasse).subscribe({
-      next: () => this.router.navigate(['/' + routesConstantes.parametresCompte]),
+      next: () => {
+        this.authService.markPasswordChanged();
+        this.router.navigate(['/' + routesConstantes.parametresCompte]);
+      },
       error: (err) => {
         this.enCours.set(false);
         this.erreur.set(err?.error?.message ?? 'Une erreur est survenue, veuillez réessayer.');

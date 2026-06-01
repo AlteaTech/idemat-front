@@ -5,4 +5,5 @@ export interface UserProfileModel {
   jwt: string;
   idGoogle: string;
   sub: string;
+  hasChangedPassword?: boolean;
 }
