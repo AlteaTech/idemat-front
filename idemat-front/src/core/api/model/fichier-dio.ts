@@ -7,13 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FichierDio } from './fichier-dio';
 
 
-export interface VehiculeInscriptionDioRequest { 
-    immatriculation: string;
-    zoneJ1?: string;
-    zoneF3?: number;
-    carteGrise?: FichierDio;
+export interface FichierDio { 
+    base64: string;
+    mimeType: string;
+    nomFichier: string;
 }
 

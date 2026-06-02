@@ -1,8 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {from, Observable, switchMap} from 'rxjs';
 import {Configuration} from '../../../core/api';
+import {FichierIdematParam} from '../../../models/idemat/fichier-idemat-param.model';
 import {InscriptionIdematParams} from '../../../models/idemat/inscription-idemat-params.model';
+import {VehiculeInscriptionParam} from '../../../models/idemat/vehicule-inscription-param.model';
 
 @Injectable({providedIn: 'root'})
 export class InscriptionIdematServiceAgents {
@@ -10,37 +12,62 @@ export class InscriptionIdematServiceAgents {
   private readonly config = inject(Configuration);
 
   inscrire(params: InscriptionIdematParams): Observable<void> {
-    const fd = new FormData();
-    fd.append('type', params.type);
-    fd.append('contratUrl', params.contratUrl);
-    fd.append('nom', params.nom);
-    fd.append('prenom', params.prenom);
-    fd.append('adresse', params.adresse);
-    fd.append('communeContratId', String(params.communeContratId));
-    fd.append('courriel', params.email);
-    fd.append('telephone', params.telephone);
-    fd.append('cartePhysique', String(params.cartePhysique));
-    fd.append('mentionsLegales', String(params.mentionsLegales));
-    if (params.deuxiemeNom) fd.append('deuxiemeNom', params.deuxiemeNom);
-    if (params.deuxiemePrenom) fd.append('deuxiemePrenom', params.deuxiemePrenom);
-    if (params.complementAdresse) fd.append('complementAdresse', params.complementAdresse);
-    if (params.societe) fd.append('societe', params.societe);
-    if (params.siret) fd.append('siret', params.siret);
-
-    params.vehicules?.forEach((v, i) => {
-      fd.append('immatriculations', v.immatriculation);
-      fd.append('zonesJ1', v.zoneJ1 ?? '');
-      fd.append('zonesF3', v.zoneF3 ?? '');
-      if (v.fileCarteGrise) fd.append(`carteGrise_${i}`, v.fileCarteGrise);
-    });
-
-    if (params.carteIdentite) fd.append('carteIdentite', params.carteIdentite);
-    if (params.justificatifDomicile) fd.append('justificatifDomicile', params.justificatifDomicile);
-    if (params.kbis) fd.append('kbis', params.kbis);
-
-    // HttpClient direct : le client généré envoie les @RequestParam en query string,
-    // ce qui rompt l'alignement des tableaux parallèles immatriculations/zonesJ1/zonesF3.
-    // FormData manuelle garantit toujours le même nombre d'entrées par véhicule.
-    return this.http.post<void>(`${this.config.basePath}/api/inscription`, fd);
+    return from(this.buildBody(params)).pipe(
+      switchMap(body => this.http.post<void>(`${this.config.basePath}/api/inscription`, body))
+    );
   }
+
+  private async buildBody(params: InscriptionIdematParams): Promise<object> {
+    const [carteIdentite, justificatifDomicile, kbis, vehicules] = await Promise.all([
+      params.carteIdentite ? toFichier(params.carteIdentite) : Promise.resolve(undefined),
+      params.justificatifDomicile ? toFichier(params.justificatifDomicile) : Promise.resolve(undefined),
+      params.kbis ? toFichier(params.kbis) : Promise.resolve(undefined),
+      Promise.all((params.vehicules ?? []).map(v => convertVehicule(v)))
+    ]);
+
+    return {
+      type: params.type,
+      contratUrl: params.contratUrl,
+      nom: params.nom,
+      prenom: params.prenom,
+      adresse: params.adresse,
+      communeContratId: params.communeContratId,
+      courriel: params.email,
+      telephone: params.telephone,
+      cartePhysique: params.cartePhysique,
+      mentionsLegales: params.mentionsLegales,
+      ...(params.deuxiemeNom && {deuxiemeNom: params.deuxiemeNom}),
+      ...(params.deuxiemePrenom && {deuxiemePrenom: params.deuxiemePrenom}),
+      ...(params.complementAdresse && {complementAdresse: params.complementAdresse}),
+      ...(params.societe && {societe: params.societe}),
+      ...(params.siret && {siret: params.siret}),
+      ...(vehicules.length > 0 && {vehicules}),
+      ...(carteIdentite && {carteIdentite}),
+      ...(justificatifDomicile && {justificatifDomicile}),
+      ...(kbis && {kbis}),
+    };
+  }
+}
+
+async function convertVehicule(v: VehiculeInscriptionParam): Promise<object> {
+  const carteGrise = v.fileCarteGrise ? await toFichier(v.fileCarteGrise) : undefined;
+  return {
+    immatriculation: v.immatriculation,
+    ...(v.zoneJ1 && {zoneJ1: v.zoneJ1}),
+    ...(v.zoneF3 && {zoneF3: v.zoneF3}),
+    ...(carteGrise && {carteGrise}),
+  };
+}
+
+function toFichier(file: File): Promise<FichierIdematParam> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      // dataUrl format: "data:<mimeType>;base64,<base64>" — on extrait uniquement la partie base64
+      const base64 = (reader.result as string).split(',')[1];
+      resolve({base64, mimeType: file.type, nomFichier: file.name});
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }

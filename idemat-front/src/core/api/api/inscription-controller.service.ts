@@ -17,7 +17,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { VehiculeInscriptionDioRequest } from '../model/vehicule-inscription-dio-request';
+import { InscriptionDioRequest } from '../model/inscription-dio-request';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -37,61 +37,16 @@ export class InscriptionControllerService extends BaseService {
 
     /**
      * @endpoint post /api/inscription
-     * @param type 
-     * @param contratUrl 
-     * @param nom 
-     * @param prenom 
-     * @param adresse 
-     * @param communeContratId 
-     * @param courriel 
-     * @param telephone 
-     * @param cartePhysique 
-     * @param mentionsLegales 
-     * @param deuxiemeNom 
-     * @param deuxiemePrenom 
-     * @param complementAdresse 
-     * @param societe 
-     * @param siret 
-     * @param immatriculations 
-     * @param zonesJ1 
-     * @param zonesF3 
-     * @param vehicules 
+     * @param inscriptionDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, communeContratId: number, courriel: string, telephone: string, cartePhysique: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, vehicules?: Array<VehiculeInscriptionDioRequest>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, communeContratId: number, courriel: string, telephone: string, cartePhysique: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, vehicules?: Array<VehiculeInscriptionDioRequest>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, communeContratId: number, courriel: string, telephone: string, cartePhysique: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, vehicules?: Array<VehiculeInscriptionDioRequest>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public inscrire(type: string, contratUrl: string, nom: string, prenom: string, adresse: string, communeContratId: number, courriel: string, telephone: string, cartePhysique: boolean, mentionsLegales: boolean, deuxiemeNom?: string, deuxiemePrenom?: string, complementAdresse?: string, societe?: string, siret?: string, immatriculations?: Array<string>, zonesJ1?: Array<string>, zonesF3?: Array<string>, vehicules?: Array<VehiculeInscriptionDioRequest>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (type === null || type === undefined) {
-            throw new Error('Required parameter type was null or undefined when calling inscrire.');
-        }
-        if (contratUrl === null || contratUrl === undefined) {
-            throw new Error('Required parameter contratUrl was null or undefined when calling inscrire.');
-        }
-        if (nom === null || nom === undefined) {
-            throw new Error('Required parameter nom was null or undefined when calling inscrire.');
-        }
-        if (prenom === null || prenom === undefined) {
-            throw new Error('Required parameter prenom was null or undefined when calling inscrire.');
-        }
-        if (adresse === null || adresse === undefined) {
-            throw new Error('Required parameter adresse was null or undefined when calling inscrire.');
-        }
-        if (communeContratId === null || communeContratId === undefined) {
-            throw new Error('Required parameter communeContratId was null or undefined when calling inscrire.');
-        }
-        if (courriel === null || courriel === undefined) {
-            throw new Error('Required parameter courriel was null or undefined when calling inscrire.');
-        }
-        if (telephone === null || telephone === undefined) {
-            throw new Error('Required parameter telephone was null or undefined when calling inscrire.');
-        }
-        if (cartePhysique === null || cartePhysique === undefined) {
-            throw new Error('Required parameter cartePhysique was null or undefined when calling inscrire.');
-        }
-        if (mentionsLegales === null || mentionsLegales === undefined) {
-            throw new Error('Required parameter mentionsLegales was null or undefined when calling inscrire.');
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (inscriptionDioRequest === null || inscriptionDioRequest === undefined) {
+            throw new Error('Required parameter inscriptionDioRequest was null or undefined when calling inscrire.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -109,102 +64,14 @@ export class InscriptionControllerService extends BaseService {
 
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
+
         // to determine the Content-Type header
         const consumes: string[] = [
-            'multipart/form-data'
+            'application/json'
         ];
-
-        const canConsumeForm = this.canConsumeForm(consumes);
-
-        let localVarFormParams: { append(param: string, value: any): any; };
-        let localVarUseForm = false;
-        let localVarConvertFormParamsToString = false;
-        if (localVarUseForm) {
-            localVarFormParams = new FormData();
-        } else {
-            localVarFormParams = new HttpParams({encoder: this.encoder});
-        }
-
-        if (type !== undefined) {
-            localVarFormParams = localVarFormParams.append('type', <any>type) as any || localVarFormParams;
-        }
-        if (contratUrl !== undefined) {
-            localVarFormParams = localVarFormParams.append('contratUrl', <any>contratUrl) as any || localVarFormParams;
-        }
-        if (nom !== undefined) {
-            localVarFormParams = localVarFormParams.append('nom', <any>nom) as any || localVarFormParams;
-        }
-        if (prenom !== undefined) {
-            localVarFormParams = localVarFormParams.append('prenom', <any>prenom) as any || localVarFormParams;
-        }
-        if (adresse !== undefined) {
-            localVarFormParams = localVarFormParams.append('adresse', <any>adresse) as any || localVarFormParams;
-        }
-        if (communeContratId !== undefined) {
-            localVarFormParams = localVarFormParams.append('communeContratId', <any>communeContratId) as any || localVarFormParams;
-        }
-        if (courriel !== undefined) {
-            localVarFormParams = localVarFormParams.append('courriel', <any>courriel) as any || localVarFormParams;
-        }
-        if (telephone !== undefined) {
-            localVarFormParams = localVarFormParams.append('telephone', <any>telephone) as any || localVarFormParams;
-        }
-        if (cartePhysique !== undefined) {
-            localVarFormParams = localVarFormParams.append('cartePhysique', <any>cartePhysique) as any || localVarFormParams;
-        }
-        if (mentionsLegales !== undefined) {
-            localVarFormParams = localVarFormParams.append('mentionsLegales', <any>mentionsLegales) as any || localVarFormParams;
-        }
-        if (deuxiemeNom !== undefined) {
-            localVarFormParams = localVarFormParams.append('deuxiemeNom', <any>deuxiemeNom) as any || localVarFormParams;
-        }
-        if (deuxiemePrenom !== undefined) {
-            localVarFormParams = localVarFormParams.append('deuxiemePrenom', <any>deuxiemePrenom) as any || localVarFormParams;
-        }
-        if (complementAdresse !== undefined) {
-            localVarFormParams = localVarFormParams.append('complementAdresse', <any>complementAdresse) as any || localVarFormParams;
-        }
-        if (societe !== undefined) {
-            localVarFormParams = localVarFormParams.append('societe', <any>societe) as any || localVarFormParams;
-        }
-        if (siret !== undefined) {
-            localVarFormParams = localVarFormParams.append('siret', <any>siret) as any || localVarFormParams;
-        }
-        if (immatriculations) {
-            if (localVarUseForm) {
-                immatriculations.forEach((element) => {
-                    localVarFormParams = localVarFormParams.append('immatriculations', <any>element) as any || localVarFormParams;
-            })
-            } else {
-                localVarFormParams = localVarFormParams.append('immatriculations', [...immatriculations].join(COLLECTION_FORMATS['csv'])) as any || localVarFormParams;
-            }
-        }
-        if (zonesJ1) {
-            if (localVarUseForm) {
-                zonesJ1.forEach((element) => {
-                    localVarFormParams = localVarFormParams.append('zonesJ1', <any>element) as any || localVarFormParams;
-            })
-            } else {
-                localVarFormParams = localVarFormParams.append('zonesJ1', [...zonesJ1].join(COLLECTION_FORMATS['csv'])) as any || localVarFormParams;
-            }
-        }
-        if (zonesF3) {
-            if (localVarUseForm) {
-                zonesF3.forEach((element) => {
-                    localVarFormParams = localVarFormParams.append('zonesF3', <any>element) as any || localVarFormParams;
-            })
-            } else {
-                localVarFormParams = localVarFormParams.append('zonesF3', [...zonesF3].join(COLLECTION_FORMATS['csv'])) as any || localVarFormParams;
-            }
-        }
-        if (vehicules) {
-            if (localVarUseForm) {
-                vehicules.forEach((element) => {
-                    localVarFormParams = localVarFormParams.append('vehicules', <any>element) as any || localVarFormParams;
-            })
-            } else {
-                localVarFormParams = localVarFormParams.append('vehicules', [...vehicules].join(COLLECTION_FORMATS['csv'])) as any || localVarFormParams;
-            }
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
         }
 
         let responseType_: 'text' | 'json' | 'blob' = 'json';
@@ -223,7 +90,7 @@ export class InscriptionControllerService extends BaseService {
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
+                body: inscriptionDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

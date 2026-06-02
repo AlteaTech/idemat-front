@@ -20,6 +20,8 @@ model/confirmer-reset-password-dio-request.ts
 model/contrat-dio.ts
 model/dechetterie-detail-dio.ts
 model/dechetterie-dio.ts
+model/fichier-dio.ts
+model/inscription-dio-request.ts
 model/login-dio-request.ts
 model/login-dio.ts
 model/models.ts

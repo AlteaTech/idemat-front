@@ -3,6 +3,8 @@ export * from './confirmer-reset-password-dio-request';
 export * from './contrat-dio';
 export * from './dechetterie-detail-dio';
 export * from './dechetterie-dio';
+export * from './fichier-dio';
+export * from './inscription-dio-request';
 export * from './login-dio';
 export * from './login-dio-request';
 export * from './modifier-vehicule-dio-request';

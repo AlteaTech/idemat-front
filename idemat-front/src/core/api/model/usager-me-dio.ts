@@ -21,7 +21,6 @@ export interface UsagerMeDio {
     ville?: string;
     hasChangedPassword: boolean;
     codeBarres?: string;
-    numeroCarte?: string;
     vehicules: Array<VehiculeDio>;
     isPro: boolean;
 }
