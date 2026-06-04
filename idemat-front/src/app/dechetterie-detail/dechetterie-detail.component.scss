@@ -3,12 +3,11 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 960px; }
 .page-title { margin-bottom: 28px; }
-.bloc { margin-bottom: 16px; max-width: 600px; }
+.bloc { margin-bottom: 16px; }
 
 .adresse-ligne { display: flex; flex-direction: column; gap: 2px; margin-bottom: 12px; &:last-child { margin-bottom: 0; } }
-.adresse-label { font-size: 0.75rem; font-weight: 700; color: $text-color-muted; text-transform: uppercase; letter-spacing: 0.3px; }
+.adresse-label { font-size: 0.9rem; font-weight: 700; color: $text-color-primary; }
 .adresse-valeur { font-size: 0.9rem; color: $text-color-secondary; }
 
 .horaires-texte {

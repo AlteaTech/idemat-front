@@ -5,5 +5,6 @@ export interface DepotIdematModel {
   date: string;
   heure: string;
   nomSite: string;
+  estDepotQualifie: boolean;
   matieres: PassageMatiereIdematModel[];
 }

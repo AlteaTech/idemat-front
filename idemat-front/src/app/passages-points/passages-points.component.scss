@@ -3,25 +3,144 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 960px; }
-.bloc { margin-bottom: 16px; max-width: 600px; }
+.bloc { margin-bottom: 16px; }
 
-.bandeau-solde {
+.bloc-icon-img { width: 18px; height: 18px; object-fit: contain; }
+
+// Compteurs dépôts
+.compteurs-placeholder {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.compteur-box {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: $background-white;
+  border: 1px solid $text-color-primary;
+  border-radius: $bloc-border-radius;
+}
+.compteur-label { font-size: 0.75rem; color: $text-color-secondary; text-align: center; }
+.compteur-valeur { font-size: 1rem; font-weight: 700; color: $text-color-primary; text-align: center; }
+
+// Historique
+.histo-item {
+  border-bottom: 1px solid $border-color-light;
+  &:last-of-type { border-bottom: none; }
+}
+.histo-resume {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: $passages-background;
+  justify-content: space-between;
+  padding: 10px 0;
+  gap: 12px;
+}
+.histo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.histo-date { font-size: 0.82rem; font-weight: 700; color: $text-color-primary; }
+.histo-site { font-size: 0.88rem; font-weight: 600; color: $text-color-primary; }
+.histo-label { font-size: 0.82rem; color: $text-color-secondary; }
+
+.btn-details {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: $background-hover-neutral-active;
+  border: 1px solid $border-color-medium;
   border-radius: $bloc-border-radius;
-  padding: 14px 20px;
-  margin-bottom: 16px;
-  max-width: 600px;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: $text-color-secondary;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  &:hover { background: $background-hover-neutral-pressed; }
+}
+.details-chevron { font-size: 16px; width: 16px; height: 16px; }
+
+.histo-details {
+  padding: 10px 0 14px;
+  background: $background-hover-neutral;
+  border-radius: $bloc-border-radius;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+}
+.details-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 32px;
+  font-size: 0.88rem;
+}
+.details-col-header {
+  font-weight: 700;
   color: $text-color-primary;
-  strong { color: $primary-color; }
+  padding-bottom: 6px;
+}
+.details-cell {
+  color: $text-color-secondary;
+  padding: 5px 0;
+  border-bottom: 1px solid $border-color-light;
+  &:nth-last-child(-n+2) { border-bottom: none; }
+}
+.points-debites { font-size: 0.82rem; color: $text-color-muted; font-weight: 700; margin: 0 0 10px; }
+
+.btn-voir-tout {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: $background-hover-neutral-active;
+  border: 1px solid $border-color-medium;
+  border-radius: $bloc-border-radius;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: $text-color-secondary;
+  cursor: pointer;
+  &:hover { background: $background-hover-neutral-pressed; }
 }
 
-.bandeau-icon { color: $primary-color; font-size: 22px; width: 22px; height: 22px; }
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 8px;
+  .btn-voir-tout { margin-top: 0; }
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.btn-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  background: $background-white;
+  border: 1px solid $border-color-medium;
+  border-radius: 50%;
+  cursor: pointer;
+  &:disabled { opacity: 0.35; cursor: default; }
+  &:not(:disabled):hover { background: $background-hover; }
+}
+.pagination-icon { width: 14px; height: 14px; }
+.page-info { font-size: 0.88rem; color: $text-color-secondary; min-width: 44px; text-align: center; }
 
+// Passages achetés
 .achat-ligne {
   display: flex;
   flex-direction: column;
@@ -30,11 +149,11 @@
   border-bottom: 1px solid $border-color-light;
   &:last-child { border-bottom: none; }
 }
-
 .achat-date { font-size: 0.85rem; font-weight: 700; color: $text-color-primary; }
 .achat-nb { font-size: 0.85rem; color: $text-color-secondary; }
 .vide { font-size: 0.85rem; color: $text-color-muted; margin: 0; }
 
+// Informations
 .info-ligne { display: flex; flex-direction: column; gap: 3px; padding: 8px 0; border-bottom: 1px solid $border-color-light; &:last-child { border-bottom: none; } }
 .info-label { font-size: 0.8rem; font-weight: 700; color: $text-color-primary; }
 .info-valeur { font-size: 0.88rem; color: $text-color-secondary; }

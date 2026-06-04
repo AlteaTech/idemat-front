@@ -10,7 +10,9 @@
   padding: 40px 80px 48px;
   flex: 1;
   background: $background-page;
-  @media (max-width: 900px) { padding: 24px 20px 40px; }
+  width: 50%;
+  margin: 0 auto;
+  @media (max-width: 900px) { padding: 24px 20px 40px; width: 100%; margin: 0; }
 }
 
 .page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }

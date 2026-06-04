@@ -3,7 +3,6 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 960px; }
 .page-title { margin-bottom: 8px; }
 
 .subtitle { font-size: 0.9rem; color: $text-color-muted; margin: 0 0 28px; }
@@ -25,7 +24,7 @@
   box-shadow: $bloc-shadow;
 }
 
-.offre-label { font-size: 0.95rem; font-weight: 500; color: $text-color-primary; }
+.offre-label { font-size: 0.95rem; font-weight: 700; color: $text-color-primary; }
 .offre-prix { font-size: 0.95rem; font-weight: 700; color: $text-color-primary; }
 
 .btn-valider {

@@ -20,7 +20,6 @@ import {InscriptionTypeComponent} from './inscription-type/inscription-type.comp
 import {InscriptionComponent} from './inscription/inscription.component';
 import {DemandOkIdematComponent} from './demande-ok-idemat/demande-ok-idemat.component';
 import {NouveauMotDePasseComponent} from './nouveau-mot-de-passe/nouveau-mot-de-passe.component';
-import {MesDepotsComponent} from './mes-depots/mes-depots.component';
 import {authGuard} from './core/guards/auth.guard';
 import {passwordChangedGuard} from './core/guards/password-changed.guard';
 
@@ -56,7 +55,6 @@ export const routes: Routes = [
       {path: routesConstantes.parametresCompte, component: ParametresCompteComponent, canActivate: [passwordChangedGuard]},
       {path: routesConstantes.modificationEmail, component: ModificationEmailComponent, canActivate: [passwordChangedGuard]},
       {path: routesConstantes.modificationProfil, component: ModificationProfilComponent, canActivate: [passwordChangedGuard]},
-      {path: routesConstantes.mesDepots, component: MesDepotsComponent, canActivate: [passwordChangedGuard]},
     ]
   },
 

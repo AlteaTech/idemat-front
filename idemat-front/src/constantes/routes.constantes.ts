@@ -17,5 +17,4 @@ export const routesConstantes = {
   creationCompte: 'creation-compte',
   demandeOk: 'demande-ok',
   nouveauMotDePasse: 'nouveau-mot-de-passe',
-  mesDepots: 'mes-depots',
 }
