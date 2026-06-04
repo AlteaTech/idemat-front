@@ -24,15 +24,15 @@
       <div class="compteurs-placeholder">
         <div class="compteur-box">
           <span class="compteur-label">Cette année</span>
-          <span class="compteur-valeur">{{ statsAnnee() ?? '—' }} dépôt{{ (statsAnnee() ?? 0) > 1 ? 's' : '' }}</span>
+          <span class="compteur-valeur">{{ stats()?.annee ?? '—' }} dépôt{{ (stats()?.annee ?? 0) > 1 ? 's' : '' }}</span>
         </div>
         <div class="compteur-box">
           <span class="compteur-label">Ce mois</span>
-          <span class="compteur-valeur">{{ statsMois() ?? '—' }} dépôt{{ (statsMois() ?? 0) > 1 ? 's' : '' }}</span>
+          <span class="compteur-valeur">{{ stats()?.mois ?? '—' }} dépôt{{ (stats()?.mois ?? 0) > 1 ? 's' : '' }}</span>
         </div>
         <div class="compteur-box">
           <span class="compteur-label">Ce jour</span>
-          <span class="compteur-valeur">{{ statsJour() ?? '—' }} dépôt{{ (statsJour() ?? 0) > 1 ? 's' : '' }}</span>
+          <span class="compteur-valeur">{{ stats()?.jour ?? '—' }} dépôt{{ (stats()?.jour ?? 0) > 1 ? 's' : '' }}</span>
         </div>
       </div>
     </div>

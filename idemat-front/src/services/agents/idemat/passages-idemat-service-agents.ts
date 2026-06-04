@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {delay, Observable, of} from 'rxjs';
 import {Configuration} from '../../../core/api';
-import {PassagesInfoModel} from '../../../models/idemat/passages-idemat.model';
+import {PassagesInfoModel, PassagesStatsIdematModel} from '../../../models/idemat/passages-idemat.model';
 import {DepotIdematModel} from '../../../models/idemat/depot-idemat.model';
 import {PageIdematModel} from '../../../models/idemat/page-idemat.model';
 
@@ -33,15 +33,7 @@ export class PassagesIdematServiceAgents {
     );
   }
 
-  getStatsJour(): Observable<number> {
-    return this.http.get<number>(`${this.config.basePath}/api/passages/stats/jour`);
-  }
-
-  getStatsMois(): Observable<number> {
-    return this.http.get<number>(`${this.config.basePath}/api/passages/stats/mois`);
-  }
-
-  getStatsAnnee(): Observable<number> {
-    return this.http.get<number>(`${this.config.basePath}/api/passages/stats/annee`);
+  getStats(): Observable<PassagesStatsIdematModel> {
+    return this.http.get<PassagesStatsIdematModel>(`${this.config.basePath}/api/passages/stats`);
   }
 }

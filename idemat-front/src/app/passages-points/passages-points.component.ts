@@ -6,7 +6,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {PassagesIdematServiceAgents} from '../../services/agents/idemat/passages-idemat-service-agents';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
-import {PassagesInfoModel} from '../../models/idemat/passages-idemat.model';
+import {PassagesInfoModel, PassagesStatsIdematModel} from '../../models/idemat/passages-idemat.model';
 import {DepotIdematModel} from '../../models/idemat/depot-idemat.model';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
@@ -25,9 +25,7 @@ export class PassagesPointsComponent implements OnInit {
   private readonly usagerService = inject(UsagerIdematServiceAgents);
 
   protected info = signal<PassagesInfoModel | null>(null);
-  protected statsJour = signal<number | null>(null);
-  protected statsMois = signal<number | null>(null);
-  protected statsAnnee = signal<number | null>(null);
+  protected stats = signal<PassagesStatsIdematModel | null>(null);
   protected usager = signal<UsagerIdematModel | null>(null);
   protected passages = signal<DepotIdematModel[]>([]);
   protected loading = signal(true);
@@ -39,9 +37,7 @@ export class PassagesPointsComponent implements OnInit {
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
     this.service.getPassagesInfo().subscribe(data => this.info.set(data));
-    this.service.getStatsJour().subscribe(v => this.statsJour.set(v));
-    this.service.getStatsMois().subscribe(v => this.statsMois.set(v));
-    this.service.getStatsAnnee().subscribe(v => this.statsAnnee.set(v));
+    this.service.getStats().subscribe(s => this.stats.set(s));
     this.chargerApercu();
   }
 
