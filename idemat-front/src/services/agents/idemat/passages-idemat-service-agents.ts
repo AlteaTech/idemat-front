@@ -1,9 +1,15 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {delay, Observable, of} from 'rxjs';
+import {Configuration} from '../../../core/api';
 import {PassagesInfoModel} from '../../../models/idemat/passages-idemat.model';
+import {DepotIdematModel} from '../../../models/idemat/depot-idemat.model';
+import {PageIdematModel} from '../../../models/page-idemat.model';
 
 @Injectable({providedIn: 'root'})
 export class PassagesIdematServiceAgents {
+  private readonly http = inject(HttpClient);
+  private readonly config = inject(Configuration);
 
   // TODO: remplacer par appels HTTP GET /api/idemat/passages/info
   getPassagesInfo(): Observable<PassagesInfoModel> {
@@ -18,5 +24,12 @@ export class PassagesIdematServiceAgents {
       forfaitAcheteAnnuel: 0,
       passagesConsommesAnnee: 2,
     }).pipe(delay(300));
+  }
+
+  // TODO #130: basculer sur client généré après merge + generate-client-local
+  getDepots(page: number, size: number): Observable<PageIdematModel<DepotIdematModel>> {
+    return this.http.get<PageIdematModel<DepotIdematModel>>(
+      `${this.config.basePath}/api/passages?page=${page}&size=${size}&sort=datePassage,DESC`
+    );
   }
 }

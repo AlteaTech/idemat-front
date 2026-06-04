@@ -1,0 +1,73 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="page-container">
+
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
+      </button>
+      <div>
+        <h1>Mes dépôts</h1>
+        <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+      </div>
+    </div>
+
+    <!-- TODO #130 : 3 compteurs — définition en attente arbitrage BRI -->
+
+    @if (depots().length === 0) {
+      <p class="vide">Aucun dépôt enregistré.</p>
+    } @else {
+      <div class="depots-liste">
+        @for (depot of depots(); track depot.id) {
+          <div class="depot-card">
+            <div class="depot-resume" role="button" tabindex="0"
+                 (click)="toggleDetails(depot.id)"
+                 (keydown.enter)="toggleDetails(depot.id)">
+              <div class="depot-resume-left">
+                <img src="Picto dépôt.svg" alt="" class="depot-icon" />
+                <div class="depot-info">
+                  <span class="depot-site">{{ depot.nomSite }}</span>
+                  <span class="depot-date">{{ depot.date | date:'dd/MM/yyyy' }} — {{ depot.heure | slice:0:5 }}</span>
+                </div>
+              </div>
+              <mat-icon class="depot-chevron">{{ isOuvert(depot.id) ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </div>
+
+            @if (isOuvert(depot.id)) {
+              <div class="depot-details">
+                <div class="details-titre">Matières déposées</div>
+                @for (m of depot.matieres; track m.libelle) {
+                  <div class="detail-ligne">
+                    <span class="detail-libelle">{{ m.libelle }}</span>
+                    <span class="detail-quantite">{{ m.quantite }} {{ m.unite ?? '' }}</span>
+                  </div>
+                }
+                <!-- TODO #130 : points débités — formule en attente arbitrage BRI -->
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      @if (apercuMode()) {
+        <button class="btn-voir-tout" (click)="afficherTout()">
+          Afficher tout l'historique
+        </button>
+      } @else {
+        <div class="pagination">
+          <button class="btn-page" [disabled]="currentPage() === 0" (click)="changerPage(currentPage() - 1)">
+            <img src="Gauche.svg" alt="Précédent" class="pagination-icon" />
+          </button>
+          <span class="page-info">{{ currentPage() + 1 }} / {{ totalPages() }}</span>
+          <button class="btn-page" [disabled]="currentPage() >= totalPages() - 1" (click)="changerPage(currentPage() + 1)">
+            <img src="Droite.svg" alt="Suivant" class="pagination-icon" />
+          </button>
+        </div>
+      }
+    }
+
+  </div>
+}
