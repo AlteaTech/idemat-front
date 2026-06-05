@@ -1,31 +1,16 @@
-// Injection du service généré (le "brut")
-import {AuthControllerService, LoginRequest} from '../../core/api';
+import {AuthIdmControllerService} from '../../core/api/api/auth-idm-controller.service';
 import {inject, Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthenticationServiceAgents {
-  private apiService = inject(AuthControllerService);
+  private apiService = inject(AuthIdmControllerService);
 
   authenticateUser(login: string, motDePasse: string): Observable<string> {
-    const request = {
-      login: login,
-      motDePasse: motDePasse
-    } as LoginRequest
-    return this.apiService.authenticateUser(
-      request,
-      'body',
-      false,
-      {
-        httpHeaderAccept: 'application/json' as any
-      }
-    ).pipe(
-      map((apiResponse: any) => {
-        return apiResponse.token as string;
-      })
+    return this.apiService.login({courriel: login, motDePasse}).pipe(
+      map(resp => resp.token)
     );
   }
 }

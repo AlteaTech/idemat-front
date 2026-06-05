@@ -1,5 +1,5 @@
 /**
- * API (IDBATV7)
+ * API (idbatv7)
  *
  * 
  *
@@ -17,7 +17,9 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { LoginRequest } from '../model/login-request';
+import { LoginDio } from '../model/login-dio';
+// @ts-ignore
+import { LoginDioRequest } from '../model/login-dio-request';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -37,16 +39,16 @@ export class AuthControllerService extends BaseService {
 
     /**
      * @endpoint post /api/auth/login
-     * @param loginRequest 
+     * @param loginDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public authenticateUser(loginRequest: LoginRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<{ [key: string]: string; }>;
-    public authenticateUser(loginRequest: LoginRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<{ [key: string]: string; }>>;
-    public authenticateUser(loginRequest: LoginRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<{ [key: string]: string; }>>;
-    public authenticateUser(loginRequest: LoginRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (loginRequest === null || loginRequest === undefined) {
-            throw new Error('Required parameter loginRequest was null or undefined when calling authenticateUser.');
+    public login(loginDioRequest: LoginDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<LoginDio>;
+    public login(loginDioRequest: LoginDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<LoginDio>>;
+    public login(loginDioRequest: LoginDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<LoginDio>>;
+    public login(loginDioRequest: LoginDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (loginDioRequest === null || loginDioRequest === undefined) {
+            throw new Error('Required parameter loginDioRequest was null or undefined when calling login.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -88,10 +90,10 @@ export class AuthControllerService extends BaseService {
 
         let localVarPath = `/api/auth/login`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<{ [key: string]: string; }>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<LoginDio>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: loginRequest,
+                body: loginDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

@@ -1,0 +1,68 @@
+// Couleurs principales
+$primary-color: #ED6E57;
+$primary-color-darker: #d65d48;
+$primary-color-light: #f4b8ad;
+$primary-color-background: #fef2ef;
+$primary-gradient-end: #F09878;
+$primary-gradient: linear-gradient(150deg, #FBCAB6 0%, #F09878 30%, #ED6E57 60%, #C94535 100%);
+
+// Texte
+$text-color-primary: #1a1a1a;
+$text-color-secondary: #555;
+$text-color-muted: #888;
+$text-color-dark: #333;
+$text-color-nav: #444;
+$text-color-logout: #999;
+$text-color-placeholder-light: #aaa;
+$icon-color-muted: #bbb;
+
+// Couleurs d'état
+$error-color: #d32f2f;
+$error-background: #fde8e8;
+
+// Fonds
+$background-page: #f2f2f2;
+$background-white: #ffffff;
+$background-hover: #fef9f8;
+$background-hover-neutral: #f5f5f5;
+$background-hover-neutral-active: #e8e8e8;
+$background-hover-neutral-pressed: #d0d0d0;
+$passages-background: #fde8e4;
+$background-overlay: rgba(255, 255, 255, 0.7);
+
+// Bordures
+$border-color-light: #f0f0f0;
+$border-color-medium: #e0e0e0;
+
+// Graphique
+$chart-bar-empty: #e8e8e8;
+
+// Blocs / cartes
+$bloc-border-radius: 12px;
+$bloc-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+$primary-color-glow: rgba($primary-color, 0.3);
+$primary-color-glow-light: rgba($primary-color, 0.25);
+$shadow-card-hover: rgba(0, 0, 0, 0.12);
+$shadow-connexion-card: 0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-mobile-header: 0 8px 12px -8px rgba(0, 0, 0, 0.18);
+
+// Couleurs neutres
+$color-gray-neutral: #808080;
+
+// Écran connexion SSO (schéma propre à cet écran)
+$connexion-gradient: linear-gradient(135deg, #fca5a5 0%, #f87171 50%, #fdba74 100%);
+$connexion-text-dark: #1f2937;
+$connexion-text-medium: #374151;
+$connexion-text-light: #4b5563;
+$connexion-border: #e5e7eb;
+$connexion-link: #f87171;
+$connexion-link-hover: #dc2626;
+
+// Écran connexion IDemat (fond gradient — couleurs semi-transparentes sur fond coloré)
+$connexion-input-bg: rgba(255, 255, 255, 0.82);
+$connexion-input-bg-focus: rgba(255, 255, 255, 0.95);
+$connexion-erreur-bg: rgba(0, 0, 0, 0.2);
+$connexion-separateur: rgba(255, 255, 255, 0.45);
+$connexion-btn-inscription-hover: rgba(255, 255, 255, 0.12);
+$connexion-text-white-soft: rgba(255, 255, 255, 0.9);
+$connexion-circle-overlay: rgba(255, 255, 255, 0.1);

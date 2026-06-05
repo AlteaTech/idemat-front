@@ -1,0 +1,32 @@
+<div class="page-container">
+
+  <!-- TITRE -->
+  <div class="page-title">
+    <button class="btn-retour" (click)="retour()">
+      <img src="Gauche.svg" alt="" class="btn-retour-img" />
+    </button>
+    <div>
+      <h1>Mon compte</h1>
+      <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+    </div>
+  </div>
+
+  <!-- LISTE ENTRÉES -->
+  <div class="liste">
+    <button class="liste-item" (click)="naviguer(routesConstantes.modificationProfil)">
+      <span class="liste-item-label">Modifier le profil</span>
+      <img src="Droite.svg" alt="" class="liste-item-chevron-img" />
+    </button>
+    <button class="liste-item" (click)="naviguer(routesConstantes.parametresCompte)">
+      <span class="liste-item-label">Paramètres du compte</span>
+      <img src="Droite.svg" alt="" class="liste-item-chevron-img" />
+    </button>
+  </div>
+
+  <!-- DÉCONNEXION -->
+  <button class="btn-deconnexion" (click)="deconnecter()">
+    <span>Déconnexion</span>
+    <img src="Droite.svg" alt="" class="btn-chevron-img" />
+  </button>
+
+</div>

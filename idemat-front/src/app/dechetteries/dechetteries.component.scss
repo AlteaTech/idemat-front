@@ -1,0 +1,8 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+
+.liste-item-nom { font-size: 0.95rem; font-weight: 700; color: $text-color-primary; }
+.liste-vide { padding: 24px 20px; font-size: 0.9rem; color: $text-color-muted; font-style: italic; margin: 0; }

@@ -1,0 +1,22 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-title { margin-bottom: 28px; }
+.bloc { margin-bottom: 16px; }
+
+.qr-container { display: flex; justify-content: center; padding: 8px 0 4px; }
+.qr-image { width: 200px; height: 200px; }
+.no-carte { font-size: 0.9rem; color: $text-color-muted; font-style: italic; }
+
+.info-ligne { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; }
+.info-label { font-size: 0.8rem; font-weight: 700; color: $text-color-dark; }
+.info-valeur { font-size: 0.9rem; color: $text-color-secondary; }
+.carte-num { font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; color: $text-color-dark; }
+.separateur { border: none; border-top: 1px solid $border-color-light; margin: 4px 0; }
+
+.vehicule-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; flex-wrap: wrap; }
+.vehicule-immat { font-size: 0.95rem; font-weight: 600; color: $text-color-dark; letter-spacing: 0.05em; }
+.vehicule-zones { display: flex; gap: 6px; flex-wrap: wrap; }
+.zone-badge { font-size: 0.75rem; color: $text-color-secondary; background: $border-color-light; border-radius: 4px; padding: 2px 6px; }

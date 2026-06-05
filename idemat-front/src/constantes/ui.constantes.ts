@@ -1,0 +1,1 @@
+export const COUNTDOWN_DECONNEXION_SECONDES = 5;

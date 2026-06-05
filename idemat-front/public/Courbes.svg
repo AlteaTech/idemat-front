@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21" viewBox="0 0 21 21">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_14" data-name="Rectangle 14" width="21" height="21" transform="translate(20.5 20)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Courbes" transform="translate(-20.5 -20)" clip-path="url(#clip-path)">
+    <path id="monitoring_24dp_E8EAED_FILL0_wght200_GRAD0_opsz24-2" d="M4.324-4.324V-5.915L5.559-7.151v2.827Zm4.941,0v-6.533L10.5-12.092v7.768Zm4.941,0v-7.768l1.235,1.266v6.5Zm4.941,0v-6.5l1.235-1.235v7.737Zm4.941,0V-15.8l1.235-1.235V-4.324ZM4.324-11.6v-1.732l8.029-8.029,4.941,4.941,8.029-8.029v1.732l-8.029,8.029-4.941-4.941L4.324-11.6Z" transform="translate(16.177 44.884)" fill="#fff"/>
+  </g>
+</svg>

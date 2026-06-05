@@ -1,0 +1,2 @@
+export const HISTORIQUE_DEPOTS_APERCU = 2;
+export const HISTORIQUE_DEPOTS_PAGE_SIZE = 4;

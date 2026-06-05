@@ -1,5 +1,5 @@
 /**
- * API (IDBATV7)
+ * API (idbatv7)
  *
  * 
  *
@@ -17,9 +17,9 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { DemandeResetPasswordRequest } from '../model/demande-reset-password-request';
+import { ConfirmerResetPasswordDioRequest } from '../model/confirmer-reset-password-dio-request';
 // @ts-ignore
-import { ResetPasswordRequest } from '../model/reset-password-request';
+import { ResetPasswordDioRequest } from '../model/reset-password-dio-request';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -38,17 +38,17 @@ export class MotDePasseControllerService extends BaseService {
     }
 
     /**
-     * @endpoint post /api/auth/password/reset-request
-     * @param demandeResetPasswordRequest 
+     * @endpoint post /api/mot-de-passe/confirmer
+     * @param confirmerResetPasswordDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public demanderResetPassword(demandeResetPasswordRequest: DemandeResetPasswordRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public demanderResetPassword(demandeResetPasswordRequest: DemandeResetPasswordRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public demanderResetPassword(demandeResetPasswordRequest: DemandeResetPasswordRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public demanderResetPassword(demandeResetPasswordRequest: DemandeResetPasswordRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (demandeResetPasswordRequest === null || demandeResetPasswordRequest === undefined) {
-            throw new Error('Required parameter demandeResetPasswordRequest was null or undefined when calling demanderResetPassword.');
+    public confirmerReset(confirmerResetPasswordDioRequest: ConfirmerResetPasswordDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public confirmerReset(confirmerResetPasswordDioRequest: ConfirmerResetPasswordDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public confirmerReset(confirmerResetPasswordDioRequest: ConfirmerResetPasswordDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public confirmerReset(confirmerResetPasswordDioRequest: ConfirmerResetPasswordDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (confirmerResetPasswordDioRequest === null || confirmerResetPasswordDioRequest === undefined) {
+            throw new Error('Required parameter confirmerResetPasswordDioRequest was null or undefined when calling confirmerReset.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -87,12 +87,12 @@ export class MotDePasseControllerService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/password/reset-request`;
+        let localVarPath = `/api/mot-de-passe/confirmer`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: demandeResetPasswordRequest,
+                body: confirmerResetPasswordDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -104,17 +104,17 @@ export class MotDePasseControllerService extends BaseService {
     }
 
     /**
-     * @endpoint post /api/auth/password/reset
-     * @param resetPasswordRequest 
+     * @endpoint post /api/mot-de-passe
+     * @param resetPasswordDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public resetPassword(resetPasswordRequest: ResetPasswordRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public resetPassword(resetPasswordRequest: ResetPasswordRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public resetPassword(resetPasswordRequest: ResetPasswordRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public resetPassword(resetPasswordRequest: ResetPasswordRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (resetPasswordRequest === null || resetPasswordRequest === undefined) {
-            throw new Error('Required parameter resetPasswordRequest was null or undefined when calling resetPassword.');
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public demanderReset(resetPasswordDioRequest: ResetPasswordDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (resetPasswordDioRequest === null || resetPasswordDioRequest === undefined) {
+            throw new Error('Required parameter resetPasswordDioRequest was null or undefined when calling demanderReset.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -153,12 +153,12 @@ export class MotDePasseControllerService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/password/reset`;
+        let localVarPath = `/api/mot-de-passe`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: resetPasswordRequest,
+                body: resetPasswordDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

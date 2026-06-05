@@ -32,7 +32,7 @@ html, body {
 
 body {
   margin: 0;
-  background-color: $background-color-light;
+  background-color: #f2f2f2;
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
   color-scheme: light;
@@ -685,4 +685,30 @@ mat-paginator {
 
 .overflow-a{
   overflow: auto;
+}
+
+.label-optionnel {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+/* --- Surcharge Angular Material 3 - Sidenav background --- */
+.shell-container {
+  --mat-sys-background: #f2f2f2;
+  --mat-sys-surface: #f2f2f2;
+  --mat-sys-surface-container: #f2f2f2;
+  --mat-sys-surface-container-low: #f2f2f2;
+  @include mat.sidenav-overrides((
+    container-background-color: #f2f2f2,
+    content-background-color: #f2f2f2,
+  ));
+}
+
+/* --- Responsive IDemat : masquer les boutons retour individuels sur mobile (géré par le header shell) --- */
+@media (max-width: 959px) {
+  .btn-retour {
+    display: none !important;
+  }
 }

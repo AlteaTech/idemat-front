@@ -1,0 +1,62 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="page-container">
+
+    <!-- TITRE -->
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
+      </button>
+      <div>
+        <h1>Paramètres du compte</h1>
+        <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+      </div>
+    </div>
+
+    <div class="contenu">
+    <!-- IDENTIFIANTS -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">badge</mat-icon>
+        <span class="bloc-titre">Identifiants</span>
+      </div>
+
+      <div class="champ-ligne">
+        <div class="champ-info">
+          <span class="champ-label">Email</span>
+          <span class="champ-valeur">{{ usager()?.email }}</span>
+        </div>
+        <button class="btn-edit" (click)="naviguer(routesConstantes.modificationEmail)">
+          <img src="Picto crayon.svg" alt="Modifier" class="btn-edit-img" />
+        </button>
+      </div>
+
+      <hr class="separateur"/>
+
+      <div class="champ-ligne">
+        <div class="champ-info">
+          <span class="champ-label">Mot de passe</span>
+          <span class="champ-valeur champ-mdp">••••••••••••</span>
+        </div>
+        <button class="btn-edit" (click)="naviguer(routesConstantes.modificationMotDePasseIdemat)">
+          <img src="Picto crayon.svg" alt="Modifier" class="btn-edit-img" />
+        </button>
+      </div>
+    </div>
+
+    <!-- SUPPRIMER LE COMPTE -->
+    <button class="btn-supprimer" (click)="supprimerCompte()" [disabled]="enCours()">
+      @if (enCours()) {
+        <mat-progress-spinner diameter="20" mode="indeterminate" />
+      } @else {
+        <span>Supprimer le compte</span>
+        <img src="Droite.svg" alt="" class="btn-chevron-img" />
+      }
+    </button>
+    </div>
+
+  </div>
+}
