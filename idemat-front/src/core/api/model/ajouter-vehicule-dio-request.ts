@@ -7,11 +7,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { FichierDio } from './fichier-dio';
 
 
-export interface SortObject { 
-    unsorted?: boolean;
-    sorted?: boolean;
-    empty?: boolean;
+export interface AjouterVehiculeDioRequest { 
+    immatriculation: string;
+    zoneJ1?: string;
+    zoneF3?: number;
+    carteGrise?: FichierDio;
 }
 

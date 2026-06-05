@@ -9,9 +9,9 @@
  */
 
 
-export interface SortObject { 
-    unsorted?: boolean;
-    sorted?: boolean;
-    empty?: boolean;
+export interface PassageMatiereDio { 
+    libelle: string;
+    quantite: number;
+    unite?: string;
 }
 
