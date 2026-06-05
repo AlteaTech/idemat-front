@@ -1,15 +1,13 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {delay, Observable, of} from 'rxjs';
-import {Configuration} from '../../../core/api';
+import {delay, map, Observable, of} from 'rxjs';
+import {PassagesControllerService} from '../../../core/api/api/passages-controller.service';
 import {PassagesInfoModel, PassagesStatsIdematModel} from '../../../models/idemat/passages-idemat.model';
 import {DepotIdematModel} from '../../../models/idemat/depot-idemat.model';
 import {PageIdematModel} from '../../../models/idemat/page-idemat.model';
 
 @Injectable({providedIn: 'root'})
 export class PassagesIdematServiceAgents {
-  private readonly http = inject(HttpClient);
-  private readonly config = inject(Configuration);
+  private readonly passagesService = inject(PassagesControllerService);
 
   // TODO: remplacer par appels HTTP GET /api/idemat/passages/info
   getPassagesInfo(): Observable<PassagesInfoModel> {
@@ -26,14 +24,21 @@ export class PassagesIdematServiceAgents {
     }).pipe(delay(300));
   }
 
-  // TODO #130: basculer sur client généré après merge + generate-client-local
   getDepots(page: number, size: number): Observable<PageIdematModel<DepotIdematModel>> {
-    return this.http.get<PageIdematModel<DepotIdematModel>>(
-      `${this.config.basePath}/api/passages?page=${page}&size=${size}&sort=datePassage,DESC`
+    return this.passagesService.getPassages(page, size, ['datePassage,DESC']).pipe(
+      map(p => ({
+        content: (p.content ?? []) as DepotIdematModel[],
+        totalElements: p.totalElements ?? 0,
+        totalPages: p.totalPages ?? 0,
+        number: p.number ?? 0,
+        size: p.size ?? size,
+        first: p.first ?? true,
+        last: p.last ?? true,
+      }))
     );
   }
 
   getStats(): Observable<PassagesStatsIdematModel> {
-    return this.http.get<PassagesStatsIdematModel>(`${this.config.basePath}/api/passages/stats`);
+    return this.passagesService.getStats();
   }
 }

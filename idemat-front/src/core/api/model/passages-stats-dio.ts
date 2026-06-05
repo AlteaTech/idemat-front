@@ -9,9 +9,9 @@
  */
 
 
-export interface SortObject { 
-    unsorted?: boolean;
-    sorted?: boolean;
-    empty?: boolean;
+export interface PassagesStatsDio { 
+    jour: number;
+    mois: number;
+    annee: number;
 }
 

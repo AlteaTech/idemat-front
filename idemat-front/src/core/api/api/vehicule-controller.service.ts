@@ -17,6 +17,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { AjouterVehiculeDioRequest } from '../model/ajouter-vehicule-dio-request';
+// @ts-ignore
 import { ModifierVehiculeDioRequest } from '../model/modifier-vehicule-dio-request';
 
 // @ts-ignore
@@ -37,18 +39,16 @@ export class VehiculeControllerService extends BaseService {
 
     /**
      * @endpoint post /api/vehicule
-     * @param immatriculation 
-     * @param zoneJ1 
-     * @param zoneF3 
+     * @param ajouterVehiculeDioRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public ajouterVehicule(immatriculation: string, zoneJ1?: string, zoneF3?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (immatriculation === null || immatriculation === undefined) {
-            throw new Error('Required parameter immatriculation was null or undefined when calling ajouterVehicule.');
+    public ajouterVehicule(ajouterVehiculeDioRequest: AjouterVehiculeDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public ajouterVehicule(ajouterVehiculeDioRequest: AjouterVehiculeDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public ajouterVehicule(ajouterVehiculeDioRequest: AjouterVehiculeDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public ajouterVehicule(ajouterVehiculeDioRequest: AjouterVehiculeDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (ajouterVehiculeDioRequest === null || ajouterVehiculeDioRequest === undefined) {
+            throw new Error('Required parameter ajouterVehiculeDioRequest was null or undefined when calling ajouterVehicule.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -66,30 +66,14 @@ export class VehiculeControllerService extends BaseService {
 
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
+
         // to determine the Content-Type header
         const consumes: string[] = [
-            'multipart/form-data'
+            'application/json'
         ];
-
-        const canConsumeForm = this.canConsumeForm(consumes);
-
-        let localVarFormParams: { append(param: string, value: any): any; };
-        let localVarUseForm = false;
-        let localVarConvertFormParamsToString = false;
-        if (localVarUseForm) {
-            localVarFormParams = new FormData();
-        } else {
-            localVarFormParams = new HttpParams({encoder: this.encoder});
-        }
-
-        if (immatriculation !== undefined) {
-            localVarFormParams = localVarFormParams.append('immatriculation', <any>immatriculation) as any || localVarFormParams;
-        }
-        if (zoneJ1 !== undefined) {
-            localVarFormParams = localVarFormParams.append('zoneJ1', <any>zoneJ1) as any || localVarFormParams;
-        }
-        if (zoneF3 !== undefined) {
-            localVarFormParams = localVarFormParams.append('zoneF3', <any>zoneF3) as any || localVarFormParams;
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
         }
 
         let responseType_: 'text' | 'json' | 'blob' = 'json';
@@ -108,7 +92,7 @@ export class VehiculeControllerService extends BaseService {
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
+                body: ajouterVehiculeDioRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
