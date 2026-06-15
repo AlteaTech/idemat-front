@@ -3,6 +3,10 @@
 
 :host { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
 
+.loading-screen {
+  display: flex; justify-content: center; align-items: center; padding: 60px 0;
+}
+
 .home-container {
   padding: 48px 80px 64px;
   flex: 1;

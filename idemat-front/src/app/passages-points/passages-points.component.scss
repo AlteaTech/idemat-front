@@ -3,9 +3,31 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 960px; }
-.bloc { margin-bottom: 16px; max-width: 600px; }
+.loading-screen { display: flex; justify-content: center; align-items: center; padding: 60px 0; }
 
+.page-container {
+  padding: 40px 80px 48px;
+  flex: 1;
+  background: $background-page;
+  max-width: 960px;
+  @media (max-width: 900px) { padding: 24px 20px 40px; }
+}
+
+.page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.page-title h1 { font-size: 1.5rem; font-weight: 700; color: $text-color-primary; margin: 0 0 2px; }
+.page-titre-sous { font-size: 0.9rem; font-weight: 400; color: $text-color-secondary; margin: 0; }
+
+.btn-retour {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; color: $text-color-secondary;
+  padding: 4px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
+// BANDEAU SOLDE
 .bandeau-solde {
   display: flex;
   align-items: center;
@@ -17,11 +39,27 @@
   max-width: 600px;
   font-size: 0.95rem;
   color: $text-color-primary;
+
   strong { color: $primary-color; }
 }
 
 .bandeau-icon { color: $primary-color; font-size: 22px; width: 22px; height: 22px; }
 
+// BLOCS
+.bloc {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: $bloc-shadow;
+  max-width: 600px;
+}
+
+.bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
+
+// ACHATS
 .achat-ligne {
   display: flex;
   flex-direction: column;
@@ -35,6 +73,7 @@
 .achat-nb { font-size: 0.85rem; color: $text-color-secondary; }
 .vide { font-size: 0.85rem; color: $text-color-muted; margin: 0; }
 
+// INFORMATIONS
 .info-ligne { display: flex; flex-direction: column; gap: 3px; padding: 8px 0; border-bottom: 1px solid $border-color-light; &:last-child { border-bottom: none; } }
 .info-label { font-size: 0.8rem; font-weight: 700; color: $text-color-primary; }
 .info-valeur { font-size: 0.88rem; color: $text-color-secondary; }

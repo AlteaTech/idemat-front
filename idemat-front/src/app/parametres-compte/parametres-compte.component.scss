@@ -3,10 +3,47 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 960px; }
-.liste { max-width: 480px; margin-bottom: 20px; }
+.loading-screen { display: flex; justify-content: center; align-items: center; padding: 60px 0; }
 
-.contenu { max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+.page-container {
+  padding: 40px 80px 48px;
+  flex: 1;
+  background: $background-page;
+  max-width: 960px;
+  @media (max-width: 900px) { padding: 24px 20px 40px; }
+}
+
+.page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.page-title h1 { font-size: 1.5rem; font-weight: 700; color: $text-color-primary; margin: 0 0 2px; }
+.page-titre-sous { font-size: 0.9rem; font-weight: 400; color: $text-color-secondary; margin: 0; }
+
+.btn-retour {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; color: $text-color-secondary;
+  padding: 4px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
+.contenu {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bloc {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 20px 24px;
+  box-shadow: $bloc-shadow;
+}
+
+.bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
 
 .champ-ligne {
   display: flex;
@@ -46,5 +83,3 @@
 }
 
 .btn-chevron-img { width: 20px; height: 20px; object-fit: contain; filter: brightness(0) invert(1); }
-
-.liste-item-label { font-size: 0.95rem; font-weight: 500; color: $text-color-primary; }

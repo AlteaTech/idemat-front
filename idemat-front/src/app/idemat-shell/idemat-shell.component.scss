@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'common' as *;
 
 $sidenav-width: 220px;
 
@@ -24,13 +25,6 @@ $sidenav-width: 220px;
   border-radius: 0 !important;
   display: flex;
   flex-direction: column;
-}
-
-@media (max-width: 959px) {
-  .shell-sidenav {
-    border-right: none;
-    border-left: 1px solid $border-color-light;
-  }
 }
 
 .sidenav-header {
