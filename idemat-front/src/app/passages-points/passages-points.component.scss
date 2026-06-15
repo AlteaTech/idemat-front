@@ -1,0 +1,40 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-container { max-width: 960px; }
+.bloc { margin-bottom: 16px; max-width: 600px; }
+
+.bandeau-solde {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: $passages-background;
+  border-radius: $bloc-border-radius;
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  max-width: 600px;
+  font-size: 0.95rem;
+  color: $text-color-primary;
+  strong { color: $primary-color; }
+}
+
+.bandeau-icon { color: $primary-color; font-size: 22px; width: 22px; height: 22px; }
+
+.achat-ligne {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px solid $border-color-light;
+  &:last-child { border-bottom: none; }
+}
+
+.achat-date { font-size: 0.85rem; font-weight: 700; color: $text-color-primary; }
+.achat-nb { font-size: 0.85rem; color: $text-color-secondary; }
+.vide { font-size: 0.85rem; color: $text-color-muted; margin: 0; }
+
+.info-ligne { display: flex; flex-direction: column; gap: 3px; padding: 8px 0; border-bottom: 1px solid $border-color-light; &:last-child { border-bottom: none; } }
+.info-label { font-size: 0.8rem; font-weight: 700; color: $text-color-primary; }
+.info-valeur { font-size: 0.88rem; color: $text-color-secondary; }

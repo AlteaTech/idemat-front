@@ -1,0 +1,104 @@
+<div class="page-container">
+  <div class="page-title">
+    <button type="button" class="btn-retour" (click)="retour()">
+      <img src="Gauche.svg" alt="" class="btn-retour-img" />
+    </button>
+    <h1>Modifier mon profil</h1>
+  </div>
+
+  @if (!usager() || !contrat()) {
+    <div class="loading">
+      <mat-progress-spinner mode="indeterminate" diameter="40" />
+    </div>
+  } @else {
+    <form [formGroup]="form">
+      <div class="contenu">
+
+        <!-- Bloc Informations personnelles -->
+        <div class="bloc">
+          <div class="bloc-header">
+            <mat-icon class="bloc-icon">badge</mat-icon>
+            <span class="bloc-titre">Informations personnelles</span>
+          </div>
+
+          <!-- Ligne 1 : Nom | Prénom -->
+          <div class="row-2">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="nom" placeholder="ex. Dupont" />
+              <mat-error>Champ obligatoire</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="prenom" placeholder="ex. Julie" />
+            </mat-form-field>
+          </div>
+
+          <!-- Ligne 2 : Adresse pleine largeur -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Adresse</mat-label>
+            <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
+            <mat-error>Champ obligatoire</mat-error>
+          </mat-form-field>
+
+          <!-- Ligne 2 : Téléphone | Code postal | Ville -->
+          <div class="row-tel">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Téléphone <span class="label-optionnel">(optionnel)</span></mat-label>
+              <input matInput formControlName="telephone" type="tel" placeholder="ex. 00 00 00 00 00" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Code postal</mat-label>
+              <input matInput formControlName="codePostal" placeholder="ex. 75000" />
+              <mat-error>Champ obligatoire</mat-error>
+            </mat-form-field>
+            @if (contrat()!.communes.length) {
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ville</mat-label>
+                <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
+                  @for (commune of contrat()!.communes; track commune.nom) {
+                    <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
+                  }
+                </mat-select>
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+            } @else {
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ville</mat-label>
+                <input matInput formControlName="ville" placeholder="Votre ville" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+            }
+          </div>
+        </div>
+
+        <!-- Bloc Véhicules enregistrés (conditionnel sur allowImmatriculations) -->
+        @if (contrat()!.allowImmatriculations) {
+          <div class="bloc">
+            <div class="bloc-header">
+              <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
+              <span class="bloc-titre">Véhicules enregistrés</span>
+            </div>
+
+            @for (vehicule of usager()!.vehicules ?? []; track vehicule.immatriculation) {
+              <div class="vehicule-item">
+                <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(vehicule)" title="Supprimer">
+                  <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
+                </button>
+                <span class="vehicule-immat">{{ vehicule.immatriculation }}</span>
+                <button type="button" class="btn-vehicule-action" (click)="onModifierVehicule(vehicule)" title="Modifier">
+                  <img src="Picto crayon.svg" alt="Modifier" class="btn-vehicule-img" />
+                </button>
+              </div>
+            }
+
+            <button type="button" class="btn-ajouter-vehicule" (click)="onOuvrirDialogVehicule()">
+              Ajouter le véhicule
+            </button>
+          </div>
+        }
+
+      </div>
+    </form>
+  }
+</div>

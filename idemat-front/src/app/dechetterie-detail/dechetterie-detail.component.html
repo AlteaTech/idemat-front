@@ -1,0 +1,44 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else if (dechetterie()) {
+  <div class="page-container">
+
+    <!-- TITRE -->
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
+      </button>
+      <h1>{{ dechetterie()!.nom }}</h1>
+    </div>
+
+    <!-- ADRESSE -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">location_on</mat-icon>
+        <span class="bloc-titre">Adresse</span>
+      </div>
+      <div class="adresse-ligne">
+        <span class="adresse-label">Numéro, Rue</span>
+        <span class="adresse-valeur">{{ dechetterie()!.adresse }}</span>
+      </div>
+      <div class="adresse-ligne">
+        <span class="adresse-label">Code postal, Ville</span>
+        <span class="adresse-valeur">{{ dechetterie()!.codePostal }} {{ dechetterie()!.ville }}</span>
+      </div>
+    </div>
+
+    <!-- HORAIRES -->
+    @if (dechetterie()!.horaires) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <mat-icon class="bloc-icon">schedule</mat-icon>
+          <span class="bloc-titre">Horaires</span>
+        </div>
+        <p class="horaires-texte">{{ dechetterie()!.horaires }}</p>
+      </div>
+    }
+
+  </div>
+}

@@ -1,0 +1,50 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-container { max-width: 960px; }
+.liste { max-width: 480px; margin-bottom: 20px; }
+
+.contenu { max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+
+.champ-ligne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.champ-info { display: flex; flex-direction: column; gap: 2px; }
+.champ-label { font-size: 0.8rem; font-weight: 700; color: $text-color-primary; }
+.champ-valeur { font-size: 0.9rem; color: $text-color-secondary; }
+.champ-mdp { letter-spacing: 2px; }
+
+.btn-edit {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; color: $primary-color;
+  padding: 6px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $primary-color-background; }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.btn-edit-img { width: 18px; height: 18px; object-fit: contain; }
+
+.separateur { border: none; border-top: 1px solid $border-color-light; margin: 8px 0; }
+
+.btn-supprimer {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(90deg, $primary-color 0%, $primary-gradient-end 100%);
+  color: white; border: none; border-radius: $bloc-border-radius;
+  font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: opacity 0.15s;
+  box-shadow: 0 2px 12px $primary-color-glow;
+  &:hover { opacity: 0.9; }
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+.btn-chevron-img { width: 20px; height: 20px; object-fit: contain; filter: brightness(0) invert(1); }
+
+.liste-item-label { font-size: 0.95rem; font-weight: 500; color: $text-color-primary; }

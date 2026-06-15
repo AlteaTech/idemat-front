@@ -29,10 +29,10 @@ export class AuthService {
 
   logout(): void {
     this.clearSession();
-    this.router.navigate(['/' + routesConstantes.login]);
+    this.router.navigate(['/' + routesConstantes.connexionIdemat]);
   }
 
-  private clearSession(): void {
+  clearSession(): void {
     this.user.set(null);
     this.isLoggedIn.set(false);
     localStorage.removeItem(storagesConstantes.userSession);
@@ -77,7 +77,10 @@ export class AuthService {
         return true;
       }
 
-      const payloadJson = atob(payloadBase64);
+      // JWT utilise base64url (- et _) ; atob() attend du base64 standard (+ et /)
+      const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64 + '=='.slice(0, (4 - base64.length % 4) % 4);
+      const payloadJson = atob(padded);
       const payload = JSON.parse(payloadJson);
 
       if (!payload.exp) {

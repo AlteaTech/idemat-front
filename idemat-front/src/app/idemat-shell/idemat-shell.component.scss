@@ -1,0 +1,185 @@
+@use 'variables' as *;
+
+$sidenav-width: 220px;
+
+.loading-screen {
+  display: flex; justify-content: center; align-items: center; height: 100vh;
+}
+
+.shell-container {
+  height: 100vh;
+}
+
+:host ::ng-deep {
+  .mat-drawer-container,
+  .mat-drawer-content {
+    background-color: $background-page !important;
+  }
+}
+
+.shell-sidenav {
+  width: $sidenav-width;
+  background: $background-white;
+  border-right: 1px solid $border-color-light;
+  border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 959px) {
+  .shell-sidenav {
+    border-right: none;
+    border-left: 1px solid $border-color-light;
+  }
+}
+
+.sidenav-header {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid $border-color-light;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.sidenav-logo { max-height: 48px; max-width: 100%; object-fit: contain; }
+.sidenav-enseigne { color: $text-color-primary; font-size: 0.9rem; font-weight: 700; line-height: 1.3; }
+
+.sidenav-nav {
+  flex: 1;
+  padding: 12px 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidenav-footer { padding: 10px 10px 16px; border-top: 1px solid $border-color-light; }
+
+.nav-lien {
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  color: $text-color-nav;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; transition: color 0.15s; }
+
+  &:hover {
+    background: $primary-color-background;
+    color: $primary-color;
+    mat-icon { color: $primary-color; }
+  }
+
+  &--active {
+    background: $primary-color;
+    color: $background-white;
+    mat-icon { color: $background-white; }
+    &:hover {
+      background: $primary-color-darker;
+      color: $background-white;
+      mat-icon { color: $background-white; }
+    }
+  }
+
+  &--logout {
+    color: $text-color-logout;
+    mat-icon { color: $icon-color-muted; }
+    &:hover {
+      background: $primary-color-background;
+      color: $primary-color;
+      mat-icon { color: $primary-color; }
+    }
+  }
+}
+
+.shell-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-bg {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: $background-page;
+  overflow-x: hidden;
+  overflow-y: auto;
+  router-outlet ~ * { flex: 1; overflow-x: hidden; }
+}
+
+.top-bar {
+  height: 52px;
+  background: transparent;
+  display: flex; justify-content: flex-end; align-items: center;
+  padding: 0 28px; flex-shrink: 0;
+}
+
+.top-bar-user {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.88rem; font-weight: 500; color: $text-color-secondary;
+  background: none; border: none; cursor: pointer; padding: 6px 10px;
+  border-radius: 8px; transition: background 0.15s, color 0.15s;
+  mat-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; transition: color 0.15s; }
+  &:hover { background: $primary-color-background; color: $primary-color; mat-icon { color: $primary-color; } }
+}
+
+.top-bar-user-icon {
+  width: 20px; height: 20px; object-fit: contain;
+}
+
+.mobile-header-backdrop {
+  background-color: $background-page;
+  flex-shrink: 0;
+}
+
+.mobile-header {
+  min-height: 64px;
+  background: $background-white;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow: $shadow-mobile-header;
+  display: flex; align-items: center; padding: 12px 20px;
+}
+
+.mobile-header-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.btn-back-img { width: 22px; height: 22px; object-fit: contain; }
+.btn-icon-placeholder { width: 36px; height: 36px; flex-shrink: 0; }
+
+.btn-icon {
+  background: none; border: none; color: $text-color-secondary; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $background-hover-neutral; }
+  mat-icon { font-size: 24px; width: 24px; height: 24px; }
+}
+
+.mobile-logo { height: 40px; max-width: 100%; object-fit: contain; }
+.mobile-enseigne { color: $text-color-primary; font-weight: 700; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mobile-user {
+  display: flex; align-items: center; gap: 4px; color: $text-color-secondary; font-size: 0.85rem;
+  background: none; border: none; cursor: pointer; padding: 4px 8px;
+  border-radius: 8px; transition: background 0.15s, color 0.15s;
+  &:hover { background: $primary-color-background; color: $primary-color; mat-icon { color: $primary-color; } }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; transition: color 0.15s; }
+}
+
+.mobile-user-icon {
+  width: 18px; height: 18px; object-fit: contain;
+}

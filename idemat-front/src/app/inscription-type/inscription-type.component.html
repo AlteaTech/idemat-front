@@ -1,0 +1,25 @@
+<div class="overlay">
+  <div class="popup">
+    <h2 class="titre">Vous êtes</h2>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Particulier</span>
+      <mat-slide-toggle color="primary"
+        [checked]="typeSelectionne() === 'Part'"
+        (change)="onToggle('Part', $event.checked)" />
+    </div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Professionnel</span>
+      <mat-slide-toggle color="primary"
+        [checked]="typeSelectionne() === 'Pro'"
+        (change)="onToggle('Pro', $event.checked)" />
+    </div>
+
+    <button type="button" class="btn-valider"
+      [disabled]="!typeSelectionne()"
+      (click)="valider()">
+      Valider
+    </button>
+  </div>
+</div>

@@ -1,0 +1,541 @@
+@if (isDesktop()) {
+
+  <!-- ═══════════════════════════ DESKTOP ═══════════════════════════ -->
+  <div class="page-container">
+    <div class="page-title">
+      <button type="button" class="btn-retour" (click)="retour()">
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
+      </button>
+      <h1>Inscription {{ type() === 'Pro' ? 'professionnel' : 'particulier' }}</h1>
+    </div>
+
+    @if (!contrat()) {
+      <div class="loading"><mat-progress-spinner mode="indeterminate" diameter="40" /></div>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="contenu">
+
+          <!-- Informations personnelles -->
+          <div class="bloc">
+            <div class="bloc-header">
+              <mat-icon class="bloc-icon">person</mat-icon>
+              <span class="bloc-titre">Informations personnelles</span>
+            </div>
+
+            @if (type() === 'Pro') {
+              <div class="row-2">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Société</mat-label>
+                  <input matInput formControlName="societe" placeholder="Nom de la société" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>SIRET</mat-label>
+                  <input matInput formControlName="siret" placeholder="14 chiffres" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              </div>
+            }
+
+            <div class="row-2">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ type() === 'Pro' ? 'Nom du contact' : 'Nom' }}</mat-label>
+                <input matInput formControlName="nom" placeholder="ex. Dupont" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="prenom" placeholder="ex. Julie" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+            </div>
+
+            @if (type() === 'Part') {
+              <div class="row-2">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Deuxième nom <span class="label-optionnel">(optionnel)</span></mat-label>
+                  <input matInput formControlName="deuxiemeNom" placeholder="ex. Dupont" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Deuxième prénom <span class="label-optionnel">(optionnel)</span></mat-label>
+                  <input matInput formControlName="deuxiemePrenom" placeholder="ex. Julie" />
+                </mat-form-field>
+              </div>
+            }
+
+            <div class="row-2">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Adresse</mat-label>
+                <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Complément d'adresse <span class="label-optionnel">(optionnel)</span></mat-label>
+                <input matInput formControlName="complementAdresse" placeholder="ex. Bât. B, apt. 12" />
+              </mat-form-field>
+            </div>
+
+            <div class="row-2">
+              @if (contrat()!.communes.length) {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ville</mat-label>
+                  <mat-select formControlName="ville" (selectionChange)="onCommuneSelected($event)">
+                    @for (commune of contrat()!.communes; track $index) {
+                      <mat-option [value]="commune.nom">{{ commune.codePostal }} – {{ commune.nom }}</mat-option>
+                    }
+                  </mat-select>
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              } @else {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ville</mat-label>
+                  <input matInput formControlName="ville" placeholder="ex. Paris" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              }
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Téléphone <span class="label-optionnel">(optionnel)</span></mat-label>
+                <input matInput formControlName="telephone" type="tel" placeholder="ex. 06 00 00 00 00" />
+              </mat-form-field>
+            </div>
+
+            <div class="row-2">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="ex. adresse@mail.com" />
+                <mat-error>E-mail invalide</mat-error>
+              </mat-form-field>
+              <div></div>
+            </div>
+            @if (erreurEmail()) {
+              <p class="field-error">{{ erreurEmail() }}</p>
+            }
+          </div>
+
+          <!-- Carte d'accès -->
+          @if (contrat()!.allowCartePhysique || contrat()!.allowCarteDematerialisee) {
+            <div class="bloc">
+              <div class="bloc-header">
+                <mat-icon class="bloc-icon">credit_card</mat-icon>
+                <span class="bloc-titre">Carte d'accès</span>
+              </div>
+              @if (contrat()!.allowCartePhysique) {
+                <div class="toggle-row">
+                  <span class="toggle-label">Physique</span>
+                  <mat-slide-toggle formControlName="cartePhysique" color="primary" />
+                </div>
+              }
+              @if (contrat()!.allowCarteDematerialisee) {
+                <div class="toggle-row">
+                  <span class="toggle-label">Dématérialisée</span>
+                  <mat-slide-toggle formControlName="carteDematerialisee" color="primary" inert class="toggle-fixe" />
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Véhicules -->
+          @if (contrat()!.allowImmatriculations) {
+            <div class="bloc">
+              <div class="bloc-header">
+                <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
+                <span class="bloc-titre">Véhicules</span>
+              </div>
+
+              @if (vehicules().length) {
+                @for (vehicule of vehicules(); track vehicule) {
+                  <div class="vehicule-item">
+                    <button type="button" class="btn-vehicule-icon btn-supprimer-vehicule" (click)="onSupprimerVehicule(vehicule)">
+                      <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
+                    </button>
+                    <span class="vehicule-immat">{{ vehicule.label }}</span>
+                  </div>
+                }
+              }
+
+              <button type="button" class="btn-ajouter-vehicule" (click)="onAjouterVehicule()">
+                Ajouter un véhicule
+              </button>
+            </div>
+          }
+
+          <!-- Carte grise (si véhicule(s)) -->
+          @if (contrat()!.allowImmatriculations && vehicules().length > 0) {
+            <div class="bloc">
+              <div class="bloc-header">
+                <mat-icon class="bloc-icon">directions_car</mat-icon>
+                <span class="bloc-titre">Carte grise</span>
+              </div>
+              <div class="file-section">
+                <label class="btn-file" for="inputCG">Ajouter la carte grise</label>
+                <input type="file" id="inputCG" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                       class="file-hidden" (change)="onFileChange($event, 'carteGrise')" />
+                <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
+              </div>
+            </div>
+          }
+
+          <!-- Kbis (professionnel) -->
+          @if (type() === 'Pro') {
+            <div class="bloc">
+              <div class="bloc-header">
+                <mat-icon class="bloc-icon">description</mat-icon>
+                <span class="bloc-titre">Kbis</span>
+              </div>
+              <div class="file-section">
+                <label class="btn-file" for="inputKbis">Ajouter le Kbis</label>
+                <input type="file" id="inputKbis" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                       class="file-hidden" (change)="onFileChange($event, 'kbis')" />
+                <span class="file-placeholder">{{ fileKbis()?.name ?? 'Aucun fichier sélectionné' }}</span>
+              </div>
+              @if (erreurKbis()) {
+                <p class="field-error">Vous devez joindre votre Kbis</p>
+              }
+            </div>
+          }
+
+          <!-- Carte d'identité (particulier) -->
+          @if (type() === 'Part') {
+            <div class="bloc">
+              <div class="bloc-header">
+                <mat-icon class="bloc-icon">badge</mat-icon>
+                <span class="bloc-titre">Carte d'identité</span>
+              </div>
+              <div class="file-section">
+                <label class="btn-file" for="inputCI">Ajouter la carte</label>
+                <input type="file" id="inputCI" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                       class="file-hidden" (change)="onFileChange($event, 'ci')" />
+                <span class="file-placeholder">{{ fileCarteIdentite()?.name ?? 'Aucun fichier sélectionné' }}</span>
+              </div>
+              @if (erreurCarteIdentite()) {
+                <p class="field-error">Vous devez joindre votre carte d'identité</p>
+              }
+            </div>
+
+            <!-- Justificatif de domicile -->
+            <div class="bloc">
+              <div class="bloc-header">
+                <mat-icon class="bloc-icon">home</mat-icon>
+                <span class="bloc-titre">Justificatif de domicile</span>
+              </div>
+              <div class="file-section">
+                <label class="btn-file" for="inputJD">Ajouter le justificatif</label>
+                <input type="file" id="inputJD" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                       class="file-hidden" (change)="onFileChange($event, 'jd')" />
+                <span class="file-placeholder">{{ fileJustificatif()?.name ?? 'Aucun fichier sélectionné' }}</span>
+              </div>
+              @if (erreurJustificatif()) {
+                <p class="field-error">Vous devez joindre votre justificatif de domicile</p>
+              }
+            </div>
+          }
+
+          <!-- Conditions générales -->
+          <div class="bloc">
+            <div class="bloc-header">
+              <mat-icon class="bloc-icon">article</mat-icon>
+              <span class="bloc-titre">Conditions générales</span>
+            </div>
+            <p class="cg-texte">
+              Pour finaliser votre préinscription, vous devez accepter le règlement intérieur
+              de la déchetterie qui vous a été remis lors de votre passage en déchetterie.
+              Pour ce faire, acceptez les conditions générales.
+            </p>
+            <div class="toggle-row">
+              <span class="toggle-label toggle-label--bold">J'ai lu et accepté les<br>conditions générales</span>
+              <mat-slide-toggle formControlName="mentionsLegales" color="primary" />
+            </div>
+          </div>
+
+          <!-- Bouton envoi -->
+          <button type="submit" class="btn-valider"
+                  [disabled]="form.invalid || enCours()">
+            @if (enCours()) {
+              <mat-progress-spinner diameter="20" mode="indeterminate" />
+            } @else {
+              <mat-icon>check_circle_outline</mat-icon>
+            }
+            Envoyer ma demande d'inscription
+          </button>
+
+        </div>
+      </form>
+    }
+  </div>
+
+} @else {
+
+  <!-- ═══════════════════════════ MOBILE WIZARD ═══════════════════════════ -->
+  <div class="mobile-page">
+
+    <!-- Bandeau logo arrondi -->
+    <div class="mobile-header-card">
+      <button type="button" class="btn-retour-mobile" (click)="precedent()">
+        <img src="Gauche.svg" alt="Retour" class="btn-retour-mobile-img" />
+      </button>
+      @if (logoUrl()) {
+        <img [src]="logoUrl()!" alt="Logo" class="mobile-logo" />
+      } @else if (contrat()) {
+        <span class="mobile-nom-contrat">{{ contrat()!.nom }}</span>
+      }
+    </div>
+
+    @if (!contrat()) {
+      <div class="loading"><mat-progress-spinner mode="indeterminate" diameter="40" /></div>
+    } @else {
+      <div class="mobile-content">
+
+        <h1 class="mobile-titre">Inscription {{ type() === 'Pro' ? 'professionnel' : 'particulier' }}</h1>
+
+        <!-- Stepper -->
+        <div class="mobile-stepper">
+          @for (step of steps(); track $index; let i = $index) {
+            @if (i > 0) {
+              <div class="stepper-line" [class.done]="i <= currentStep()"></div>
+            }
+            <div class="stepper-dot" [class.active]="i <= currentStep()"></div>
+          }
+        </div>
+
+        <!-- Contenu de l'étape courante -->
+        <form [formGroup]="form" class="mobile-step-card">
+
+          @switch (steps()[currentStep()]) {
+
+            @case ('infos') {
+              <div class="step-section-header">
+                <mat-icon class="step-icon">person</mat-icon>
+                <span class="step-titre">Informations personnelles</span>
+              </div>
+
+              @if (type() === 'Pro') {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Société</mat-label>
+                  <input matInput formControlName="societe" placeholder="Nom de la société" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>SIRET</mat-label>
+                  <input matInput formControlName="siret" placeholder="14 chiffres" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              }
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ type() === 'Pro' ? 'Nom du contact' : 'Nom' }}</mat-label>
+                <input matInput formControlName="nom" placeholder="ex. Dupont" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="prenom" placeholder="ex. Julie" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+
+              @if (type() === 'Part') {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Deuxième nom <span class="label-optionnel">(optionnel)</span></mat-label>
+                  <input matInput formControlName="deuxiemeNom" placeholder="ex. Dupont" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Deuxième prénom <span class="label-optionnel">(optionnel)</span></mat-label>
+                  <input matInput formControlName="deuxiemePrenom" placeholder="ex. Julie" />
+                </mat-form-field>
+              }
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Adresse</mat-label>
+                <input matInput formControlName="adresse" placeholder="ex. 1 rue des roses" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Complément d'adresse <span class="label-optionnel">(optionnel)</span></mat-label>
+                <input matInput formControlName="complementAdresse" placeholder="ex. Bât. B, apt. 12" />
+              </mat-form-field>
+
+              @if (contrat()!.communes.length) {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ville</mat-label>
+                  <mat-select formControlName="ville" (selectionChange)="onCommuneSelected($event)">
+                    @for (commune of contrat()!.communes; track $index) {
+                      <mat-option [value]="commune.nom">{{ commune.codePostal }} – {{ commune.nom }}</mat-option>
+                    }
+                  </mat-select>
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              } @else {
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ville</mat-label>
+                  <input matInput formControlName="ville" placeholder="ex. Paris" />
+                  <mat-error>Champ obligatoire</mat-error>
+                </mat-form-field>
+              }
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Téléphone <span class="label-optionnel">(optionnel)</span></mat-label>
+                <input matInput formControlName="telephone" type="tel" placeholder="ex. 06 00 00 00 00" />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="ex. adresse@mail.com" />
+                <mat-error>E-mail invalide</mat-error>
+              </mat-form-field>
+
+              @if (erreurEmail()) {
+                <p class="field-error">{{ erreurEmail() }}</p>
+              }
+            }
+
+            @case ('carte') {
+              <div class="step-section-header">
+                <mat-icon class="step-icon">credit_card</mat-icon>
+                <span class="step-titre">Carte d'accès</span>
+              </div>
+
+              @if (contrat()!.allowCartePhysique) {
+                <div class="toggle-row">
+                  <span class="toggle-label">Physique</span>
+                  <mat-slide-toggle formControlName="cartePhysique" color="primary" />
+                </div>
+              }
+              @if (contrat()!.allowCarteDematerialisee) {
+                <div class="toggle-row">
+                  <span class="toggle-label">Dématérialisée</span>
+                  <mat-slide-toggle formControlName="carteDematerialisee" color="primary" inert class="toggle-fixe" />
+                </div>
+              }
+            }
+
+            @case ('vehicules') {
+              <div class="step-section-header">
+                <img src="Immatriculation.svg" alt="" class="step-icon-img" />
+                <span class="step-titre">Véhicules</span>
+              </div>
+
+              @for (vehicule of vehicules(); track vehicule) {
+                <div class="vehicule-item">
+                  <img src="Immatriculation.svg" alt="" class="vehicule-icon-small" />
+                  <span class="vehicule-immat">{{ vehicule.label }}</span>
+                  <button type="button" class="btn-vehicule-icon btn-supprimer-vehicule" (click)="onSupprimerVehicule(vehicule)">
+                    <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
+                  </button>
+                </div>
+              }
+
+              <button type="button" class="btn-ajouter-vehicule" (click)="onAjouterVehicule()">
+                Ajouter un véhicule
+              </button>
+            }
+
+            @case ('documents') {
+              @if (type() === 'Part') {
+                <div class="step-section-header">
+                  <mat-icon class="step-icon">badge</mat-icon>
+                  <span class="step-titre">Carte d'identité</span>
+                </div>
+                <div class="file-section">
+                  <label class="btn-file" for="inputCI-m">Ajouter la carte</label>
+                  <input type="file" id="inputCI-m" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                         class="file-hidden" (change)="onFileChange($event, 'ci')" />
+                  <span class="file-placeholder">{{ fileCarteIdentite()?.name ?? 'Aucun fichier sélectionné' }}</span>
+                </div>
+                @if (erreurCarteIdentite()) {
+                  <p class="field-error">Vous devez joindre votre carte d'identité</p>
+                }
+
+                <div class="step-section-header step-section-header--mt">
+                  <mat-icon class="step-icon">home</mat-icon>
+                  <span class="step-titre">Justificatif de domicile</span>
+                </div>
+                <div class="file-section">
+                  <label class="btn-file" for="inputJD-m">Ajouter le justificatif</label>
+                  <input type="file" id="inputJD-m" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                         class="file-hidden" (change)="onFileChange($event, 'jd')" />
+                  <span class="file-placeholder">{{ fileJustificatif()?.name ?? 'Aucun fichier sélectionné' }}</span>
+                </div>
+                @if (erreurJustificatif()) {
+                  <p class="field-error">Vous devez joindre votre justificatif de domicile</p>
+                }
+              }
+
+              @if (type() === 'Pro') {
+                <div class="step-section-header">
+                  <mat-icon class="step-icon">description</mat-icon>
+                  <span class="step-titre">Kbis</span>
+                </div>
+                <div class="file-section">
+                  <label class="btn-file" for="inputKbis-m">Ajouter le Kbis</label>
+                  <input type="file" id="inputKbis-m" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                         class="file-hidden" (change)="onFileChange($event, 'kbis')" />
+                  <span class="file-placeholder">{{ fileKbis()?.name ?? 'Aucun fichier sélectionné' }}</span>
+                </div>
+                @if (erreurKbis()) {
+                  <p class="field-error">Vous devez joindre votre Kbis</p>
+                }
+              }
+
+              @if (contrat()!.allowImmatriculations && vehicules().length > 0) {
+                <div class="step-section-header step-section-header--mt">
+                  <mat-icon class="step-icon">directions_car</mat-icon>
+                  <span class="step-titre">Carte grise</span>
+                </div>
+                <div class="file-section">
+                  <label class="btn-file" for="inputCG-m">Ajouter la carte grise</label>
+                  <input type="file" id="inputCG-m" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                         class="file-hidden" (change)="onFileChange($event, 'carteGrise')" />
+                  <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
+                </div>
+              }
+            }
+
+            @case ('cg') {
+              @if (erreurEmail()) {
+                <p class="field-error" style="margin-bottom: 12px">{{ erreurEmail() }}</p>
+              }
+              <div class="step-section-header">
+                <mat-icon class="step-icon">article</mat-icon>
+                <span class="step-titre">Conditions générales</span>
+              </div>
+              <p class="cg-texte">
+                Pour finaliser votre préinscription, vous devez accepter le règlement intérieur
+                de la déchetterie qui vous a été remis lors de votre passage en déchetterie.
+                Pour ce faire, acceptez les conditions générales.
+                @if (contrat()!.mentionsLegales) { {{ contrat()!.mentionsLegales }} }
+              </p>
+              <div class="toggle-row">
+                <span class="toggle-label toggle-label--bold">J'ai lu et accepté les<br>conditions générales</span>
+                <mat-slide-toggle formControlName="mentionsLegales" color="primary" />
+              </div>
+            }
+
+          }
+        </form>
+
+        <!-- Navigation -->
+        <div class="mobile-nav">
+          <button type="button" class="btn-nav-gauche" (click)="precedent()">
+            {{ currentStep() === 0 ? 'Annuler' : 'Précédent' }}
+          </button>
+          @if (currentStep() === steps().length - 1) {
+            <button type="button" class="btn-nav-valider" (click)="onSubmit()"
+                    [disabled]="form.controls.mentionsLegales.invalid || enCours()">
+              @if (enCours()) {
+                <mat-progress-spinner diameter="18" mode="indeterminate" />
+              } @else {
+                <mat-icon>check_circle_outline</mat-icon>
+              }
+              Valider
+            </button>
+          } @else {
+            <button type="button" class="btn-nav-suivant" (click)="suivant()">Suivant</button>
+          }
+        </div>
+
+      </div>
+    }
+  </div>
+
+}

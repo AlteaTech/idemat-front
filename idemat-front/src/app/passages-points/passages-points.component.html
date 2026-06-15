@@ -1,0 +1,63 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else if (info()) {
+  <div class="page-container">
+
+    <!-- TITRE -->
+    <div class="page-title">
+      <button class="btn-retour" (click)="retour()">
+        <img src="Gauche.svg" alt="" class="btn-retour-img" />
+      </button>
+      <div>
+        <h1>Passages & Points</h1>
+        <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+      </div>
+    </div>
+
+    <!-- BANDEAU SOLDE -->
+    <div class="bandeau-solde">
+      <mat-icon class="bandeau-icon">local_offer</mat-icon>
+      <span>Il vous reste <strong>{{ info()!.passagesRestants }} passages</strong></span>
+    </div>
+
+    <!-- PASSAGES ACHETÉS -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">shopping_cart</mat-icon>
+        <span class="bloc-titre">Passages achetés</span>
+      </div>
+      @for (achat of info()!.achatsAnnee; track achat.date) {
+        <div class="achat-ligne">
+          <span class="achat-date">{{ achat.date | date:'dd/MM/yyyy' }}</span>
+          <span class="achat-nb">{{ achat.nbPassages }} passage{{ achat.nbPassages > 1 ? 's' : '' }} achetés</span>
+        </div>
+      }
+      @if (info()!.achatsAnnee.length === 0) {
+        <p class="vide">Aucun achat cette année.</p>
+      }
+    </div>
+
+    <!-- INFORMATIONS -->
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">info_outline</mat-icon>
+        <span class="bloc-titre">Informations</span>
+      </div>
+      <div class="info-ligne">
+        <span class="info-label">Nombre de passages achetés</span>
+        <span class="info-valeur">{{ info()!.nbPassagesAchetesTotal }}</span>
+      </div>
+      <div class="info-ligne">
+        <span class="info-label">Forfait sur l'année</span>
+        <span class="info-valeur">{{ info()!.forfaitGratuitAnnuel }} passages gratuits • {{ info()!.forfaitAcheteAnnuel }} passages achetés</span>
+      </div>
+      <div class="info-ligne">
+        <span class="info-label">Passages consommés cette année</span>
+        <span class="info-valeur">{{ info()!.passagesConsommesAnnee }} passage{{ info()!.passagesConsommesAnnee > 1 ? 's' : '' }} en déchetterie</span>
+      </div>
+    </div>
+
+  </div>
+}

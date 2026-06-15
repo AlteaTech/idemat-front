@@ -1,0 +1,25 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-container { max-width: 960px; }
+.bloc-header { margin-bottom: 12px; }
+
+.contenu { max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+
+.field-label { font-size: 0.85rem; color: $text-color-muted; display: block; margin-bottom: 4px; }
+
+.erreur-msg { font-size: 0.875rem; color: $error-color; margin: 0; }
+
+.btn-valider {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 24px;
+  background: $primary-color; color: white;
+  border: none; border-radius: 30px;
+  font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  &:hover:not(:disabled) { background: $primary-color-darker; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}

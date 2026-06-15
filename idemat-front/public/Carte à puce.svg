@@ -1,0 +1,13 @@
+<svg id="Carte_à_puce" data-name="Carte à puce" xmlns="http://www.w3.org/2000/svg" width="90.849" height="58.639" viewBox="0 0 90.849 58.639">
+  <path id="Carte_-_Contour" data-name="Carte - Contour" d="M8.259,1.652A6.615,6.615,0,0,0,1.652,8.259V50.38a6.615,6.615,0,0,0,6.607,6.607H82.59A6.615,6.615,0,0,0,89.2,50.38V8.259A6.615,6.615,0,0,0,82.59,1.652H8.259M8.259,0H82.59a8.259,8.259,0,0,1,8.259,8.259V50.38a8.259,8.259,0,0,1-8.259,8.259H8.259A8.259,8.259,0,0,1,0,50.38V8.259A8.259,8.259,0,0,1,8.259,0Z"/>
+  <g id="PUCE" transform="translate(55.335 11.563)">
+    <path id="Rectangle_10_-_Contour" data-name="Rectangle 10 - Contour" d="M8.259,1.652A6.615,6.615,0,0,0,1.652,8.259V9.911a6.615,6.615,0,0,0,6.607,6.607h7.433A6.615,6.615,0,0,0,22.3,9.911V8.259a6.615,6.615,0,0,0-6.607-6.607H8.259M8.259,0h7.433a8.259,8.259,0,0,1,8.259,8.259V9.911a8.259,8.259,0,0,1-8.259,8.259H8.259A8.259,8.259,0,0,1,0,9.911V8.259A8.259,8.259,0,0,1,8.259,0Z" transform="translate(0)"/>
+    <path id="Ligne_1" data-name="Ligne 1" d="M.326,16.843H-.5V0H.326Z" transform="translate(7.855 0.759)"/>
+    <path id="Ligne_2" data-name="Ligne 2" d="M.326,16.843H-.5V0H.326Z" transform="translate(16.568 0.759)"/>
+    <path id="Ligne_3" data-name="Ligne 3" d="M5.83.326H0V-.5H5.83Z" transform="translate(1.938 6.028)"/>
+    <path id="Ligne_5" data-name="Ligne 5" d="M5.83.326H0V-.5H5.83Z" transform="translate(16.481 6.028)"/>
+    <path id="Ligne_4" data-name="Ligne 4" d="M5.83.326H0V-.5H5.83Z" transform="translate(1.938 12.506)"/>
+    <path id="Ligne_6" data-name="Ligne 6" d="M5.83.326H0V-.5H5.83Z" transform="translate(16.481 12.506)"/>
+  </g>
+  <path id="Tracé_2" data-name="Tracé 2" d="M0,0H89.2V9.911H0Z" transform="translate(0.826 42.121)"/>
+</svg>

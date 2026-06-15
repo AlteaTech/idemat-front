@@ -1,0 +1,56 @@
+<div class="page-container">
+
+  <div class="page-title">
+    <button class="btn-retour" (click)="retour()">
+      <img src="Gauche.svg" alt="" class="btn-retour-img" />
+    </button>
+    <div>
+      <h1>Modifier le mot de passe</h1>
+      <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+    </div>
+  </div>
+
+  <form class="contenu" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="bloc">
+      <div class="bloc-header">
+        <mat-icon class="bloc-icon">lock_outline</mat-icon>
+        <span class="bloc-titre">Mot de passe</span>
+      </div>
+
+      <label class="field-label">Mot de passe actuel</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput formControlName="ancienMotDePasse" type="password" placeholder="Mot de passe"/>
+        <mat-error>Champ requis</mat-error>
+      </mat-form-field>
+
+      <label class="field-label">Nouveau mot de passe</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput formControlName="nouveauMotDePasse" type="password" placeholder="Mot de passe"/>
+        <mat-error>8 caractères minimum</mat-error>
+      </mat-form-field>
+
+      <label class="field-label">Confirmer le mot de passe</label>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput formControlName="confirmation" type="password" placeholder="Mot de passe"/>
+        @if (form.hasError('passwordsMismatch')) {
+          <mat-error>Les mots de passe ne correspondent pas</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    @if (erreur()) {
+      <p class="erreur-msg">{{ erreur() }}</p>
+    }
+
+    <button type="submit" class="btn-valider" [disabled]="form.invalid || enCours()">
+      @if (enCours()) {
+        <mat-spinner diameter="20" color="accent"></mat-spinner>
+      } @else {
+        <mat-icon>check_circle_outline</mat-icon>
+        <span>Enregistrer le nouveau mot de passe</span>
+      }
+    </button>
+
+  </form>
+</div>

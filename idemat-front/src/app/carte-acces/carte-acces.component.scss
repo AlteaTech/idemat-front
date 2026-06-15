@@ -1,0 +1,17 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-container { max-width: 960px; }
+.page-title { margin-bottom: 28px; }
+.bloc { margin-bottom: 16px; max-width: 600px; }
+
+.qr-container { display: flex; justify-content: center; padding: 8px 0 4px; }
+.qr-image { width: 200px; height: 200px; }
+.no-carte { font-size: 0.9rem; color: $text-color-muted; font-style: italic; }
+
+.info-ligne { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; }
+.info-label { font-size: 0.8rem; font-weight: 700; color: $text-color-dark; }
+.info-valeur { font-size: 0.9rem; color: $text-color-secondary; }
+.separateur { border: none; border-top: 1px solid $border-color-light; margin: 4px 0; }

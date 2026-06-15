@@ -1,1 +1,42 @@
-<p>home works!</p>
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="home-container">
+
+    <h1 class="bienvenue">Bienvenue</h1>
+    <p class="bienvenue-nom">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+
+    @if (showCarteAcces()) {
+      <div class="cards-wrapper">
+
+        <!-- Carte d'accès avec QR code -->
+        <div class="card-acces">
+          <div class="card-header">
+            <img src="Code barres.svg" alt="" class="card-icon-img" />
+            <span class="card-titre">Carte d'accès</span>
+          </div>
+          @if (qrCodeUrl()) {
+            <img [src]="qrCodeUrl()" alt="QR Code" class="qr-img" />
+          } @else {
+            <p class="no-qr">Aucun code-barres associé à votre compte</p>
+          }
+        </div>
+
+        <!-- Voir tous mes accès -->
+        <div class="card-voir-acces" role="button" tabindex="0"
+             (click)="naviguer(routesConstantes.carteAcces)"
+             (keydown.enter)="naviguer(routesConstantes.carteAcces)">
+          <div class="voir-acces-content">
+            <img src="Autres cartes.svg" alt="" class="voir-acces-img" />
+            <span class="voir-acces-label">Voir tous mes accès</span>
+          </div>
+          <img src="Droite.svg" alt="" class="voir-acces-chevron-img" />
+        </div>
+
+      </div>
+    }
+
+  </div>
+}

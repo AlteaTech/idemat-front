@@ -1,30 +1,17 @@
-import {inject, Injectable} from '@angular/core';
-import {LoaderDialogComponent} from '../app/shared/components/loader-dialog/loader-dialog.component';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Injectable, signal} from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class LoaderService {
-  private dialogRef: MatDialogRef<LoaderDialogComponent> | null = null;
   private nbRequetesEnCours = 0;
-  private dialog = inject(MatDialog);
+  readonly loading = signal(false);
 
-  openLoaderDialog() {
-    if (this.nbRequetesEnCours === 0) {
-      this.dialogRef = this.dialog.open(LoaderDialogComponent, {
-        disableClose: true
-      });
-    }
+  openLoaderDialog(): void {
     this.nbRequetesEnCours++;
+    this.loading.set(true);
   }
 
-  closeLoaderDialog() {
-    this.nbRequetesEnCours--;
-    if (this.nbRequetesEnCours <= 0) {
-      this.nbRequetesEnCours = 0;
-      this.dialogRef?.close();
-      this.dialogRef = null;
-    }
+  closeLoaderDialog(): void {
+    this.nbRequetesEnCours = Math.max(0, this.nbRequetesEnCours - 1);
+    if (this.nbRequetesEnCours === 0) this.loading.set(false);
   }
 }

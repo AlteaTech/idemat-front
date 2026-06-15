@@ -1,0 +1,131 @@
+@use 'variables' as *;
+
+// ─── LOADING ─────────────────────────────────────────────────────────────────
+
+.loading-screen { display: flex; justify-content: center; align-items: center; padding: 60px 0; }
+
+// ─── LAYOUT PAGE ─────────────────────────────────────────────────────────────
+
+.page-container {
+  padding: 40px 80px 48px;
+  flex: 1;
+  background: $background-page;
+  @media (max-width: 900px) { padding: 24px 20px 40px; }
+}
+
+.page-title { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.page-title h1 { font-size: 1.5rem; font-weight: 700; color: $text-color-primary; margin: 0; }
+.page-titre-sous { font-size: 0.9rem; font-weight: 400; color: $text-color-secondary; margin: 0; }
+
+.btn-retour {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; color: $text-color-secondary;
+  padding: 4px; border-radius: 50%; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+.btn-retour-img { width: 22px; height: 22px; object-fit: contain; }
+
+// ─── BLOCS ───────────────────────────────────────────────────────────────────
+
+.bloc {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  padding: 20px 24px;
+  box-shadow: $bloc-shadow;
+}
+.bloc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.bloc-icon { font-size: 20px; width: 20px; height: 20px; color: $text-color-muted; }
+.bloc-icon-img { width: 20px; height: 20px; object-fit: contain; }
+.bloc-titre { font-size: 0.9rem; font-weight: 600; color: $text-color-secondary; }
+
+// ─── LISTES ──────────────────────────────────────────────────────────────────
+
+.liste {
+  background: $background-white;
+  border-radius: $bloc-border-radius;
+  box-shadow: $bloc-shadow;
+  overflow: hidden;
+}
+
+.liste-item {
+  width: 100%;
+  background: none; border: none;
+  border-bottom: 1px solid $border-color-light;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:last-child { border-bottom: none; }
+  &:hover { background: $background-hover; }
+}
+
+.liste-item-chevron { color: $icon-color-muted; font-size: 20px; width: 20px; height: 20px; }
+.liste-item-chevron-img { width: 20px; height: 20px; object-fit: contain; opacity: 0.5; }
+
+// ─── UTILITAIRES ─────────────────────────────────────────────────────────────
+
+.full-width { width: 100%; }
+
+// ─── DIALOGS ─────────────────────────────────────────────────────────────────
+
+.dialog-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 480px;
+  background: $background-white;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+
+  .dialog-icon { color: $primary-color; font-size: 24px; width: 24px; height: 24px; }
+  .dialog-icon-img { width: 24px; height: 24px; object-fit: contain; }
+  .dialog-title { font-size: 1.3rem; font-weight: 700; color: $text-color-primary; margin: 0; }
+}
+
+.dialog-form { display: flex; flex-direction: column; gap: 16px; }
+
+.actions-row { display: flex; gap: 12px; margin-top: 12px; }
+
+.btn-annuler {
+  flex: 1;
+  background: $background-hover-neutral;
+  border: none; border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 0.95rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; color: $text-color-secondary; transition: background 0.15s;
+  &:hover { background: $border-color-medium; }
+}
+
+// ─── SURCHARGES MATERIAL ─────────────────────────────────────────────────────
+
+::ng-deep {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 16px !important;
+    .mdc-dialog__surface {
+      padding: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+  }
+
+  .mat-mdc-form-field {
+    .mdc-text-field--outlined { height: 44px !important; }
+    .mat-mdc-form-field-infix {
+      padding-top: 0 !important; padding-bottom: 0 !important;
+      min-height: 44px !important;
+      display: flex !important; align-items: center !important;
+    }
+    .mat-mdc-select { display: flex !important; align-items: center !important; }
+    .mdc-floating-label { top: 22px !important; transform: translateY(-50%) !important; }
+    .mdc-floating-label--float-above { top: 0px !important; transform: translateY(-50%) scale(0.75) !important; }
+    .mdc-notched-outline__leading { border-radius: 12px 0 0 12px !important; }
+    .mdc-notched-outline__trailing { border-radius: 0 12px 12px 0 !important; }
+  }
+}

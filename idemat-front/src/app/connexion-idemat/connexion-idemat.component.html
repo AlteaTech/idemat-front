@@ -1,0 +1,65 @@
+<div class="page" [class.page--mobile]="!isDesktop()">
+
+  @if (!isDesktop()) {
+    <div class="mobile-header-inset">
+      @if (logoUrl()) {
+        <img [src]="logoUrl()" alt="Logo" class="mobile-logo" />
+      } @else if (nomContrat()) {
+        <span class="mobile-nom-contrat">{{ nomContrat() }}</span>
+      }
+    </div>
+  } @else {
+    @if (logoUrl()) {
+      <img [src]="logoUrl()" alt="Logo enseigne" class="logo" />
+    } @else if (nomContrat()) {
+      <p class="nom-contrat">{{ nomContrat() }}</p>
+    }
+  }
+
+  <div class="card">
+    <form [formGroup]="form" (ngSubmit)="onLogin()">
+
+      <div class="champ">
+        <label class="label" for="login">Identifiant</label>
+        <input id="login" type="email" class="input" formControlName="login"
+               placeholder="Ex : adresse@mail.com" autocomplete="email" />
+      </div>
+
+      <div class="champ">
+        <label class="label" for="motdepasse">Mot de passe</label>
+        <input id="motdepasse" type="password" class="input" formControlName="motdepasse"
+               placeholder="Votre mot de passe" autocomplete="current-password" />
+      </div>
+
+      <button type="button" class="lien-oublie" (click)="onMotDePasseOublie()">
+        J'ai oublié mon mot de passe
+      </button>
+
+      @if (erreurLogin()) {
+        <p class="erreur">Votre identifiant est incorrect</p>
+      }
+      @if (erreurMotdepasse()) {
+        <p class="erreur">Votre mot de passe est incorrect</p>
+      }
+      @if (erreurCompteSupprime()) {
+        <p class="erreur">Ce compte a été supprimé à votre demande</p>
+      }
+
+      <button type="submit" class="btn-connexion" [disabled]="enCours()">
+        @if (enCours()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate" />
+        } @else {
+          Se connecter
+        }
+      </button>
+
+      <hr class="separateur" />
+
+      <p class="pas-de-compte">Vous n'avez pas encore de compte ?</p>
+      <button type="button" class="btn-inscription" (click)="onSInscrire()">
+        S'inscrire
+      </button>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IDemat — Roadmap endpoints BO</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; color: #1a1a1a; background: #f5f5f5; padding: 40px 24px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+    .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 36px; }
+
+    h2 { font-size: 1.05rem; font-weight: 700; color: #fff; padding: 10px 16px; border-radius: 8px 8px 0 0; margin-top: 32px; }
+    h2.public  { background: #2e7d32; }
+    h2.secured { background: #1565c0; }
+    h2.order   { background: #6a1b9a; }
+    h2.constraint { background: #b71c1c; }
+    h2.lead-msg { background: #ED6E57; }
+
+    .card { background: #fff; border-radius: 0 0 8px 8px; box-shadow: 0 2px 8px rgba(0,0,0,.07); padding: 20px 24px; margin-bottom: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { text-align: left; padding: 8px 12px; background: #f9f9f9; border-bottom: 2px solid #eee; color: #555; font-weight: 600; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+
+    .method { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: 'SF Mono', Monaco, monospace; white-space: nowrap; }
+    .get    { background: #e3f2fd; color: #0d47a1; }
+    .post   { background: #e8f5e9; color: #1b5e20; }
+    .put    { background: #fff3e0; color: #e65100; }
+    .delete { background: #fce4ec; color: #880e4f; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+    .badge-public   { background: #e8f5e9; color: #2e7d32; }
+    .badge-secured  { background: #e3f2fd; color: #1565c0; }
+    .badge-priority { background: #fff8e1; color: #f57f17; }
+    .badge-open     { background: #f3e5f5; color: #7b1fa2; }
+    .badge-tbd      { background: #fce4ec; color: #c62828; }
+
+    code { background: #f4f4f4; padding: 1px 6px; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 0.82rem; }
+    .endpoint { font-family: 'SF Mono', Monaco, monospace; font-size: 0.82rem; color: #1a1a1a; font-weight: 600; }
+
+    .note { background: #fff8e1; border-left: 4px solid #ffc107; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 0.88rem; color: #5d4037; margin-top: 12px; }
+    .note-danger { background: #fce4ec; border-left: 4px solid #e53935; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 0.88rem; color: #b71c1c; margin-top: 12px; }
+
+    .order-list { list-style: none; counter-reset: steps; }
+    .order-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+    .order-list li:last-child { border-bottom: none; }
+    .order-list li::before { content: counter(steps); flex-shrink: 0; width: 28px; height: 28px; background: #6a1b9a; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; }
+    .order-content strong { display: block; margin-bottom: 3px; font-size: 0.92rem; }
+    .order-content span { color: #555; font-size: 0.85rem; }
+
+    .lead-table td:first-child { font-style: italic; color: #444; width: 42%; }
+    .lead-table td:nth-child(2) { color: #1a1a1a; }
+
+    .constraint-list { list-style: none; }
+    .constraint-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; display: flex; gap: 10px; }
+    .constraint-list li:last-child { border-bottom: none; }
+    .constraint-list li::before { content: '✖'; color: #c62828; font-weight: 700; flex-shrink: 0; }
+
+    .sub-title { font-size: 0.8rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 6px; }
+
+    @media (max-width: 600px) {
+      table { font-size: 0.8rem; }
+      td, th { padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>IDemat — Roadmap endpoints BO</h1>
+  <p class="subtitle">Déduite des services agents Angular — à destination du développeur back-end · <strong>branch : feature/back-idemat</strong> · généré le 21 mai 2026</p>
+
+  <!-- MESSAGE DU LEAD -->
+  <h2 class="lead-msg">Instructions du lead</h2>
+  <div class="card">
+    <table class="lead-table">
+      <thead>
+        <tr><th>Fragment</th><th>Interprétation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"feature dédiée pour le back idemat"</td>
+          <td>Travailler sur une branche <code>feature/back-idemat</code> isolée — ne pas toucher à <code>develop</code> / <code>main</code></td>
+        </tr>
+        <tr>
+          <td>"route non sécurisée pour l'inscription"</td>
+          <td><code>POST /api/idemat/inscription</code> doit être <strong>public</strong> — l'usager n'est pas encore authentifié au moment de s'inscrire</td>
+        </tr>
+        <tr>
+          <td>"interdit lui la modification de structure de bdd"</td>
+          <td>La BDD IDemat est partagée avec le .NET en production. <strong>Aucun ALTER TABLE, CREATE TABLE ni migration.</strong> Lire/écrire sur les tables existantes uniquement.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CONTRAINTE BDD -->
+  <h2 class="constraint">Contrainte BDD — à lire avant tout</h2>
+  <div class="card">
+    <ul class="constraint-list">
+      <li>Pas de <code>ALTER TABLE</code> ni <code>CREATE TABLE</code></li>
+      <li>Pas de fichier de migration (EF Core, Flyway, Liquibase…)</li>
+      <li>Pas de renommage ou suppression de colonne</li>
+      <li>Si une donnée semble manquer en base : <strong>remonter au lead</strong> avant d'improviser une colonne</li>
+    </ul>
+    <div class="note-danger">
+      La base IDemat est <strong>en production côté .NET</strong>. Toute modification de structure casse l'application existante.
+      Le dev back cartographie les tables existantes et s'y tient.
+    </div>
+  </div>
+
+  <!-- ROUTES PUBLIQUES -->
+  <h2 class="public">Bloc 1 — Routes PUBLIQUES (non sécurisées)</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Méthode</th><th>Corps de la requête</th><th>Réponse attendue</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="endpoint">/api/idemat/auth/login</td>
+          <td><span class="method post">POST</span></td>
+          <td><code>{ login, motDePasse }</code></td>
+          <td><code>{ token: string }</code> (JWT)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/reset-password</td>
+          <td><span class="method post">POST</span></td>
+          <td><code>{ email }</code></td>
+          <td>200 OK — déclenche l'envoi d'un e-mail de réinitialisation</td>
+          <td></td>
+        </tr>
+        <tr style="background: #f1f8e9;">
+          <td class="endpoint">/api/idemat/inscription</td>
+          <td><span class="method post">POST</span></td>
+          <td>
+            <code>multipart/form-data</code> — voir corps détaillé ci-dessous
+          </td>
+          <td>201 Created</td>
+          <td><span class="badge badge-priority">Priorité #1</span></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/contrat/by-url/{url}</td>
+          <td><span class="method get">GET</span></td>
+          <td>—</td>
+          <td><code>ContratIdematModel</code> (logo, communes, flags <code>allow*</code>)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/contrat/mentions-legales</td>
+          <td><span class="method get">GET</span></td>
+          <td>—</td>
+          <td>Texte HTML des CGU — depuis <code>strMentionsLegales</code> en base, par enseigne</td>
+          <td><span class="badge badge-open">Question ouverte</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sub-title">Corps détaillé — POST /api/idemat/inscription</p>
+    <table>
+      <thead>
+        <tr><th>Champ</th><th>Type</th><th>Obligatoire</th><th>Condition</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>type</code></td><td>string</td><td>Oui</td><td><code>"Part"</code> ou <code>"Pro"</code></td></tr>
+        <tr><td><code>contrat</code></td><td>string</td><td>Oui</td><td>URL de l'enseigne</td></tr>
+        <tr><td><code>nom</code></td><td>string</td><td>Oui</td><td></td></tr>
+        <tr><td><code>prenom</code></td><td>string</td><td>Oui</td><td></td></tr>
+        <tr><td><code>adresse</code></td><td>string</td><td>Oui</td><td></td></tr>
+        <tr><td><code>ville</code></td><td>string</td><td>Oui</td><td></td></tr>
+        <tr><td><code>email</code></td><td>string</td><td>Oui</td><td></td></tr>
+        <tr><td><code>telephone</code></td><td>string</td><td>Oui</td><td></td></tr>
+        <tr><td><code>cartePhysique</code></td><td>boolean</td><td>Oui</td><td></td></tr>
+        <tr><td><code>carteDematerialisee</code></td><td>boolean</td><td>Oui</td><td></td></tr>
+        <tr><td><code>mentionsLegales</code></td><td>boolean</td><td>Oui</td><td>Doit être <code>true</code></td></tr>
+        <tr><td><code>civilite</code></td><td>string</td><td>Particulier</td><td>type = <code>"Part"</code></td></tr>
+        <tr><td><code>carteIdentite</code></td><td>File</td><td>Particulier</td><td>type = <code>"Part"</code></td></tr>
+        <tr><td><code>justificatifDomicile</code></td><td>File</td><td>Particulier</td><td>type = <code>"Part"</code></td></tr>
+        <tr><td><code>societe</code></td><td>string</td><td>Pro</td><td>type = <code>"Pro"</code></td></tr>
+        <tr><td><code>siret</code></td><td>string</td><td>Pro</td><td>type = <code>"Pro"</code></td></tr>
+        <tr><td><code>immatriculation</code></td><td>string</td><td>Non</td><td>Si le contrat <code>allowImmatriculations</code></td></tr>
+        <tr><td><code>carteGrise</code></td><td>File</td><td>Non</td><td>Requis si immatriculation renseignée</td></tr>
+        <tr><td><code>zoneJ1</code></td><td>string</td><td>Non</td><td>Si contrat <code>demandeZoneJ1F3</code></td></tr>
+        <tr><td><code>zoneF3</code></td><td>number</td><td>Non</td><td>Si contrat <code>demandeZoneJ1F3</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ROUTES SÉCURISÉES -->
+  <h2 class="secured">Bloc 2 — Routes SÉCURISÉES (JWT Bearer requis)</h2>
+  <div class="card">
+
+    <p class="sub-title">Profil usager</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Méthode</th><th>Corps / Réponse</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/me</td>
+          <td><span class="method get">GET</span></td>
+          <td>→ <code>{ guid, nom, prenom, email, telephone, adresse, codePostal, ville, hasChangedPassword, codeBarres, immatriculations[] }</code></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/profil</td>
+          <td><span class="method put">PUT</span></td>
+          <td><code>{ nomPrenom, adresse, telephone, codePostal, ville }</code> → 200</td>
+          <td><span class="badge badge-open">Q : nomPrenom combiné ou nom+prenom séparés ?</span></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/email</td>
+          <td><span class="method put">PUT</span></td>
+          <td><code>{ email }</code> → 200</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/mot-de-passe</td>
+          <td><span class="method put">PUT</span></td>
+          <td><code>{ ancienMotDePasse, nouveauMotDePasse }</code> → 200</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/usager</td>
+          <td><span class="method delete">DELETE</span></td>
+          <td>→ 200 <em>(flux de confirmation à préciser : délai de grâce ? anonymisation ?)</em></td>
+          <td><span class="badge badge-tbd">À cadrer</span></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/contrat/current</td>
+          <td><span class="method get">GET</span></td>
+          <td>→ même <code>ContratIdematModel</code> que <code>by-url</code>, résolu depuis le JWT</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sub-title">Véhicules</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Méthode</th><th>Corps / Réponse</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/vehicules</td>
+          <td><span class="method post">POST</span></td>
+          <td><code>multipart/form-data</code> : <code>immatriculation</code>, <code>carteGrise</code> (File), <code>zoneJ1?</code>, <code>zoneF3?</code> → 201</td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/usager/vehicules/{immat}</td>
+          <td><span class="method delete">DELETE</span></td>
+          <td>→ 200</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sub-title">Passages &amp; solde</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Méthode</th><th>Réponse</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="endpoint">/api/idemat/passages/info</td>
+          <td><span class="method get">GET</span></td>
+          <td><code>{ passagesRestants, achatsAnnee[], nbPassagesAchetesTotal, forfaitGratuitAnnuel, forfaitAcheteAnnuel, passagesConsommesAnnee }</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sub-title">Déchetteries</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Méthode</th><th>Réponse</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="endpoint">/api/idemat/dechetteries</td>
+          <td><span class="method get">GET</span></td>
+          <td><code>DechetterieIdematModel[]</code> (nom, adresse, codePostal, ville)</td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/dechetteries/{id}</td>
+          <td><span class="method get">GET</span></td>
+          <td><code>DechetterieIdematModel</code> avec horaires par jour (matin/apresMidi) et affluence hebdo (valeur 0–100)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="sub-title">Achat de passages (intégration PayFip)</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Méthode</th><th>Réponse</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="endpoint">/api/idemat/achat-passages/options</td>
+          <td><span class="method get">GET</span></td>
+          <td><code>{ nbPassages, montant, montantFormate }</code></td>
+          <td><span class="badge badge-open">Q : options fixes ou configurées par enseigne dans le BO ?</span></td>
+        </tr>
+        <tr>
+          <td class="endpoint">/api/idemat/achat-passages/initier</td>
+          <td><span class="method post">POST</span></td>
+          <td>→ <code>{ url: string }</code> (URL de redirection PayFip)</td>
+          <td><span class="badge badge-tbd">Dépend de la config PayFip</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ORDRE D'IMPLÉMENTATION -->
+  <h2 class="order">Ordre d'implémentation suggéré</h2>
+  <div class="card">
+    <ul class="order-list">
+      <li>
+        <div class="order-content">
+          <strong>Auth — <code>POST /auth/login</code></strong>
+          <span>Nécessaire pour tout le reste. Retourne le JWT utilisé par tous les endpoints sécurisés.</span>
+        </div>
+      </li>
+      <li>
+        <div class="order-content">
+          <strong>Contrat — <code>GET /contrat/by-url/{url}</code></strong>
+          <span>Chargé dès la mire de connexion pour afficher le logo de l'enseigne. Aucune auth requise.</span>
+        </div>
+      </li>
+      <li>
+        <div class="order-content">
+          <strong>Inscription — <code>POST /inscription</code></strong> <span class="badge badge-priority" style="margin-left:6px">Priorité lead</span>
+          <span>Route publique, multipart. Priorité explicite dans le message du lead. Inclure la validation côté serveur (email unique, SIRET format, etc.).</span>
+        </div>
+      </li>
+      <li>
+        <div class="order-content">
+          <strong>Profil usager — <code>GET /usager/me</code> + <code>PUT /usager/profil</code> + véhicules</strong>
+          <span>Débloque tous les écrans "Mon compte". Cadrer d'abord la question <code>nomPrenom</code> combiné vs séparé.</span>
+        </div>
+      </li>
+      <li>
+        <div class="order-content">
+          <strong>Passages &amp; déchetteries</strong>
+          <span>Endpoints en lecture seule, peu de complexité métier.</span>
+        </div>
+      </li>
+      <li>
+        <div class="order-content">
+          <strong>Achat de passages (PayFip)</strong>
+          <span>Dépend de la configuration PayFip et des décisions métier sur les options d'achat. À cadrer avec le lead avant d'implémenter.</span>
+        </div>
+      </li>
+      <li>
+        <div class="order-content">
+          <strong>Reset mot de passe — <code>POST /usager/reset-password</code></strong>
+          <span>Nécessite la configuration d'un SMTP / service d'envoi d'e-mail. À traiter en parallèle de l'inscription.</span>
+        </div>
+      </li>
+    </ul>
+    <div class="note">
+      <strong>Côté front :</strong> tous les appels sont dans <code>src/services/agents/idemat/</code>, chacun avec un commentaire <code>// TODO: remplacer par appel HTTP …</code>.
+      Le branchement sur la vraie API ne nécessite de modifier <strong>que ces fichiers</strong> — aucun composant n'est à toucher.
+    </div>
+  </div>
+
+  <p style="margin-top: 32px; color: #999; font-size: 0.8rem; text-align: center;">
+    idemat-front · branch <code>feature/idemat-portal-v1</code> · AlteaTech/idemat-front · 21 mai 2026
+  </p>
+
+</div>
+</body>
+</html>

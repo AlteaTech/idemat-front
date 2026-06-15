@@ -1,0 +1,21 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+:host { display: flex; flex-direction: column; flex: 1; }
+
+.page-container { max-width: 480px; display: flex; flex-direction: column; }
+
+.btn-deconnexion {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  align-self: center;
+  padding: 14px 40px;
+  background: $primary-color; color: white;
+  border: none; border-radius: 30px;
+  font-size: 1rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  margin-top: 20px;
+  img.btn-chevron-img { width: 20px; height: 20px; object-fit: contain; filter: brightness(0) invert(1); }
+  &:hover { background: $primary-color-darker; }
+}
+
+.liste-vide { padding: 24px 20px; font-size: 0.9rem; color: $text-color-muted; font-style: italic; margin: 0; }

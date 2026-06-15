@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_150" data-name="Rectangle 150" width="20" height="20" fill="#f2664f"/>
+    </clipPath>
+  </defs>
+  <g id="Picto_corbeille" data-name="Picto corbeille" transform="translate(-403 -589)">
+    <g id="Groupe_de_masques_57" data-name="Groupe de masques 57" transform="translate(403 589)" clip-path="url(#clip-path)">
+      <path id="delete_24dp_E8EAED_FILL0_wght200_GRAD0_opsz24-2" d="M10-6.177a1.991,1.991,0,0,1-1.461-.6,1.991,1.991,0,0,1-.6-1.461V-24.066H6.659v-1.278H11.77v-.983h7.667v.983h5.111v1.278H23.27V-8.241a2,2,0,0,1-.591,1.473,2,2,0,0,1-1.473.591ZM21.992-24.066H9.214V-8.241a.766.766,0,0,0,.221.565A.766.766,0,0,0,10-7.454H21.206a.752.752,0,0,0,.541-.246.752.752,0,0,0,.246-.541ZM12.8-10.01H14.08v-11.5H12.8Zm4.325,0H18.4v-11.5H17.127ZM9.214-24.066v0Z" transform="translate(-5.528 26.327)" fill="#f2664f"/>
+    </g>
+  </g>
+</svg>

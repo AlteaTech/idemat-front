@@ -1,0 +1,68 @@
+@use 'variables' as *;
+
+:host { display: flex; flex: 1; min-height: 100vh; }
+
+.overlay {
+  flex: 1;
+  min-height: 100vh;
+  background: $color-gray-neutral;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.popup {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px 28px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.titre {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $text-color-primary;
+  margin: 0 0 20px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid $border-color-light;
+
+  &:last-of-type { border-bottom: none; }
+}
+
+.toggle-label {
+  font-size: 1rem;
+  color: $text-color-primary;
+}
+
+.btn-valider {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  background: $text-color-primary;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover { opacity: 0.85; }
+}
