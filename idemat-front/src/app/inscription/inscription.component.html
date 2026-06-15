@@ -79,9 +79,9 @@
               @if (contrat()!.communes.length) {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Ville</mat-label>
-                  <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
-                    @for (commune of contrat()!.communes; track commune.nom) {
-                      <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
+                  <mat-select formControlName="ville" (selectionChange)="onCommuneSelected($event)">
+                    @for (commune of contrat()!.communes; track $index) {
+                      <mat-option [value]="commune.nom">{{ commune.codePostal }} – {{ commune.nom }}</mat-option>
                     }
                   </mat-select>
                   <mat-error>Champ obligatoire</mat-error>
@@ -156,6 +156,22 @@
               <button type="button" class="btn-ajouter-vehicule" (click)="onAjouterVehicule()">
                 Ajouter un véhicule
               </button>
+            </div>
+          }
+
+          <!-- Carte grise (si véhicule(s)) -->
+          @if (contrat()!.allowImmatriculations && vehicules().length > 0) {
+            <div class="bloc">
+              <div class="bloc-header">
+                <mat-icon class="bloc-icon">directions_car</mat-icon>
+                <span class="bloc-titre">Carte grise</span>
+              </div>
+              <div class="file-section">
+                <label class="btn-file" for="inputCG">Ajouter la carte grise</label>
+                <input type="file" id="inputCG" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                       class="file-hidden" (change)="onFileChange($event, 'carteGrise')" />
+                <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
+              </div>
             </div>
           }
 
@@ -311,20 +327,17 @@
                 <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
 
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="prenom" placeholder="ex. Julie" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+
               @if (type() === 'Part') {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Deuxième nom <span class="label-optionnel">(optionnel)</span></mat-label>
                   <input matInput formControlName="deuxiemeNom" placeholder="ex. Dupont" />
                 </mat-form-field>
-              }
-
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Prénom @if (type() === 'Part') { <span class="label-optionnel">(optionnel)</span> }</mat-label>
-                <input matInput formControlName="prenom" placeholder="ex. Julie" />
-                @if (type() === 'Pro') { <mat-error>Champ obligatoire</mat-error> }
-              </mat-form-field>
-
-              @if (type() === 'Part') {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Deuxième prénom <span class="label-optionnel">(optionnel)</span></mat-label>
                   <input matInput formControlName="deuxiemePrenom" placeholder="ex. Julie" />
@@ -345,9 +358,9 @@
               @if (contrat()!.communes.length) {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Ville</mat-label>
-                  <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
-                    @for (commune of contrat()!.communes; track commune.nom) {
-                      <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
+                  <mat-select formControlName="ville" (selectionChange)="onCommuneSelected($event)">
+                    @for (commune of contrat()!.communes; track $index) {
+                      <mat-option [value]="commune.nom">{{ commune.codePostal }} – {{ commune.nom }}</mat-option>
                     }
                   </mat-select>
                   <mat-error>Champ obligatoire</mat-error>
@@ -462,6 +475,19 @@
                 @if (erreurKbis()) {
                   <p class="field-error">Vous devez joindre votre Kbis</p>
                 }
+              }
+
+              @if (contrat()!.allowImmatriculations && vehicules().length > 0) {
+                <div class="step-section-header step-section-header--mt">
+                  <mat-icon class="step-icon">directions_car</mat-icon>
+                  <span class="step-titre">Carte grise</span>
+                </div>
+                <div class="file-section">
+                  <label class="btn-file" for="inputCG-m">Ajouter la carte grise</label>
+                  <input type="file" id="inputCG-m" accept=".pdf,.jpg,.jpeg,.gif,.png"
+                         class="file-hidden" (change)="onFileChange($event, 'carteGrise')" />
+                  <span class="file-placeholder">{{ fileCarteGrise()?.name ?? 'Aucun fichier sélectionné' }}</span>
+                </div>
               }
             }
 

@@ -2,43 +2,14 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Configuration} from '../../../core/api';
-
-export interface VehiculeInscriptionParam {
-  immatriculation: string;
-  zoneJ1?: string;
-  zoneF3?: string;
-}
-
-interface InscriptionParams {
-  type: string;
-  contratUrl: string;
-  nom: string;
-  prenom: string;
-  adresse: string;
-  ville: string;
-  email: string;
-  telephone: string;
-  cartePhysique: boolean;
-  carteDematerialisee: boolean;
-  mentionsLegales: boolean;
-  deuxiemeNom?: string;
-  deuxiemePrenom?: string;
-  complementAdresse?: string;
-  societe?: string;
-  siret?: string;
-  vehicules?: VehiculeInscriptionParam[];
-  codePostal?: string;
-  carteIdentite?: File;
-  justificatifDomicile?: File;
-  kbis?: File;
-}
+import {InscriptionIdematParams} from '../../../models/idemat/inscription-idemat-params.model';
 
 @Injectable({providedIn: 'root'})
 export class InscriptionIdematServiceAgents {
   private readonly http = inject(HttpClient);
   private readonly config = inject(Configuration);
 
-  inscrire(params: InscriptionParams): Observable<void> {
+  inscrire(params: InscriptionIdematParams): Observable<void> {
     const fd = new FormData();
     fd.append('type', params.type);
     fd.append('contratUrl', params.contratUrl);
@@ -66,6 +37,7 @@ export class InscriptionIdematServiceAgents {
 
     if (params.carteIdentite) fd.append('carteIdentite', params.carteIdentite);
     if (params.justificatifDomicile) fd.append('justificatifDomicile', params.justificatifDomicile);
+    if (params.carteGrise) fd.append('carteGrise', params.carteGrise);
     if (params.kbis) fd.append('kbis', params.kbis);
 
     // HttpClient direct : le client généré envoie les @RequestParam en query string,

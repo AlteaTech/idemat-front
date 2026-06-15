@@ -1,7 +1,7 @@
 import {VehiculeIdematModel} from './vehicule-idemat.model';
 
 export interface UsagerIdematModel {
-  guid: string;
+  guid: number;
   nom: string;
   prenom: string;
   email: string;

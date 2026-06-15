@@ -8,6 +8,7 @@
     <!-- SIDENAV -->
     <mat-sidenav #sidenav
                  [mode]="isDesktop() ? 'side' : 'over'"
+                 [position]="isDesktop() ? 'start' : 'end'"
                  [opened]="isDesktop()"
                  class="shell-sidenav">
 

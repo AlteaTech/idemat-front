@@ -87,12 +87,32 @@ Toutes les couleurs sont dans `src/_variables.scss`. Aucune valeur hex dans un `
 ❌ background: linear-gradient(150deg, #FBCAB6 ...);  // INTERDIT
 ```
 
-**Toujours commencer chaque fichier SCSS par :**
+Si la couleur manque dans `_variables.scss`, l'y ajouter avec un nom sémantique avant de l'utiliser.
+
+### 2b. Architecture SCSS — `_common.scss` pour les règles partagées
+
+Chaque fichier SCSS composant commence obligatoirement par :
+
 ```scss
 @use 'variables' as *;
+@use 'common' as *;
 ```
 
-Si la couleur manque dans `_variables.scss`, l'y ajouter avec un nom sémantique avant de l'utiliser.
+`src/_common.scss` centralise toutes les règles répétées entre composants IDemat :
+`.loading-screen`, `.page-container`, `.page-title`, `.page-titre-sous`, `.btn-retour`, `.bloc` et sa famille (`.bloc-header`, `.bloc-sous-titre`, `.bloc-row`, `.bloc-label`, `.bloc-valeur`, `.bloc-vide`), `.liste` et sa famille, `.full-width`, `.dialog-container` et sa famille, `.btn-annuler`, + `::ng-deep` Material (dialog shape 16px + form-field height 44px + repositionnement labels).
+
+**Surcharge par cascade CSS** : pour une valeur différente d'une seule propriété, redéclarer **uniquement cette propriété** dans le fichier local — toutes les autres restent actives depuis `_common.scss`.
+
+```scss
+// _common.scss définit margin-bottom: 24px
+// Le composant a besoin de 8px → surcharge locale :
+.page-title { margin-bottom: 8px; }   // ✅ les autres propriétés (display, font-size…) restent
+```
+
+**Ce qui NE va PAS dans `_common.scss`** :
+- `.btn-valider` — trop de variantes selon le contexte (dialog vs page)
+- `:host { display: flex; ... }` — risque d'impacter les hosts de dialogs
+- `max-width: 960px` sur `.page-container` — certains composants n'en ont pas
 
 ### 4. FormGroups toujours typés — interface dans models/forms/
 
@@ -139,6 +159,24 @@ export function passwordsMatchValidator(control: AbstractControl): ValidationErr
 
 // ❌ INTERDIT — déclaré dans modification-mot-de-passe.component.ts
 function passwordsMatchValidator(...) { ... }
+```
+
+### 7b. IDs du backend — toujours `number`, jamais `string`
+
+Le backend expose les IDs en `Long`. Dans les modèles TypeScript, ils sont `number`. Ne jamais les convertir avec `String()` ni les déclarer en `string`.
+
+```typescript
+// ✅ Correct
+export interface UsagerIdematModel {
+  guid: number;
+}
+// guid: r.id!
+
+// ❌ Interdit
+export interface UsagerIdematModel {
+  guid: string;
+}
+// guid: String(r.id)
 ```
 
 ### 7. Zéro code mort — supprimer, ne pas commenter

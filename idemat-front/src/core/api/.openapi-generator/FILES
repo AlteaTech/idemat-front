@@ -28,6 +28,7 @@ model/update-mot-de-passe-dio-request.ts
 model/update-profil-dio-request.ts
 model/usager-me-dio.ts
 model/vehicule-dio.ts
+model/vehicule-inscription-dio-request.ts
 param.ts
 provide-api.ts
 variables.ts
