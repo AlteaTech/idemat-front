@@ -1,5 +1,5 @@
 /**
- * API (IDBATV7)
+ * API (idbatv7)
  *
  * 
  *
@@ -11,11 +11,11 @@ import { SortObject } from './sort-object';
 
 
 export interface PageableObject { 
+    pageNumber?: number;
+    unpaged?: boolean;
+    paged?: boolean;
+    pageSize?: number;
     offset?: number;
     sort?: SortObject;
-    paged?: boolean;
-    unpaged?: boolean;
-    pageSize?: number;
-    pageNumber?: number;
 }
 

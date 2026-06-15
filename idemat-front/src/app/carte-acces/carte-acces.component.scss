@@ -3,9 +3,8 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 960px; }
 .page-title { margin-bottom: 28px; }
-.bloc { margin-bottom: 16px; max-width: 600px; }
+.bloc { margin-bottom: 16px; }
 
 .qr-container { display: flex; justify-content: center; padding: 8px 0 4px; }
 .qr-image { width: 200px; height: 200px; }

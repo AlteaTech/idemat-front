@@ -9,3 +9,9 @@ export interface PassagesInfoModel {
   forfaitAcheteAnnuel: number;
   passagesConsommesAnnee: number;
 }
+
+export interface PassagesStatsIdematModel {
+  jour: number;
+  mois: number;
+  annee: number;
+}

@@ -1,12 +1,13 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import {from, map, Observable, switchMap} from 'rxjs';
 import {ProfilIdematUpdateModel, UsagerIdematModel} from '../../../models/idemat/usager-idemat.model';
 import {VehiculeIdematModel} from '../../../models/idemat/vehicule-idemat.model';
 import {UsagerControllerService} from '../../../core/api/api/usager-controller.service';
 import {VehiculeControllerService} from '../../../core/api/api/vehicule-controller.service';
 import {MotDePasseIdmControllerService} from '../../../core/api/api/mot-de-passe-idm-controller.service';
 import {Configuration} from '../../../core/api';
+import {FichierIdematParam} from '../../../models/idemat/fichier-idemat-param.model';
 
 @Injectable({providedIn: 'root'})
 export class UsagerIdematServiceAgents {
@@ -14,7 +15,7 @@ export class UsagerIdematServiceAgents {
   private readonly vehiculeService = inject(VehiculeControllerService);
   private readonly motDePasseService = inject(MotDePasseIdmControllerService);
   private readonly http = inject(HttpClient);
-  private readonly config = inject(Configuration);
+  private readonly config = inject(Configuration); // used by confirmerResetPassword (endpoint public, non généré)
 
   getUsager(): Observable<UsagerIdematModel> {
     return this.usagerService.getMe().pipe(map(r => {
@@ -60,12 +61,14 @@ export class UsagerIdematServiceAgents {
   }
 
   addVehicule(immat: string, carteGrise?: File | null, zoneJ1?: string, zoneF3?: number): Observable<void> {
-    const fd = new FormData();
-    fd.append('immatriculation', immat);
-    if (zoneJ1) fd.append('zoneJ1', zoneJ1);
-    if (zoneF3 != null) fd.append('zoneF3', String(zoneF3));
-    if (carteGrise) fd.append('carteGrise', carteGrise);
-    return this.http.post<void>(`${this.config.basePath}/api/vehicule`, fd);
+    return from(carteGrise ? toFichier(carteGrise) : Promise.resolve(undefined)).pipe(
+      switchMap(fichier => this.vehiculeService.ajouterVehicule({
+        immatriculation: immat,
+        zoneJ1,
+        zoneF3,
+        ...(fichier && {carteGrise: fichier}),
+      }))
+    );
   }
 
   updateVehicule(immatriculation: string, nouvelleImmatriculation: string, zoneJ1?: string, zoneF3?: number): Observable<void> {
@@ -87,4 +90,16 @@ export class UsagerIdematServiceAgents {
   confirmerResetPassword(token: string, nouveauMotDePasse: string): Observable<void> {
     return this.http.post<void>(`${this.config.basePath}/api/mot-de-passe/confirmer`, {token, nouveauMotDePasse});
   }
+}
+
+function toFichier(file: File): Promise<FichierIdematParam> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = (reader.result as string).split(',')[1];
+      resolve({base64, mimeType: file.type, nomFichier: file.name});
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
