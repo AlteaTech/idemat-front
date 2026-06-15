@@ -48,13 +48,19 @@ export class NouveauMotDePasseComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.contratSlug = params.get('contrat') ?? '';
-      if (this.contratSlug) {
-        this.contratService.getContratByUrl(this.contratSlug).subscribe(c => {
+      const contrat = params.get('contrat');
+      if (!contrat) {
+        this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true});
+        return;
+      }
+      this.contratSlug = contrat;
+      this.contratService.getContratByUrl(contrat).subscribe({
+        next: c => {
           this.logoUrl.set(c.logoUrl);
           this.nomContrat.set(c.nomEnseigne);
-        });
-      }
+        },
+        error: () => this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true}),
+      });
     });
     this.token = this.route.snapshot.queryParamMap.get('token') ?? '';
   }

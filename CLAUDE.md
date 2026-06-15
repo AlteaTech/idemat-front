@@ -251,13 +251,11 @@ protected retourConnexion(): void {
 
 ## Page lien invalide — gestion slug absent/erroné
 
-Pages publiques à slug concernées (`connexion-idemat`, `creation-compte/:contrat`, `creation-compte/:contrat/:type`) : redirection vers `/lien-invalide` (`LienInvalideComponent`) si :
+Toutes les pages publiques à slug (`connexion-idemat/:contrat`, `creation-compte/:contrat`, `creation-compte/:contrat/:type`, `mot-de-passe-oublie/:contrat`, `nouveau-mot-de-passe/:contrat`) : redirection vers `/lien-invalide` (`LienInvalideComponent`) si :
 - `:contrat` absent dans `paramMap`, **ou**
 - `getByUrl`/`getContratByUrl` échoue (slug inconnu → 400 backend)
 
 Toujours `{replaceUrl: true}` sur ces `router.navigate()` : le slug invalide ne doit pas rester dans l'historique, sinon le bouton "Retour" (`location.back()`) de `LienInvalideComponent` rebondit en boucle sur la page d'erreur.
-
-`mot-de-passe-oublie` est **hors scope** (décision Ronald, 2026-06-15).
 
 `LienInvalideComponent` : page de layout custom (`.page`/`.card` sur `$primary-gradient`, pas de `@use 'common'`, même pattern que `demande-ok-idemat`). Icône `Carte de ville.svg` (asset Veolia, fill inversé en blanc). Bouton "Retour" = `location.back()` (`@angular/common Location`), aligné sur le `history.go(-1)` de la page d'erreur Veolia (`idemat-dev.recyclage.veolia.fr`).
 
