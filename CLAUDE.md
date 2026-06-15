@@ -32,7 +32,7 @@ npm run build                    # Build prod
 - Angular Material
 - Services agents dans `src/services/agents/idemat/` — connectés à l'API réelle (backend :8101). Certains endpoints complexes (multipart multi-fichiers, tableaux parallèles) utilisent `HttpClient` direct plutôt que le client OpenAPI généré — ne pas régénérer ces méthodes sans vérification
 - Branchement/adaptation API = modifier uniquement ces fichiers, zéro composant à toucher
-- Icônes : SVG personnalisés dans `public/` (Gauche.svg, Droite.svg, Immatriculation.svg, Picto corbeille.svg, Picto crayon.svg, User.svg, Code barres.svg, Autres cartes.svg…). Pas de mat-icon sauf icônes dynamiques (nav shell, logout, badge)
+- Icônes : SVG personnalisés dans `public/` (Gauche.svg, Droite.svg, Immatriculation.svg, Picto corbeille.svg, Picto crayon.svg, User.svg, Code barres.svg, Autres cartes.svg, Carte de ville.svg…). Pas de mat-icon sauf icônes dynamiques (nav shell, logout, badge)
 
 ---
 
@@ -248,6 +248,18 @@ protected retourConnexion(): void {
   this.router.navigate([`/${routesConstantes.connexionIdemat}/${this.contratSlug}`]);
 }
 ```
+
+## Page lien invalide — gestion slug absent/erroné
+
+Pages publiques à slug concernées (`connexion-idemat`, `creation-compte/:contrat`, `creation-compte/:contrat/:type`) : redirection vers `/lien-invalide` (`LienInvalideComponent`) si :
+- `:contrat` absent dans `paramMap`, **ou**
+- `getByUrl`/`getContratByUrl` échoue (slug inconnu → 400 backend)
+
+Toujours `{replaceUrl: true}` sur ces `router.navigate()` : le slug invalide ne doit pas rester dans l'historique, sinon le bouton "Retour" (`location.back()`) de `LienInvalideComponent` rebondit en boucle sur la page d'erreur.
+
+`mot-de-passe-oublie` est **hors scope** (décision Ronald, 2026-06-15).
+
+`LienInvalideComponent` : page de layout custom (`.page`/`.card` sur `$primary-gradient`, pas de `@use 'common'`, même pattern que `demande-ok-idemat`). Icône `Carte de ville.svg` (asset Veolia, fill inversé en blanc). Bouton "Retour" = `location.back()` (`@angular/common Location`), aligné sur le `history.go(-1)` de la page d'erreur Veolia (`idemat-dev.recyclage.veolia.fr`).
 
 ## Intercepteur HTTP — comportement sur 401
 
