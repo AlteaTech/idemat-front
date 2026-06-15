@@ -20,7 +20,7 @@ Backend correspondant : module `api-idemat` dans `../idbatv7/` (port 8101)
 ```bash
 cd idemat-front
 npm run generate-client-local   # Regénère les services Angular depuis l'OpenAPI local (:8101)
-npm start                        # Serveur dev sur :4200
+npm start                        # Serveur dev sur :4201
 npm run build                    # Build prod
 ```
 
