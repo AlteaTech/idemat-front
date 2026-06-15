@@ -79,9 +79,9 @@
               @if (contrat()!.communes.length) {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Ville</mat-label>
-                  <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
-                    @for (commune of contrat()!.communes; track commune.nom) {
-                      <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
+                  <mat-select formControlName="ville" (selectionChange)="onCommuneSelected($event)">
+                    @for (commune of contrat()!.communes; track $index) {
+                      <mat-option [value]="commune.nom">{{ commune.codePostal }} – {{ commune.nom }}</mat-option>
                     }
                   </mat-select>
                   <mat-error>Champ obligatoire</mat-error>
@@ -327,20 +327,17 @@
                 <mat-error>Champ obligatoire</mat-error>
               </mat-form-field>
 
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="prenom" placeholder="ex. Julie" />
+                <mat-error>Champ obligatoire</mat-error>
+              </mat-form-field>
+
               @if (type() === 'Part') {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Deuxième nom <span class="label-optionnel">(optionnel)</span></mat-label>
                   <input matInput formControlName="deuxiemeNom" placeholder="ex. Dupont" />
                 </mat-form-field>
-              }
-
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Prénom @if (type() === 'Part') { <span class="label-optionnel">(optionnel)</span> }</mat-label>
-                <input matInput formControlName="prenom" placeholder="ex. Julie" />
-                @if (type() === 'Pro') { <mat-error>Champ obligatoire</mat-error> }
-              </mat-form-field>
-
-              @if (type() === 'Part') {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Deuxième prénom <span class="label-optionnel">(optionnel)</span></mat-label>
                   <input matInput formControlName="deuxiemePrenom" placeholder="ex. Julie" />
@@ -361,9 +358,9 @@
               @if (contrat()!.communes.length) {
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Ville</mat-label>
-                  <mat-select formControlName="ville" (selectionChange)="onVilleChange($event.value)">
-                    @for (commune of contrat()!.communes; track commune.nom) {
-                      <mat-option [value]="commune.nom">{{ commune.nom }}</mat-option>
+                  <mat-select formControlName="ville" (selectionChange)="onCommuneSelected($event)">
+                    @for (commune of contrat()!.communes; track $index) {
+                      <mat-option [value]="commune.nom">{{ commune.codePostal }} – {{ commune.nom }}</mat-option>
                     }
                   </mat-select>
                   <mat-error>Champ obligatoire</mat-error>
