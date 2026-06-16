@@ -18,21 +18,26 @@ export class InscriptionTypeComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly contratService = inject(ContratControllerService);
 
-  protected contrat = signal<string | null>(null);
+  protected contrat = signal('');
   protected logoUrl = signal('');
   protected typeSelectionne = signal<TypeInscription | null>(null);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const contrat = params.get('contrat');
+      if (!contrat) {
+        this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true});
+        return;
+      }
       this.contrat.set(contrat);
-      if (contrat) {
-        this.contratService.getByUrl(contrat).subscribe(c => {
+      this.contratService.getByUrl(contrat).subscribe({
+        next: c => {
           if (c.logoBase64 && c.logoMime) {
             this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
           }
-        });
-      }
+        },
+        error: () => this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true}),
+      });
     });
   }
 
@@ -42,10 +47,9 @@ export class InscriptionTypeComponent implements OnInit {
 
   protected valider(): void {
     const type = this.typeSelectionne();
-    const contrat = this.contrat();
-    if (!type || !contrat) return;
+    if (!type) return;
     const typePath = type === 'Part' ? 'particulier' : 'professionnel';
-    this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}/${typePath}`]);
+    this.router.navigate([`/${routesConstantes.creationCompte}/${this.contrat()}/${typePath}`]);
   }
 
   protected retour(): void {

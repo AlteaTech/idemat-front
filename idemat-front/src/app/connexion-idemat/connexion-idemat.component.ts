@@ -36,7 +36,7 @@ export class ConnexionIdematComponent implements OnInit {
     {initialValue: true}
   );
 
-  protected contrat = signal<string | null>(null);
+  protected contrat = signal('');
   protected logoUrl = signal('');
   protected nomContrat = signal('');
   protected enCours = signal(false);
@@ -55,15 +55,20 @@ export class ConnexionIdematComponent implements OnInit {
     }
     this.route.paramMap.subscribe(params => {
       const contrat = params.get('contrat');
+      if (!contrat) {
+        this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true});
+        return;
+      }
       this.contrat.set(contrat);
-      if (contrat) {
-        this.contratService.getByUrl(contrat).subscribe(c => {
+      this.contratService.getByUrl(contrat).subscribe({
+        next: c => {
           this.nomContrat.set(c.nom);
           if (c.logoBase64 && c.logoMime) {
             this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
           }
-        });
-      }
+        },
+        error: () => this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true}),
+      });
     });
   }
 
@@ -110,16 +115,10 @@ export class ConnexionIdematComponent implements OnInit {
   }
 
   protected onMotDePasseOublie(): void {
-    const contrat = this.contrat();
-    const path = contrat
-      ? `/${routesConstantes.motDePasseOublie}/${contrat}`
-      : `/${routesConstantes.motDePasseOublie}`;
-    this.router.navigate([path]);
+    this.router.navigate([`/${routesConstantes.motDePasseOublie}/${this.contrat()}`]);
   }
 
   protected onSInscrire(): void {
-    const contrat = this.contrat();
-    if (!contrat) return;
-    this.router.navigate([`/${routesConstantes.creationCompte}/${contrat}`]);
+    this.router.navigate([`/${routesConstantes.creationCompte}/${this.contrat()}`]);
   }
 }

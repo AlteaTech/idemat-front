@@ -95,9 +95,14 @@ export class InscriptionComponent implements OnInit {
       this.contratUrl.set(contratUrl);
       this.type.set(typePath === 'professionnel' ? 'Pro' : 'Part');
       this.updateValidators();
-      if (contratUrl) {
-        this.contratService.getContratByUrl(contratUrl).subscribe(c => this.contrat.set(c));
+      if (!contratUrl) {
+        this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true});
+        return;
       }
+      this.contratService.getContratByUrl(contratUrl).subscribe({
+        next: c => this.contrat.set(c),
+        error: () => this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true}),
+      });
     });
   }
 
