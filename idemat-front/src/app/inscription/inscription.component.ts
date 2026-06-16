@@ -20,11 +20,12 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-form.model';
 import {AjouterVehiculeDialogComponent} from './ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
+import {LinkifyPipe} from '../../pipes/linkify.pipe';
 
 @Component({
   selector: 'app-inscription',
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-            MatSelectModule, MatSlideToggleModule, MatProgressSpinnerModule, MatIconModule],
+            MatSelectModule, MatSlideToggleModule, MatProgressSpinnerModule, MatIconModule, LinkifyPipe],
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

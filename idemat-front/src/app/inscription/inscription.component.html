@@ -212,11 +212,7 @@
               <mat-icon class="bloc-icon">article</mat-icon>
               <span class="bloc-titre">Conditions générales</span>
             </div>
-            <p class="cg-texte">
-              Pour finaliser votre préinscription, vous devez accepter le règlement intérieur
-              de la déchetterie qui vous a été remis lors de votre passage en déchetterie.
-              Pour ce faire, acceptez les conditions générales.
-            </p>
+            <div class="cg-texte" [innerHTML]="contrat()!.mentionsLegales | linkify"></div>
             <div class="toggle-row">
               <span class="toggle-label toggle-label--bold">J'ai lu et accepté les<br>conditions générales</span>
               <mat-slide-toggle formControlName="mentionsLegales" color="primary" />
@@ -455,12 +451,7 @@
                 <mat-icon class="step-icon">article</mat-icon>
                 <span class="step-titre">Conditions générales</span>
               </div>
-              <p class="cg-texte">
-                Pour finaliser votre préinscription, vous devez accepter le règlement intérieur
-                de la déchetterie qui vous a été remis lors de votre passage en déchetterie.
-                Pour ce faire, acceptez les conditions générales.
-                @if (contrat()!.mentionsLegales) { {{ contrat()!.mentionsLegales }} }
-              </p>
+              <div class="cg-texte" [innerHTML]="contrat()!.mentionsLegales | linkify"></div>
               <div class="toggle-row">
                 <span class="toggle-label toggle-label--bold">J'ai lu et accepté les<br>conditions générales</span>
                 <mat-slide-toggle formControlName="mentionsLegales" color="primary" />

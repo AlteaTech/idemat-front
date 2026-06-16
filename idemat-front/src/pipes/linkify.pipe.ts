@@ -5,7 +5,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 export class LinkifyPipe implements PipeTransform {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
-  transform(value: string): SafeHtml {
+  transform(value: string | null | undefined): SafeHtml {
+    if (!value) return '';
     const linked = value.replace(
       /(https?:\/\/[^\s<>"]+)/g,
       '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
