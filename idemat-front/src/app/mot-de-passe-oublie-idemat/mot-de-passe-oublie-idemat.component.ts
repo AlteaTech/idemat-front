@@ -62,7 +62,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   }
 
   protected retour(): void {
-    this.router.navigate([`/${routesConstantes.connexionIdemat}/${this.contratSlug}`]);
+    this.router.navigate(['/' + this.contratSlug]);
   }
 
   protected onSubmit(): void {
