@@ -2,7 +2,6 @@ export const routesConstantes = {
   home: 'home',
   login: 'connexion',
   motDePasseOublie: 'mot-de-passe-oublie',
-  connexionIdemat: 'connexion-idemat',
   carteAcces: 'carte-acces',
   dechetteries: 'dechetteries',
   dechetterieDetail: 'dechetteries/:id',

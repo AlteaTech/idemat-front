@@ -1,8 +1,8 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {UserProfileModel} from '../../models/UserProfileModel';
 import {routesConstantes} from '../../constantes/routes.constantes';
-import {Router} from '@angular/router';
 import {storagesConstantes} from '../../constantes/storages.constantes';
+import {Router} from '@angular/router';
 import {StorageService} from '../storage.service';
 
 @Injectable({
@@ -49,8 +49,9 @@ export class AuthService {
   }
 
   logout(): void {
+    const slug = this.storageService.getLocalStorage(storagesConstantes.contratSlug);
     this.clearSession();
-    this.router.navigate(['/' + routesConstantes.connexionIdemat]);
+    this.router.navigate(['/' + (slug ?? routesConstantes.lienInvalide)]);
   }
 
   clearSession(): void {

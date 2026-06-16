@@ -12,6 +12,8 @@ import {AuthService} from '../../services/auth/auth.service';
 import {AuthIdmControllerService} from '../../core/api/api/auth-idm-controller.service';
 import {ContratControllerService} from '../../core/api/api/contrat-controller.service';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
+import {StorageService} from '../../services/storage.service';
+import {storagesConstantes} from '../../constantes/storages.constantes';
 import {routesConstantes} from '../../constantes/routes.constantes';
 
 @Component({
@@ -29,6 +31,7 @@ export class ConnexionIdematComponent implements OnInit {
   private readonly contratService = inject(ContratControllerService);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly storageService = inject(StorageService);
 
   protected readonly isDesktop = toSignal(
     this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
@@ -62,6 +65,7 @@ export class ConnexionIdematComponent implements OnInit {
       this.contrat.set(contrat);
       this.contratService.getByUrl(contrat).subscribe({
         next: c => {
+          this.storageService.setLocalStorage(storagesConstantes.contratSlug, contrat);
           this.nomContrat.set(c.nom);
           if (c.logoBase64 && c.logoMime) {
             this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);

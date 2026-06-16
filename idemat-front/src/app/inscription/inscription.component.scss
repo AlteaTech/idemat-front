@@ -122,6 +122,12 @@
   color: $text-color-secondary;
   line-height: 1.5;
   margin-bottom: 12px;
+  max-height: 160px;
+  min-height: 0;
+  overflow-y: auto;
+  &::-webkit-scrollbar { width: 5px; }
+  &::-webkit-scrollbar-track { background: $background-page; border-radius: 3px; }
+  &::-webkit-scrollbar-thumb { background: $border-color-medium; border-radius: 3px; }
 }
 
 .btn-valider {

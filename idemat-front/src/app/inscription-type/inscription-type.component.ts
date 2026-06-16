@@ -53,6 +53,6 @@ export class InscriptionTypeComponent implements OnInit {
   }
 
   protected retour(): void {
-    this.router.navigate(['/' + routesConstantes.connexionIdemat]);
+    this.router.navigate(['/' + this.contrat()]);
   }
 }

@@ -83,6 +83,6 @@ export class NouveauMotDePasseComponent implements OnInit {
   }
 
   protected retourConnexion(): void {
-    this.router.navigate([`/${routesConstantes.connexionIdemat}/${this.contratSlug}`]);
+    this.router.navigate(['/' + this.contratSlug]);
   }
 }
