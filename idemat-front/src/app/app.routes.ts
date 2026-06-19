@@ -34,6 +34,7 @@ export const routes: Routes = [
   {path: `${routesConstantes.nouveauMotDePasse}/:contrat`, component: NouveauMotDePasseComponent},
   {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
   {path: ':contrat', component: ConnexionIdematComponent, canMatch: [isContratSlugGuard]},
+  {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
 
   // --- ROUTES PROTÉGÉES (shell IDemat) ---
   {
