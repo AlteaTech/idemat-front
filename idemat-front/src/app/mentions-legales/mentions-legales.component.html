@@ -10,6 +10,6 @@
       </button>
       <h1>Mentions légales</h1>
     </div>
-    <div class="contenu" [innerHTML]="contenu()"></div>
+    <div class="contenu" [innerHTML]="contenu() | linkify"></div>
   </div>
 }

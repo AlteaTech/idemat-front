@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
+import {StorageService} from '../../services/storage.service';
+import {storagesConstantes} from '../../constantes/storages.constantes';
 import {routesConstantes} from '../../constantes/routes.constantes';
 
 @Component({
@@ -12,14 +14,13 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 })
 export class DemandOkIdematComponent {
   private readonly router = inject(Router);
+  private readonly storageService = inject(StorageService);
   private readonly contratUrl: string = this.router.lastSuccessfulNavigation?.extras?.state?.['contratUrl']
     ?? history.state?.contratUrl
     ?? '';
 
   protected retourConnexion(): void {
-    const route = this.contratUrl
-      ? `/${routesConstantes.connexionIdemat}/${this.contratUrl}`
-      : `/${routesConstantes.connexionIdemat}`;
-    this.router.navigate([route]);
+    const slug = this.contratUrl || this.storageService.getLocalStorage(storagesConstantes.contratSlug);
+    this.router.navigate(['/' + (slug ?? routesConstantes.lienInvalide)]);
   }
 }

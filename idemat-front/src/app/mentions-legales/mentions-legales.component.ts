@@ -5,11 +5,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {MentionsLegalesIdematServiceAgents} from '../../services/agents/idemat/mentions-legales-idemat-service-agents';
+import {LinkifyPipe} from '../../pipes/linkify.pipe';
 import {routesConstantes} from '../../constantes/routes.constantes';
 
 @Component({
   selector: 'app-mentions-legales',
-  imports: [CommonModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, LinkifyPipe],
   templateUrl: './mentions-legales.component.html',
   styleUrl: './mentions-legales.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

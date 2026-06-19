@@ -9,10 +9,11 @@ import {ZONES_J1} from '../../../constantes/inscription.constantes';
 import {ModifierVehiculeDialogData, ModifierVehiculeDialogResult} from '../../../models/idemat/modifier-vehicule-dialog.model';
 import {MajusculeOnlyDirective} from '../../../directives/majuscule-only.directive';
 import {AlphaNumOnlyDirective} from '../../../directives/alpha-num-only.directive';
+import {ChiffresOnlyDirective} from '../../../directives/chiffres-only.directive';
 
 @Component({
   selector: 'app-modifier-vehicule-dialog',
-  imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MajusculeOnlyDirective, AlphaNumOnlyDirective],
+  imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MajusculeOnlyDirective, AlphaNumOnlyDirective, ChiffresOnlyDirective],
   templateUrl: './modifier-vehicule-dialog.component.html',
   styleUrl: './modifier-vehicule-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

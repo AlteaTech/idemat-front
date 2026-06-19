@@ -6,7 +6,8 @@ export interface ContratIdematModel {
   allowAchatPassages: boolean;
   allowCarteDematerialisee: boolean;
   allowCartePhysique: boolean;
-  allowImmatriculations: boolean;
+  allowImmatriculationsParticuliers: boolean;
+  allowImmatriculationsProfessionnels: boolean;
   demandeZoneJ1F3: boolean;
   communes: { id: number; nom: string; codePostal: string }[];
   mentionsLegales?: string;

@@ -19,7 +19,8 @@ export interface ContratDio {
     communes: Array<CommuneDio>;
     allowCartePhysique: boolean;
     allowCarteDematerialisee: boolean;
-    allowImmatriculations: boolean;
+    allowImmatriculationsParticuliers: boolean;
+    allowImmatriculationsProfessionnels: boolean;
     demandeZoneJ1F3: boolean;
     allowAchatPassages: boolean;
     mentionsLegales?: string;

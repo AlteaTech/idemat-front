@@ -20,11 +20,12 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-form.model';
 import {AjouterVehiculeDialogComponent} from './ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
+import {LinkifyPipe} from '../../pipes/linkify.pipe';
 
 @Component({
   selector: 'app-inscription',
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-            MatSelectModule, MatSlideToggleModule, MatProgressSpinnerModule, MatIconModule],
+            MatSelectModule, MatSlideToggleModule, MatProgressSpinnerModule, MatIconModule, LinkifyPipe],
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,7 +83,8 @@ export class InscriptionComponent implements OnInit {
     if (!c) return [];
     const s: string[] = ['infos'];
     if (c.allowCartePhysique || c.allowCarteDematerialisee) s.push('carte');
-    if (c.allowImmatriculations) s.push('vehicules');
+    const isPro = this.type() === 'Pro';
+    if (isPro ? c.allowImmatriculationsProfessionnels : c.allowImmatriculationsParticuliers) s.push('vehicules');
     s.push('documents');
     s.push('cg');
     return s;

@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {ConnexionComponent} from './connexion/connexion.component';
 import {ConnexionIdematComponent} from './connexion-idemat/connexion-idemat.component';
 import {IdematShellComponent} from './idemat-shell/idemat-shell.component';
 import {HomeComponent} from './home/home.component';
@@ -23,18 +22,18 @@ import {NouveauMotDePasseComponent} from './nouveau-mot-de-passe/nouveau-mot-de-
 import {LienInvalideComponent} from './lien-invalide/lien-invalide.component';
 import {authGuard} from './core/guards/auth.guard';
 import {passwordChangedGuard} from './core/guards/password-changed.guard';
+import {isContratSlugGuard} from './core/guards/is-contrat-slug.guard';
 
 export const routes: Routes = [
   // --- ROUTES PUBLIQUES ---
-  {path: routesConstantes.login, component: ConnexionComponent},
-  {path: routesConstantes.connexionIdemat, component: ConnexionIdematComponent},
-  {path: `${routesConstantes.connexionIdemat}/:contrat`, component: ConnexionIdematComponent},
   {path: routesConstantes.motDePasseOublie, component: MotDePasseOublieIdematComponent},
   {path: `${routesConstantes.motDePasseOublie}/:contrat`, component: MotDePasseOublieIdematComponent},
   {path: `${routesConstantes.creationCompte}/:contrat`, component: InscriptionTypeComponent},
   {path: `${routesConstantes.creationCompte}/:contrat/:type`, component: InscriptionComponent},
   {path: routesConstantes.demandeOk, component: DemandOkIdematComponent},
   {path: `${routesConstantes.nouveauMotDePasse}/:contrat`, component: NouveauMotDePasseComponent},
+  {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
+  {path: ':contrat', component: ConnexionIdematComponent, canMatch: [isContratSlugGuard]},
   {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
 
   // --- ROUTES PROTÉGÉES (shell IDemat) ---

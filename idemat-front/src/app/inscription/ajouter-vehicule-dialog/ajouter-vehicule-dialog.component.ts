@@ -8,12 +8,13 @@ import {MatIconModule} from '@angular/material/icon';
 import {ZONES_J1} from '../../../constantes/inscription.constantes';
 import {MajusculeOnlyDirective} from '../../../directives/majuscule-only.directive';
 import {AlphaNumOnlyDirective} from '../../../directives/alpha-num-only.directive';
+import {ChiffresOnlyDirective} from '../../../directives/chiffres-only.directive';
 import {VehiculeFormModel} from '../../../models/forms/vehicule-form.model';
 import {AjouterVehiculeDialogData, AjouterVehiculeDialogResult} from '../../../models/idemat/ajouter-vehicule-dialog.model';
 
 @Component({
   selector: 'app-ajouter-vehicule-dialog',
-  imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MajusculeOnlyDirective, AlphaNumOnlyDirective],
+  imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MajusculeOnlyDirective, AlphaNumOnlyDirective, ChiffresOnlyDirective],
   templateUrl: './ajouter-vehicule-dialog.component.html',
   styleUrl: './ajouter-vehicule-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,6 +45,7 @@ export class AjouterVehiculeDialogComponent {
 
   protected onConfirmer(): void {
     if (this.form.invalid) return;
+    if (!this.fileCarteGrise()) { this.erreurFichier.set(true); return; }
     const {immatriculation, zoneJ1, zoneF3} = this.form.getRawValue();
     const label = this.showZones && zoneJ1 && zoneF3
       ? `${immatriculation} (${zoneJ1}-${zoneF3} kg)`

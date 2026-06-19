@@ -18,7 +18,8 @@ export interface ContratIdmResponse {
     communes: Array<string>;
     allowCartePhysique: boolean;
     allowCarteDematerialisee: boolean;
-    allowImmatriculations: boolean;
+    allowImmatriculationsParticuliers: boolean;
+    allowImmatriculationsProfessionnels: boolean;
     demandeZoneJ1F3: boolean;
     allowAchatPassages: boolean;
     mentionsLegales?: string;
