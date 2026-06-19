@@ -72,8 +72,8 @@
           </div>
         </div>
 
-        <!-- Bloc Véhicules enregistrés (conditionnel sur allowImmatriculations) -->
-        @if (contrat()!.allowImmatriculations) {
+        <!-- Bloc Véhicules enregistrés (conditionnel sur allowImmatriculationsParticuliers / allowImmatriculationsProfessionnels) -->
+        @if (usager()!.isPro ? contrat()!.allowImmatriculationsProfessionnels : contrat()!.allowImmatriculationsParticuliers) {
           <div class="bloc">
             <div class="bloc-header">
               <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />

@@ -52,7 +52,7 @@
     }
 
     <!-- IMMATRICULATIONS -->
-    @if (contrat()?.allowImmatriculations && (usager()?.vehicules?.length ?? 0) > 0) {
+    @if ((usager()?.isPro ? contrat()?.allowImmatriculationsProfessionnels : contrat()?.allowImmatriculationsParticuliers) && (usager()?.vehicules?.length ?? 0) > 0) {
       <div class="bloc">
         <div class="bloc-header">
           <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />

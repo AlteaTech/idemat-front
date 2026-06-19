@@ -83,7 +83,8 @@ export class InscriptionComponent implements OnInit {
     if (!c) return [];
     const s: string[] = ['infos'];
     if (c.allowCartePhysique || c.allowCarteDematerialisee) s.push('carte');
-    if (c.allowImmatriculations) s.push('vehicules');
+    const isPro = this.type() === 'Pro';
+    if (isPro ? c.allowImmatriculationsProfessionnels : c.allowImmatriculationsParticuliers) s.push('vehicules');
     s.push('documents');
     s.push('cg');
     return s;

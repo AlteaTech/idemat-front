@@ -45,6 +45,7 @@ export class AjouterVehiculeDialogComponent {
 
   protected onConfirmer(): void {
     if (this.form.invalid) return;
+    if (!this.fileCarteGrise()) { this.erreurFichier.set(true); return; }
     const {immatriculation, zoneJ1, zoneF3} = this.form.getRawValue();
     const label = this.showZones && zoneJ1 && zoneF3
       ? `${immatriculation} (${zoneJ1}-${zoneF3} kg)`
