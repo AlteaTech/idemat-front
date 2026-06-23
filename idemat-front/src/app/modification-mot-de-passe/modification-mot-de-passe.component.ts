@@ -48,10 +48,11 @@ export class ModificationMotDePasseComponent implements OnInit {
     this.enCours.set(true);
     this.erreur.set('');
     const {ancienMotDePasse, nouveauMotDePasse} = this.form.getRawValue();
+    const etaitObligatoire = !this.authService.hasChangedPassword();
     this.usagerService.updateMotDePasse(ancienMotDePasse, nouveauMotDePasse).subscribe({
       next: () => {
         this.authService.markPasswordChanged();
-        this.router.navigate(['/' + routesConstantes.parametresCompte]);
+        this.router.navigate(['/' + (etaitObligatoire ? routesConstantes.home : routesConstantes.parametresCompte)]);
       },
       error: (err) => {
         this.enCours.set(false);
