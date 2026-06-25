@@ -272,7 +272,6 @@ Toujours `{replaceUrl: true}` sur ces `router.navigate()` : le slug invalide ne 
 ## Conventions dialog Angular Material
 
 Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA`) doivent être dans `src/models/idemat/`, jamais inline dans le composant :
-- `models/idemat/modifier-vehicule-dialog.model.ts` → `ModifierVehiculeDialogData` + `ModifierVehiculeDialogResult`
 - `models/idemat/ajouter-vehicule-dialog.model.ts` → `AjouterVehiculeDialogData` + `AjouterVehiculeDialogResult`
 
 ## Statut PR en cours
