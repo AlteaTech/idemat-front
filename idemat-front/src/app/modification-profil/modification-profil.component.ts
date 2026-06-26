@@ -18,8 +18,6 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 import {ModificationProfilFormModel} from '../../models/forms/modification-profil-form.model';
 import {AjouterVehiculeDialogComponent} from '../inscription/ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
-import {ModifierVehiculeDialogComponent} from './modifier-vehicule-dialog/modifier-vehicule-dialog.component';
-import {ModifierVehiculeDialogResult} from '../../models/idemat/modifier-vehicule-dialog.model';
 
 @Component({
   selector: 'app-modification-profil',
@@ -106,38 +104,6 @@ export class ModificationProfilComponent implements OnInit {
             zoneF3: result.zoneF3 ? Number(result.zoneF3) : undefined,
           };
           this.usager.set({...current, vehicules: [...(current.vehicules ?? []), nouveau]});
-        },
-      });
-    });
-  }
-
-  protected onModifierVehicule(vehicule: VehiculeIdematModel): void {
-    const ref = this.dialog.open(ModifierVehiculeDialogComponent, {
-      data: {vehicule, contrat: this.contrat()!, isPro: this.usager()!.isPro},
-      width: '95vw',
-      maxWidth: '480px',
-    });
-    ref.afterClosed().subscribe((result: ModifierVehiculeDialogResult | undefined) => {
-      if (!result) return;
-      this.usagerService.updateVehicule(
-        vehicule.immatriculation,
-        result.nouvelleImmatriculation,
-        result.zoneJ1,
-        result.zoneF3,
-      ).subscribe({
-        next: () => {
-          const current = this.usager()!;
-          const modifie: VehiculeIdematModel = {
-            immatriculation: result.nouvelleImmatriculation,
-            zoneJ1: result.zoneJ1,
-            zoneF3: result.zoneF3,
-          };
-          this.usager.set({
-            ...current,
-            vehicules: (current.vehicules ?? []).map(v =>
-              v.immatriculation === vehicule.immatriculation ? modifie : v
-            ),
-          });
         },
       });
     });

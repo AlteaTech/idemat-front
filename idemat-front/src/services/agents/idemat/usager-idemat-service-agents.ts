@@ -71,10 +71,6 @@ export class UsagerIdematServiceAgents {
     );
   }
 
-  updateVehicule(immatriculation: string, nouvelleImmatriculation: string, zoneJ1?: string, zoneF3?: number): Observable<void> {
-    return this.vehiculeService.modifierVehicule(immatriculation, {nouvelleImmatriculation, zoneJ1, zoneF3});
-  }
-
   deleteVehicule(immat: string): Observable<void> {
     return this.vehiculeService.supprimerVehicule(immat);
   }
