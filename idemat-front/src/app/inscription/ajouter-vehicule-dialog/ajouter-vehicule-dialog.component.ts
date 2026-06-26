@@ -30,12 +30,20 @@ export class AjouterVehiculeDialogComponent {
 
   protected form = new FormGroup<VehiculeFormModel>({
     immatriculation: new FormControl(this.data.immatriculation ?? '', {nonNullable: true, validators: [Validators.required]}),
-    zoneJ1: new FormControl('', {nonNullable: true}),
-    zoneF3: new FormControl('', {nonNullable: true, validators: [Validators.pattern('^[0-9]+$')]}),
+    zoneJ1: new FormControl('', {
+      nonNullable: true,
+      validators: this.data.contrat.demandeZoneJ1F3 ? [Validators.required] : [],
+    }),
+    zoneF3: new FormControl('', {
+      nonNullable: true,
+      validators: this.data.contrat.demandeZoneJ1F3
+        ? [Validators.required, Validators.pattern('^[0-9]+$')]
+        : [Validators.pattern('^[0-9]+$')],
+    }),
   });
 
   get contrat() { return this.data.contrat; }
-  get showZones() { return this.data.isPro || this.data.contrat.demandeZoneJ1F3; }
+  get showZones() { return this.data.contrat.demandeZoneJ1F3; }
 
   protected onFileChange(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0] ?? null;
