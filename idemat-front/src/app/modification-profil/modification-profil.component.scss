@@ -39,6 +39,20 @@
 
 .vehicule-immat { font-weight: 700; color: $text-color-primary; font-size: 1rem; }
 
+.badge-en-attente {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $primary-color;
+  background: $primary-color-background;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-left: auto;
+  .material-icons { font-size: 16px; width: 16px; height: 16px; }
+}
+
 .btn-vehicule-action {
   display: flex;
   align-items: center;
