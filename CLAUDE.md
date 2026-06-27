@@ -277,8 +277,9 @@ Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA
 ## Statut PR en cours
 
 - **`fix/routing-et-divers`** (2026-06-16) — pushée, review Bertrand en cours : routing `/:contrat`, `ChiffresOnlyDirective` (F3), `LinkifyPipe` (mentions légales), suppression `ConnexionComponent` mort.
-- **PR [#24](https://github.com/AlteaTech/idemat-front/pull/24)** (`fix/vehicule-suppression-modification-crayon`) — retrait du bouton crayon (modification) sur les véhicules de l'écran profil, ne reste qu'Ajouter/Supprimer. Validé Bertrand, branche pas de retour en arrière prévu.
-- **PR [#25](https://github.com/AlteaTech/idemat-front/pull/25)** (`fix/zone-j1-f3-flag-contrat`) — corrige `AjouterVehiculeDialogComponent.showZones` : dépendait à tort de `isPro || demandeZoneJ1F3`, ne doit dépendre que du flag contrat `demandeZoneJ1F3` (legacy .NET ne liait pas ça au PART/PRO). Champs J1/F3 passent en `Validators.required` dynamique quand le flag est actif. Dialog partagé inscription + profil → un seul point de correction pour les deux flux.
+- **PR [#24](https://github.com/AlteaTech/idemat-front/pull/24)** — **mergée** — retrait du bouton crayon (modification) sur les véhicules de l'écran profil, ne reste qu'Ajouter/Supprimer.
+- **PR [#25](https://github.com/AlteaTech/idemat-front/pull/25)** — **mergée** — corrige `AjouterVehiculeDialogComponent.showZones` : dépend uniquement du flag contrat `demandeZoneJ1F3`, jamais de PART/PRO (legacy .NET). Champs J1/F3 en `Validators.required` dynamique quand le flag est actif.
+- **PR [#26](https://github.com/AlteaTech/idemat-front/pull/26)** (`feature/ajout-vehicule-staging`) — `addVehicule()` passe par une demande en staging (back), pastille corail "En attente" + icône horloge sur le profil. Lié aux PR #244 (idbatv7) et #61 (idbatv7-front).
 
 ## Règle métier — zones J1/F3 et carte grise (ajout de véhicule)
 
