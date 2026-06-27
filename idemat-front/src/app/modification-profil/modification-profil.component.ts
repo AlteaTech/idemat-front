@@ -102,6 +102,7 @@ export class ModificationProfilComponent implements OnInit {
             immatriculation: result.immatriculation,
             zoneJ1: result.zoneJ1 || undefined,
             zoneF3: result.zoneF3 ? Number(result.zoneF3) : undefined,
+            enAttente: true,
           };
           this.usager.set({...current, vehicules: [...(current.vehicules ?? []), nouveau]});
         },

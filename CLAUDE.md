@@ -277,6 +277,13 @@ Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA
 ## Statut PR en cours
 
 - **`fix/routing-et-divers`** (2026-06-16) — pushée, review Bertrand en cours : routing `/:contrat`, `ChiffresOnlyDirective` (F3), `LinkifyPipe` (mentions légales), suppression `ConnexionComponent` mort.
+- **PR [#24](https://github.com/AlteaTech/idemat-front/pull/24)** (`fix/vehicule-suppression-modification-crayon`) — retrait du bouton crayon (modification) sur les véhicules de l'écran profil, ne reste qu'Ajouter/Supprimer. Validé Bertrand, branche pas de retour en arrière prévu.
+- **PR [#25](https://github.com/AlteaTech/idemat-front/pull/25)** (`fix/zone-j1-f3-flag-contrat`) — corrige `AjouterVehiculeDialogComponent.showZones` : dépendait à tort de `isPro || demandeZoneJ1F3`, ne doit dépendre que du flag contrat `demandeZoneJ1F3` (legacy .NET ne liait pas ça au PART/PRO). Champs J1/F3 passent en `Validators.required` dynamique quand le flag est actif. Dialog partagé inscription + profil → un seul point de correction pour les deux flux.
+
+## Règle métier — zones J1/F3 et carte grise (ajout de véhicule)
+
+- **zoneJ1/zoneF3** : affichés et obligatoires **uniquement** si `contrat.demandeZoneJ1F3` est actif — **jamais** lié à PART/PRO (erreur corrigée par PR #25, ne pas réintroduire ce raccourci).
+- **carteGrise** (fichier) : obligatoire côté front pour **tout** ajout de véhicule (PART et PRO, indépendamment du flag J1/F3) — bloqué par `erreurFichier` dans `AjouterVehiculeDialogComponent`. ⚠️ Aucun contrôle équivalent côté back (champ nullable dans les DTOs `AjouterVehiculeDioRequest`/`VehiculeInscriptionDioRequest`) — gap de validation identifié, pas corrigé, décision à prendre.
 
 ## TODO prod (avant mise en production)
 

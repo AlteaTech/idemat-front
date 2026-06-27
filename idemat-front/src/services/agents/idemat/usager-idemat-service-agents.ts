@@ -43,6 +43,7 @@ export class UsagerIdematServiceAgents {
           immatriculation: v.immatriculation,
           zoneJ1: v.zoneJ1 ?? undefined,
           zoneF3: v.zoneF3 ?? undefined,
+          enAttente: v.enAttente,
         })),
       };
     }));
