@@ -82,10 +82,18 @@
 
             @for (vehicule of usager()!.vehicules ?? []; track vehicule.immatriculation) {
               <div class="vehicule-item">
-                <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(vehicule)" title="Supprimer">
-                  <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
-                </button>
+                @if (!vehicule.enAttente) {
+                  <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(vehicule)" title="Supprimer">
+                    <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
+                  </button>
+                }
                 <span class="vehicule-immat">{{ vehicule.immatriculation }}</span>
+                @if (vehicule.enAttente) {
+                  <span class="badge-en-attente">
+                    <span class="material-icons">schedule</span>
+                    En attente
+                  </span>
+                }
               </div>
             }
 
