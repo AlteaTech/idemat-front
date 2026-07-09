@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import {ConnexionIdematComponent} from './connexion-idemat/connexion-idemat.component';
 import {IdematShellComponent} from './idemat-shell/idemat-shell.component';
-import {HomeComponent} from './home/home.component';
+import {WipComponent} from './wip/wip.component';
 import {routesConstantes} from '../constantes/routes.constantes';
 import {CarteAccesComponent} from './carte-acces/carte-acces.component';
 import {DechetteriesComponent} from './dechetteries/dechetteries.component';
@@ -36,16 +36,18 @@ export const routes: Routes = [
   {path: ':contrat', component: ConnexionIdematComponent, canMatch: [isContratSlugGuard]},
   {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
 
+  // TEMPORAIRE — squelette sprint 10 : page WIP plein écran, hors shell (pas de menu). À retirer au sprint 11 (IDemat prêt) — remettre `home` dans les children du shell avec HomeComponent.
+  {path: routesConstantes.home, component: WipComponent, canActivate: [authGuard, passwordChangedGuard]},
+
   // --- ROUTES PROTÉGÉES (shell IDemat) ---
   {
     path: '',
     canActivate: [authGuard],
     component: IdematShellComponent,
     children: [
-      {path: '', redirectTo: routesConstantes.home, pathMatch: 'full'},
+      {path: '', redirectTo: '/' + routesConstantes.home, pathMatch: 'full'},
       {path: routesConstantes.modificationMotDePasseIdemat, component: ModificationMotDePasseComponent},
 
-      {path: routesConstantes.home, component: HomeComponent, canActivate: [passwordChangedGuard]},
       {path: routesConstantes.carteAcces, component: CarteAccesComponent, canActivate: [passwordChangedGuard]},
       {path: routesConstantes.dechetteries, component: DechetteriesComponent, canActivate: [passwordChangedGuard]},
       {path: routesConstantes.dechetterieDetail, component: DechetterieDetailComponent, canActivate: [passwordChangedGuard]},
