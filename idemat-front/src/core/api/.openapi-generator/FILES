@@ -32,6 +32,7 @@ model/pageable-object.ts
 model/passage-dio.ts
 model/passage-matiere-dio.ts
 model/passages-stats-dio.ts
+model/refresh-dio-request.ts
 model/reset-password-dio-request.ts
 model/sort-object.ts
 model/update-email-dio-request.ts
