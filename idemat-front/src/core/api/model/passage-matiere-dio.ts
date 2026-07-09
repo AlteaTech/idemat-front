@@ -13,5 +13,6 @@ export interface PassageMatiereDio {
     libelle: string;
     quantite: number;
     unite?: string;
+    points: number;
 }
 

@@ -66,13 +66,15 @@
             </div>
             @if (p.estDepotQualifie && isOuvert(p.id)) {
               <div class="histo-details">
-                <p class="points-debites">— points débités (calcul en attente)</p>
+                <p class="points-debites">{{ p.valeurPoints | number:'1.2-2' }} points débités</p>
                 <div class="details-table">
                   <span class="details-col-header">Matière</span>
                   <span class="details-col-header">Quantité</span>
+                  <span class="details-col-header">Points</span>
                   @for (m of p.matieres; track m.libelle) {
                     <span class="details-cell">{{ m.libelle }}</span>
                     <span class="details-cell">{{ m.quantite }} {{ m.unite ?? '' }}</span>
+                    <span class="details-cell">{{ m.points | number:'1.2-2' }}</span>
                   }
                 </div>
               </div>

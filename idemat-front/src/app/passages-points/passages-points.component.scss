@@ -79,7 +79,7 @@
 }
 .details-table {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto auto auto;
   column-gap: 32px;
   font-size: 0.88rem;
 }
@@ -92,7 +92,7 @@
   color: $text-color-secondary;
   padding: 5px 0;
   border-bottom: 1px solid $border-color-light;
-  &:nth-last-child(-n+2) { border-bottom: none; }
+  &:nth-last-child(-n+3) { border-bottom: none; }
 }
 .points-debites { font-size: 0.82rem; color: $text-color-muted; font-weight: 700; margin: 0 0 10px; }
 
