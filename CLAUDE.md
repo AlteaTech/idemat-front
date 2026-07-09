@@ -274,12 +274,17 @@ Toujours `{replaceUrl: true}` sur ces `router.navigate()` : le slug invalide ne 
 Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA`) doivent être dans `src/models/idemat/`, jamais inline dans le composant :
 - `models/idemat/ajouter-vehicule-dialog.model.ts` → `AjouterVehiculeDialogData` + `AjouterVehiculeDialogResult`
 
-## Statut PR en cours
+## Statut PR en cours (vérifié 2026-07-09)
 
-- **`fix/routing-et-divers`** (2026-06-16) — pushée, review Bertrand en cours : routing `/:contrat`, `ChiffresOnlyDirective` (F3), `LinkifyPipe` (mentions légales), suppression `ConnexionComponent` mort.
-- **PR [#24](https://github.com/AlteaTech/idemat-front/pull/24)** — **mergée** — retrait du bouton crayon (modification) sur les véhicules de l'écran profil, ne reste qu'Ajouter/Supprimer.
-- **PR [#25](https://github.com/AlteaTech/idemat-front/pull/25)** — **mergée** — corrige `AjouterVehiculeDialogComponent.showZones` : dépend uniquement du flag contrat `demandeZoneJ1F3`, jamais de PART/PRO (legacy .NET). Champs J1/F3 en `Validators.required` dynamique quand le flag est actif.
-- **PR [#26](https://github.com/AlteaTech/idemat-front/pull/26)** (`feature/ajout-vehicule-staging`) — `addVehicule()` passe par une demande en staging (back), pastille corail "En attente" + icône horloge sur le profil. Lié aux PR #244 (idbatv7) et #61 (idbatv7-front).
+- **PR [#27](https://github.com/AlteaTech/idemat-front/pull/27)** — logo contrat centré + redimensionné (sidenav desktop + header mobile, 72px), issue #261. **Ouverte**, en attente du test de Bertrand (autre téléphone, XCover IDbat) pour trancher un doute sur le fix `image-orientation: from-image` (présent sur Passages, absent sur Signalements — pas encore tranché si c'est un vrai gap ou pas).
+- **PR [#28](https://github.com/AlteaTech/idemat-front/pull/28)** — **mergée** — page WIP plein écran (squelette sprint 10), voir section dédiée ci-dessous.
+- **PR [#29](https://github.com/AlteaTech/idemat-front/pull/29)** — **mergée** — affichage points (#130/#267) sur écran Passages & Points : total + détail par matière, valeurs à 0 en attendant la formule de calcul back/mobile.
+
+## ⚠️ Squelette WIP — sprint 10 (temporaire, à retirer sprint 11)
+
+Depuis PR #28 (mergée dans `develop`), la route `home` pointe vers `WipComponent` (page plein écran "IDemat en cours de développement" + nom du contrat, **hors du shell** `IdematShellComponent` — aucun menu). Objectif : montrer l'avancement à Veolia avant la livraison complète sprint 11. Conséquence : **aucun écran IDemat n'est accessible par navigation normale pour le sprint 10** (Passages & Points, Carte d'accès, etc. — routes/imports actifs, juste inatteignables sans taper l'URL directe). Bertrand testera réellement IDemat à partir du 20/07.
+
+**À faire au sprint 11** : dans `app.routes.ts`, retirer la route top-level `WipComponent` sur `home`, remettre `{path: routesConstantes.home, component: HomeComponent, canActivate: [passwordChangedGuard]}` dans les `children` du shell (voir commentaire `TEMPORAIRE` dans le fichier).
 
 ## Règle métier — zones J1/F3 et carte grise (ajout de véhicule)
 
