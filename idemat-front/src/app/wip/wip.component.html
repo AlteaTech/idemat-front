@@ -1,0 +1,14 @@
+@if (loading()) {
+  <div class="loading-screen">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else {
+  <div class="wip-container">
+    <mat-icon class="wip-icon">construction</mat-icon>
+    <h1 class="wip-titre">IDemat en cours de développement</h1>
+    <p class="wip-texte">Cet espace sera disponible prochainement.</p>
+    @if (contrat()?.nomEnseigne) {
+      <p class="wip-contrat">Contrat : {{ contrat()?.nomEnseigne }}</p>
+    }
+  </div>
+}
