@@ -7,4 +7,5 @@ export interface DepotIdematModel {
   nomSite: string;
   estDepotQualifie: boolean;
   matieres: PassageMatiereIdematModel[];
+  valeurPoints: number;
 }

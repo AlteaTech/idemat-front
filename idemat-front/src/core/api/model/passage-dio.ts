@@ -17,5 +17,8 @@ export interface PassageDio {
     nomSite: string;
     estDepotQualifie: boolean;
     matieres: Array<PassageMatiereDio>;
+    valeurPoints: number;
+    ancienSoldePoints: number;
+    nouveauSoldePoints: number;
 }
 
