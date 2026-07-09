@@ -1,0 +1,120 @@
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  # Base de l'image commune
+  IMAGE_BASE_NAME: "newnelson.veolia-es.net:8084/idbatv7-front/image"
+  
+  # Configuration d'environnement Front-End (Variables a injecter lors du build Angular)
+  # Ces variables seront inscrites dans le code Javascript compile
+  BASE_IDEMAT_URL: "https://IDemat-dev.recyclage.veolia.fr/"
+  API_URL: "https://idemat-rec.recyclage.veolia.fr"
+  API_URL_PRIV: "https://idemat-rec.recyclage.veolia.fr"
+  TYPE_IMPRIMANTES_SITE: "GX420d;LP2844"
+
+  # Configuration Kubernetes
+  K8S_POD_NAME: "idemat-front"
+  K8S_NAMESPACE_REC: "nsv-rec-idbat-01"
+  K8S_NAMESPACE_DEV: "nsv-rec-idbat-01"
+  K8S_LABELS: "app=idematfront"
+  K8S_PORT: "80"
+  
+  # Configuration Base de données - REC
+  DB_API_URL: "frontbackidbat:8081"
+  
+  # TODO: Set these in GitLab CI/CD Variables (Settings > CI/CD > Variables) as masked variables
+
+stages:
+  - cleanup
+  - build
+  - package
+  - deploy
+  - kubernetes
+
+cleanup-workspace:
+  stage: cleanup
+  tags:
+    - idbatv7
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo "Reparation des permissions du workspace..."
+    - docker run --rm -v "$(pwd)":/app -w /app alpine:latest chown -R $(id -u):$(id -g) . || true
+
+angular-build:
+  stage: build
+  tags:
+    - idbatv7
+  script:
+    # Build Angular avec Node 20
+    # 1. On corrige le lockfile pour Linux
+    # 2. On remplace les placeholders dans environment.gitlab.ts par les variables d'env
+    # 3. On lance le build avec la configuration 'gitlab'
+    - docker run --rm -v "$(pwd)/idemat-front":/app -w /app -e API_URL="$API_URL" -e BASE_IDEMAT_URL="$BASE_IDEMAT_URL" -e TYPE_IMPRIMANTES_SITE="$TYPE_IMPRIMANTES_SITE" node:20 /bin/sh -c "
+        npm install --package-lock-only && 
+        sed -i \"s|API_URL_PLACEHOLDER|\$API_URL|g\" src/environments/environment.gitlab.ts &&
+        npm ci && 
+        npm run build -- --configuration=gitlab; 
+        RET=\$?; 
+        chown -R $(id -u):$(id -g) .; 
+        exit \$RET"
+  artifacts:
+    paths:
+      - idemat-front/dist/
+    expire_in: 1 week
+  needs:
+    - cleanup-workspace
+
+
+# --- Jobs pour DEVELOP (avec SHA) ---
+
+docker-build-dev:
+  stage: package
+  tags:
+    - idbatv7
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+  variables:
+    # En dev : on ajoute le SHA
+    IMAGE_TAG_UNIQUE: "$IMAGE_BASE_NAME:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+  script:
+    - docker build -t "$IMAGE_TAG_UNIQUE" .
+  needs:
+    - angular-build
+
+
+docker-push-dev:
+  stage: deploy
+  tags:
+    - idbatv7
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+  variables:
+    IMAGE_TAG_UNIQUE: "$IMAGE_BASE_NAME:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+  script:
+    - docker push "$IMAGE_TAG_UNIQUE"
+    - echo "Image poussee avec succes :"
+    - echo "- $IMAGE_TAG_UNIQUE"
+  needs:
+    - docker-build-dev
+
+k8s-deploy-dev:
+  stage: kubernetes
+  tags:
+    - v-idbat
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+  variables:
+    IMAGE_TAG_UNIQUE: "$IMAGE_BASE_NAME:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+    CLOUDWATCH_LOG_GROUP: "/aws/kubernetes/idbatv7-back-integration"
+  before_script:
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x kubectl
+    - mv kubectl /usr/local/bin/
+    - kubectl version --client
+  script:
+    - kubectl delete pod $K8S_POD_NAME -n $K8S_NAMESPACE_DEV --ignore-not-found=true
+    # Note: On ne passe plus de variables --env liees au Front-End car elles sont injectees au build
+    - kubectl run $K8S_POD_NAME --image=$IMAGE_TAG_UNIQUE -n $K8S_NAMESPACE_DEV --labels=$K8S_LABELS --port=$K8S_PORT
+    - kubectl wait --for=condition=Ready pod/$K8S_POD_NAME -n $K8S_NAMESPACE_DEV --timeout=300s
+  needs:
+    - docker-push-dev

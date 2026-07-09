@@ -1,2 +1,1 @@
- cd .\idemat-front\
 npm run generate-client-local
