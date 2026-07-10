@@ -37,10 +37,9 @@ export class AchatPassagesComponent implements OnInit {
 
   protected valider(): void {
     this.enCours.set(true);
-    // TODO: rediriger vers l'URL PayFip retournée par le service
     this.service.initierPaiement().subscribe(url => {
       this.enCours.set(false);
-      // window.location.href = url; // décommenter quand PayFip sera branché
+      window.location.href = url;
     });
   }
 
