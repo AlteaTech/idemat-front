@@ -1,5 +1,7 @@
 import {inject, Injectable} from '@angular/core';
-import {delay, map, Observable, of} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {map, Observable} from 'rxjs';
+import {Configuration} from '../../../core/api';
 import {PassagesControllerService} from '../../../core/api/api/passages-controller.service';
 import {PassagesInfoModel, PassagesStatsIdematModel} from '../../../models/idemat/passages-idemat.model';
 import {DepotIdematModel} from '../../../models/idemat/depot-idemat.model';
@@ -8,20 +10,12 @@ import {PageIdematModel} from '../../../models/idemat/page-idemat.model';
 @Injectable({providedIn: 'root'})
 export class PassagesIdematServiceAgents {
   private readonly passagesService = inject(PassagesControllerService);
+  private readonly http = inject(HttpClient);
+  private readonly config = inject(Configuration);
 
-  // TODO: remplacer par appels HTTP GET /api/idemat/passages/info
+  // TODO: remplacer par le client OpenAPI généré une fois le back démarré (table PayFiP en attente de migration)
   getPassagesInfo(): Observable<PassagesInfoModel> {
-    return of({
-      passagesRestants: 10,
-      achatsAnnee: [
-        {date: '2025-04-10', nbPassages: 2},
-        {date: '2025-04-04', nbPassages: 5},
-      ],
-      nbPassagesAchetesTotal: 24,
-      forfaitGratuitAnnuel: 10,
-      forfaitAcheteAnnuel: 0,
-      passagesConsommesAnnee: 2,
-    }).pipe(delay(300));
+    return this.http.get<PassagesInfoModel>(`${this.config.basePath}/api/passages/info`);
   }
 
   getDepots(page: number, size: number): Observable<PageIdematModel<DepotIdematModel>> {
