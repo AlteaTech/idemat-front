@@ -214,6 +214,7 @@ Convention : `@RequestMapping` = `/api/<NomController-sans-Idm-sans-Controller>`
 |---|---|---|
 | `POST /api/inscription` | `InscriptionController` | ✅ |
 | `POST /api/auth/login` | `AuthController` | ✅ |
+| `POST /api/auth/refresh` | `AuthController` | ✅ livré 2026-07-10 (#277) — rafraîchit le JWT (30min glissantes) |
 | `POST /api/mot-de-passe` | `MotDePasseController` | ✅ |
 | `POST /api/mot-de-passe/confirmer` | `MotDePasseController` | ✅ livré 2026-05-28 (#122) — public, sans JWT |
 | `GET /api/contrat/by-url/{url}` | `ContratController` | ✅ |
@@ -261,6 +262,18 @@ Toujours `{replaceUrl: true}` sur ces `router.navigate()` : le slug invalide ne 
 
 `error.interceptor.ts` appelle `authService.logout()` sur tout 401. `logout()` lit `storagesConstantes.contratSlug` depuis le localStorage et navigue vers `/${slug}` (fallback `/lien-invalide`). Conséquence : tout endpoint public appelé sans JWT doit être dans le `permitAll` de `SecurityConfig` côté back (`/api/mot-de-passe/**`, `/api/inscription`, etc.), sinon l'utilisateur est redirigé en boucle.
 
+## Session JWT glissante 30min (#277, livré 2026-07-10)
+
+Le token JWT est passé de 24h fixe à **30min glissantes** (durée pilotée par `jwt.expiration-web-ms` côté back, `api-idemat/application.properties`). `AuthService` (`src/services/auth/auth.service.ts`) :
+- détecte l'activité réelle (`click`/`keydown`/`visibilitychange` sur `document`, throttlé par un simple timestamp `lastActivityAt`)
+- toutes les 60s (`setInterval`), si activité dans les 60 dernières secondes → appelle `AuthenticationServiceAgents.refreshToken()` (`POST /api/auth/refresh`) et remplace le JWT en storage
+- sinon laisse la session expirer naturellement (pas de logout forcé sur échec de refresh — c'est `isTokenExpired` + le 401 existant qui restent seuls responsables)
+- **pas de plafond de session absolu** (décision Jérémie) : tant qu'il y a de l'activité, la session glisse indéfiniment
+
+⚠️ **Piège** : `isTokenExpired()` avait une marge de sécurité codée en dur à **1h** (pensée pour l'ancien token 24h). Avec un token de 30min, cette marge doit être largement inférieure à la durée du token — passée à **1min**. Toute nouvelle modification de la durée du token doit revérifier ce ratio (marge ≪ durée token), sinon le token peut apparaître "expiré" dès sa réception.
+
+⚠️ **Drift générateur OpenAPI découvert en implémentant `/refresh`** : le dossier `src/core/api/` contenait un fichier orphelin `auth-idm-controller.service.ts` (classe `AuthIdmControllerService`, DTOs `LoginIdmRequest`/`LoginIdmResponse`) que `ConnexionIdematComponent` et `AuthenticationServiceAgents.authenticateUser()` utilisent encore pour le login. Une régénération actuelle (`npm run generate-client-local`) ne produit plus ce fichier — le controller réel s'appelle `AuthController` côté back et génère `auth-controller.service.ts` (`AuthControllerService`, DTOs `LoginDioRequest`/`LoginDio`). Les deux sont fonctionnellement identiques (mêmes champs JSON `courriel`/`motDePasse`/`token`), donc pas de bug actif, mais **le login et le refresh utilisent aujourd'hui deux classes générées différentes pour le même endpoint** (`refreshToken()` a été branché sur la version à jour `AuthControllerService`, volontairement pas de refactor du login existant pour ne pas risquer une régression hors scope). À nettoyer à l'occasion : basculer le login sur `AuthControllerService` et supprimer `auth-idm-controller.service.ts` + `login-idm-request.ts`/`login-idm-response.ts`.
+
 ## Conventions shell mobile
 
 - Bouton retour ← : `<button (click)="goBack()">` dans `idemat-shell.component.html`, masqué sur home via `@if (!isActive(routesConstantes.home))`
@@ -274,17 +287,16 @@ Toujours `{replaceUrl: true}` sur ces `router.navigate()` : le slug invalide ne 
 Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA`) doivent être dans `src/models/idemat/`, jamais inline dans le composant :
 - `models/idemat/ajouter-vehicule-dialog.model.ts` → `AjouterVehiculeDialogData` + `AjouterVehiculeDialogResult`
 
-## Statut PR en cours (vérifié 2026-07-09)
+## Statut PR en cours (vérifié 2026-07-10)
 
 - **PR [#27](https://github.com/AlteaTech/idemat-front/pull/27)** — logo contrat centré + redimensionné (sidenav desktop + header mobile, 72px), issue #261. **Ouverte**, en attente du test de Bertrand (autre téléphone, XCover IDbat) pour trancher un doute sur le fix `image-orientation: from-image` (présent sur Passages, absent sur Signalements — pas encore tranché si c'est un vrai gap ou pas).
-- **PR [#28](https://github.com/AlteaTech/idemat-front/pull/28)** — **mergée** — page WIP plein écran (squelette sprint 10), voir section dédiée ci-dessous.
+- **PR [#28](https://github.com/AlteaTech/idemat-front/pull/28)** — mergée puis **revertée par Jérémie** (`cfa084d`, 2026-07-10) : le squelette WIP sprint 10 n'a plus lieu d'être, la préparation passe directement au sprint 11. Voir section "Squelette WIP" ci-dessous, retirée du code.
 - **PR [#29](https://github.com/AlteaTech/idemat-front/pull/29)** — **mergée** — affichage points (#130/#267) sur écran Passages & Points : total + détail par matière, valeurs à 0 en attendant la formule de calcul back/mobile.
+- **PR [#30](https://github.com/AlteaTech/idemat-front/pull/30)** — session JWT glissante 30min (#277), voir section dédiée ci-dessus. **Ouverte**, vers `develop`.
 
-## ⚠️ Squelette WIP — sprint 10 (temporaire, à retirer sprint 11)
+## Squelette WIP sprint 10 — reverté (2026-07-10)
 
-Depuis PR #28 (mergée dans `develop`), la route `home` pointe vers `WipComponent` (page plein écran "IDemat en cours de développement" + nom du contrat, **hors du shell** `IdematShellComponent` — aucun menu). Objectif : montrer l'avancement à Veolia avant la livraison complète sprint 11. Conséquence : **aucun écran IDemat n'est accessible par navigation normale pour le sprint 10** (Passages & Points, Carte d'accès, etc. — routes/imports actifs, juste inatteignables sans taper l'URL directe). Bertrand testera réellement IDemat à partir du 20/07.
-
-**À faire au sprint 11** : dans `app.routes.ts`, retirer la route top-level `WipComponent` sur `home`, remettre `{path: routesConstantes.home, component: HomeComponent, canActivate: [passwordChangedGuard]}` dans les `children` du shell (voir commentaire `TEMPORAIRE` dans le fichier).
+La route `home` a pointé temporairement vers `WipComponent` (page plein écran "IDemat en cours de développement", hors shell) entre PR #28 et son revert par Jérémie (`cfa084d`) — **entièrement retiré du code**, `HomeComponent` est de nouveau la route active. Ne pas réintroduire ce pattern sans redemander.
 
 ## Règle métier — zones J1/F3 et carte grise (ajout de véhicule)
 
