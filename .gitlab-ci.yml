@@ -6,8 +6,8 @@ variables:
   # Configuration d'environnement Front-End (Variables a injecter lors du build Angular)
   # Ces variables seront inscrites dans le code Javascript compile
   BASE_IDEMAT_URL: "https://IDemat-dev.recyclage.veolia.fr/"
-  API_URL: "https://idemat-rec.recyclage.veolia.fr"
-  API_URL_PRIV: "https://idemat-rec.recyclage.veolia.fr"
+  API_URL: "https://idemat-ws-rec.recyclage.veolia.fr"
+  API_URL_PRIV: "https://idemat-ws-rec.recyclage.veolia.fr"
   TYPE_IMPRIMANTES_SITE: "GX420d;LP2844"
 
   # Configuration Kubernetes
