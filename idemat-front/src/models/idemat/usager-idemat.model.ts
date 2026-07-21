@@ -11,6 +11,7 @@ export interface UsagerIdematModel {
   ville?: string;
   hasChangedPassword: boolean;
   codeBarres?: string;
+  autresCartesCodeBarres: string[];
   numeroCarte?: string;
   vehicules?: VehiculeIdematModel[];
   isPro: boolean;
