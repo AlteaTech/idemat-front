@@ -1,0 +1,37 @@
+@use 'variables' as *;
+@use 'common' as *;
+
+.dialog-container {
+  padding: 24px;
+}
+
+.dialog-header {
+  justify-content: center;
+
+  .dialog-title {
+    color: $primary-color;
+    text-align: center;
+  }
+}
+
+.question-continuer {
+  text-align: center;
+}
+
+.btn-supprimer {
+  flex: 1;
+  background: $error-color;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
