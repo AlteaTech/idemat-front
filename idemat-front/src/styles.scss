@@ -23,6 +23,21 @@ html {
     typography: Roboto,
     density: 0,
   ));
+
+  // Le thème M3 par défaut (rose-palette) ne rend pas la vraie couleur de marque sur les
+  // slide-toggle — même correctif que le BO (idbatv7-front/styles.scss), overrides ciblés.
+  @include mat.slide-toggle-overrides((
+    selected-icon-color: $primary-color,
+    selected-focus-state-layer-color: $primary-color,
+    selected-track-color: $primary-color,
+    selected-hover-track-color: $primary-color,
+    selected-focus-track-color: $primary-color,
+    selected-pressed-track-color: $primary-color,
+    unselected-track-color: white,
+    unselected-icon-color: white,
+    unselected-hover-track-color: white,
+    unselected-focus-track-color: white,
+  ));
 }
 
 // 3. --- BASE & TYPOGRAPHY ---
