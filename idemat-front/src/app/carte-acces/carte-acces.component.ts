@@ -63,29 +63,20 @@ export class CarteAccesComponent implements OnInit {
         result.zoneJ1 || undefined,
         result.zoneF3 ? Number(result.zoneF3) : undefined,
       ).subscribe({
-        next: () => {
-          const current = this.usager()!;
-          const nouveau: VehiculeIdematModel = {
-            immatriculation: result.immatriculation,
-            zoneJ1: result.zoneJ1 || undefined,
-            zoneF3: result.zoneF3 ? Number(result.zoneF3) : undefined,
-            enAttente: true,
-          };
-          this.usager.set({...current, vehicules: [...(current.vehicules ?? []), nouveau]});
-        },
+        next: () => this.rafraichirUsager(),
+        error: err => console.error('Erreur ajout véhicule', err),
       });
     });
   }
 
   protected onSupprimerVehicule(vehicule: VehiculeIdematModel): void {
     this.usagerService.deleteVehicule(vehicule.immatriculation).subscribe({
-      next: () => {
-        const current = this.usager()!;
-        this.usager.set({
-          ...current,
-          vehicules: (current.vehicules ?? []).filter(v => v.immatriculation !== vehicule.immatriculation),
-        });
-      },
+      next: () => this.rafraichirUsager(),
+      error: err => console.error('Erreur suppression véhicule', err),
     });
+  }
+
+  private rafraichirUsager(): void {
+    this.usagerService.getUsager().subscribe(u => this.usager.set(u));
   }
 }
