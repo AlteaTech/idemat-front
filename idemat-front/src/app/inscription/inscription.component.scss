@@ -15,6 +15,9 @@ mat-form-field:has(mat-hint) {
   }
 }
 
+// Compteur SIRET (x/14) — rouge quand le format est invalide, idem écran usagers du BO.
+.hint-erreur { color: $error-color !important; }
+
 .bloc { padding-bottom: 12px; }
 .bloc-header { margin-bottom: 12px; }
 

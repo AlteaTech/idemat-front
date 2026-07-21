@@ -31,12 +31,14 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>SIRET</mat-label>
-                  <input matInput formControlName="siret" placeholder="14 chiffres" maxlength="14" (input)="onSiretInput($event)" #siretInput />
-                  <mat-hint align="end">{{ siretInput.value.length }} / 14</mat-hint>
+                  <input matInput formControlName="siret" placeholder="14 chiffres" maxlength="14" (input)="onSiretInput($event)" [errorStateMatcher]="siretErrorMatcher" #siretInput />
+                  @if (siretInput.value.length > 0) {
+                    <mat-hint align="end" [class.hint-erreur]="form.controls.siret.hasError('pattern')">{{ siretInput.value.length }} / 14</mat-hint>
+                  }
                   @if (form.controls.siret.hasError("required")) {
                     <mat-error>Champ obligatoire</mat-error>
-                  } @else if (form.controls.siret.hasError("pattern")) {
-                    <mat-error>Le SIRET doit comporter 14 chiffres</mat-error>
+                  } @else if (form.controls.siret.hasError("formatInvalide")) {
+                    <mat-error>Ce SIRET n'est pas valide</mat-error>
                   }
                 </mat-form-field>
               </div>
@@ -297,12 +299,14 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>SIRET</mat-label>
-                  <input matInput formControlName="siret" placeholder="14 chiffres" maxlength="14" (input)="onSiretInput($event)" #siretInput />
-                  <mat-hint align="end">{{ siretInput.value.length }} / 14</mat-hint>
+                  <input matInput formControlName="siret" placeholder="14 chiffres" maxlength="14" (input)="onSiretInput($event)" [errorStateMatcher]="siretErrorMatcher" #siretInput />
+                  @if (siretInput.value.length > 0) {
+                    <mat-hint align="end" [class.hint-erreur]="form.controls.siret.hasError('pattern')">{{ siretInput.value.length }} / 14</mat-hint>
+                  }
                   @if (form.controls.siret.hasError("required")) {
                     <mat-error>Champ obligatoire</mat-error>
-                  } @else if (form.controls.siret.hasError("pattern")) {
-                    <mat-error>Le SIRET doit comporter 14 chiffres</mat-error>
+                  } @else if (form.controls.siret.hasError("formatInvalide")) {
+                    <mat-error>Ce SIRET n'est pas valide</mat-error>
                   }
                 </mat-form-field>
               }

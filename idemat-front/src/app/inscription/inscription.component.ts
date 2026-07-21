@@ -19,6 +19,15 @@ class TouchedErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && control.touched);
   }
 }
+
+// SIRET : comportement repris tel quel du BO (usager-form) — pas d'ErrorStateMatcher custom
+// là-bas, donc Material utilise son défaut (dirty || touched) : validation en direct, dès le
+// dernier caractère saisi, sans attendre la perte de focus.
+class DirtyOuTouchedErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: AbstractControl | null): boolean {
+    return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+}
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
@@ -31,6 +40,7 @@ import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-
 import {AjouterVehiculeDialogComponent} from './ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
 import {LinkifyPipe} from '../../pipes/linkify.pipe';
+import {siretValidator} from '../../validateurs/siret.validator';
 
 @Component({
   selector: 'app-inscription',
@@ -54,6 +64,8 @@ export class InscriptionComponent implements OnInit {
       .pipe(map(r => r.matches)),
     {initialValue: true}
   );
+
+  protected readonly siretErrorMatcher = new DirtyOuTouchedErrorStateMatcher();
 
   protected contrat = signal<ContratIdematModel | null>(null);
   protected contratUrl = signal('');
@@ -124,7 +136,7 @@ export class InscriptionComponent implements OnInit {
     const siretCtrl = this.form.controls.siret;
     const societeCtrl = this.form.controls.societe;
     if (isPro) {
-      siretCtrl.addValidators([Validators.required, Validators.pattern(/^\d{14}$/)]);
+      siretCtrl.addValidators([Validators.required, siretValidator]);
       societeCtrl.addValidators(Validators.required);
     } else {
       siretCtrl.clearValidators();
