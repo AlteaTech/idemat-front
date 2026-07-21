@@ -496,6 +496,13 @@ input, mat-label, [mat-dialog-title], [mat-dialog-content], mat-paginator, mat-o
   font-family: $font-idbat-family;
 }
 
+// mat-dialog (Material 20/MDC) pilote sa police via ces variables internes, qui passent
+// devant la règle font-family ci-dessus — même piège que mat-card/mat-button déjà rencontré.
+[mat-dialog-title], [mat-dialog-content] {
+  --mat-dialog-subhead-font: #{$font-idbat-family};
+  --mat-dialog-supporting-text-font: #{$font-idbat-family};
+}
+
 
 [mat-dialog-title] {
 
