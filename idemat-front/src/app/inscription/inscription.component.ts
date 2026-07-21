@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {map} from 'rxjs/operators';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -9,6 +9,16 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+// Erreur affichée uniquement après perte de focus (touched), jamais pendant la saisie (dirty) —
+// le comportement par défaut de Material déclenche sur dirty || touched, ce qui masque
+// prématurément les mat-hint (ex. compteur SIRET) et applique le style d'erreur pendant la frappe.
+class TouchedErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: AbstractControl | null): boolean {
+    return !!(control && control.invalid && control.touched);
+  }
+}
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
@@ -29,6 +39,7 @@ import {LinkifyPipe} from '../../pipes/linkify.pipe';
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher}],
 })
 export class InscriptionComponent implements OnInit {
   private readonly router = inject(Router);
@@ -113,7 +124,7 @@ export class InscriptionComponent implements OnInit {
     const siretCtrl = this.form.controls.siret;
     const societeCtrl = this.form.controls.societe;
     if (isPro) {
-      siretCtrl.addValidators(Validators.required);
+      siretCtrl.addValidators([Validators.required, Validators.pattern(/^\d{14}$/)]);
       societeCtrl.addValidators(Validators.required);
     } else {
       siretCtrl.clearValidators();
@@ -124,6 +135,14 @@ export class InscriptionComponent implements OnInit {
 
   protected retour(): void {
     this.router.navigate([`/${routesConstantes.creationCompte}/${this.contratUrl()}`]);
+  }
+
+  protected onSiretInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const chiffresSeuls = input.value.replace(/\D/g, '').slice(0, 14);
+    if (chiffresSeuls !== input.value) {
+      this.form.controls.siret.setValue(chiffresSeuls);
+    }
   }
 
   protected onFileChange(event: Event, type: 'ci' | 'jd' | 'kbis'): void {
