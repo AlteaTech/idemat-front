@@ -287,12 +287,50 @@ Le token JWT est passé de 24h fixe à **30min glissantes** (durée pilotée par
 Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA`) doivent être dans `src/models/idemat/`, jamais inline dans le composant :
 - `models/idemat/ajouter-vehicule-dialog.model.ts` → `AjouterVehiculeDialogData` + `AjouterVehiculeDialogResult`
 
-## Statut PR en cours (vérifié 2026-07-10)
+## Statut PR en cours (vérifié 2026-07-22 tard)
 
 - **PR [#27](https://github.com/AlteaTech/idemat-front/pull/27)** — logo contrat centré + redimensionné (sidenav desktop + header mobile, 72px), issue #261. **Ouverte**, en attente du test de Bertrand (autre téléphone, XCover IDbat) pour trancher un doute sur le fix `image-orientation: from-image` (présent sur Passages, absent sur Signalements — pas encore tranché si c'est un vrai gap ou pas).
 - **PR [#28](https://github.com/AlteaTech/idemat-front/pull/28)** — mergée puis **revertée par Jérémie** (`cfa084d`, 2026-07-10) : le squelette WIP sprint 10 n'a plus lieu d'être, la préparation passe directement au sprint 11. Voir section "Squelette WIP" ci-dessous, retirée du code.
 - **PR [#29](https://github.com/AlteaTech/idemat-front/pull/29)** — **mergée** — affichage points (#130/#267) sur écran Passages & Points : total + détail par matière, valeurs à 0 en attendant la formule de calcul back/mobile.
 - **PR [#30](https://github.com/AlteaTech/idemat-front/pull/30)** — session JWT glissante 30min (#277), voir section dédiée ci-dessus. **Ouverte**, vers `develop`.
+- **PR [#33](https://github.com/AlteaTech/idemat-front/pull/33)** à **[#41](https://github.com/AlteaTech/idemat-front/pull/41)** — toutes **mergées** dans `develop` le 2026-07-22 : #33 (linkify), #34 (police mat-dialog + popup suppression compte — a nécessité un merge de `develop` en cours de route pour résoudre un conflit sur `styles.scss`, deux ajouts indépendants à la même liste de sélecteurs `font-family`, les deux conservés), #35 (chevauchement/SIRET inscription), #36-#39 (#292-#295), #40 (alignement largeur écrans compte, sans ticket), #41 (#296 cartes code-barres + déplacement ajout véhicule — suivi d'un fix de rafraîchissement de liste après ajout/suppression, voir section dédiée ci-dessous). Détail RG par RG dans CLAUDE.md idbatv7, section "Vague de petits fix fin de projet (2026-07-22)".
+
+## Piège — validation "live" vs "lostfocus" cohabitant sur un même formulaire (#292, 2026-07-22)
+
+Un `ErrorStateMatcher` fourni au niveau du `@Component` (`providers: [{provide: ErrorStateMatcher, useClass: ...}]`) s'applique à **tous** les champs du formulaire. Si un seul champ doit se comporter différemment (ex. SIRET : validation en direct dès la frappe, comme le fait le BO par défaut — sans `ErrorStateMatcher` custom, Material utilise `dirty || touched`), ne pas changer le matcher global : donner un `[errorStateMatcher]` **local** à ce seul `<input matInput>`, avec une classe dédiée (`dirty || touched`), en laissant le matcher global (`touched` seul, demande Bertrand) pour tout le reste du formulaire.
+
+## Pattern — icônes SVG statiques (`<img src>`) : pas d'accès aux variables SCSS
+
+Les icônes du dossier `public/*.svg` (`Carte.svg`, `Code barres.svg`, `User.svg`…) sont chargées via `<img src="...">`, des fichiers statiques totalement isolés d'Angular — **impossible** d'y référencer une variable SCSS (`$text-color-muted` etc.), même en théorie. La couleur est codée en dur (`fill="..."`) dans le fichier SVG lui-même. Pour uniformiser la couleur de plusieurs icônes d'un même écran, comparer et aligner les valeurs `fill` des fichiers SVG un par un — pas de solution CSS.
+
+Pour qu'une icône suive vraiment une variable SCSS, il faudrait l'inliner en `<svg>` dans le template (`fill="currentColor"`, couleur héritée via `color` CSS du parent) au lieu de `<img src>` — refactor plus large, pas fait à ce jour (#295).
+
+## Pattern — couleur d'un `mat-slide-toggle` (ou tout composant Material) qui ne rend pas la vraie couleur de marque
+
+Le thème M3 global (`mat.theme()` dans `styles.scss`) utilise une palette Material générique (`mat.$rose-palette`) qui ne correspond pas à `$primary-color` (#ED6E57) réel. **Ne jamais changer le thème global pour corriger ça** (risque de casser d'autres composants app-wide) — utiliser les overrides ciblés par composant Material, ex. pour les toggles :
+
+```scss
+@include mat.slide-toggle-overrides((
+  selected-track-color: $primary-color,
+  unselected-track-color: white,
+  // ...
+));
+```
+Pattern déjà en place côté BO (`idbatv7-front/styles.scss`) pour les mêmes raisons — reproduit à l'identique côté IDemat (#294).
+
+## Pattern — centrage horizontal : toujours `max-width` sur `.page-container`, jamais sur un enfant
+
+`.page-container` (global, `_common.scss`) se centre lui-même via `width: 50%; margin: 0 auto`. Si un écran a besoin d'une largeur différente, poser le `max-width` **sur `.page-container` lui-même** (surcharge locale dans le composant), jamais sur un `div.contenu` enfant — sinon ce dernier ne se centre pas (il colle au bord gauche de la boîte large du parent), créant un désalignement horizontal entre écrans qui devraient pourtant être visuellement cohérents (repéré sur "Modifier le profil"/"Paramètres du compte" vs "Mon compte", 2026-07-22).
+
+## Écran "Mes accès" (`carte-acces`) — ajout/suppression de véhicule (2026-07-22)
+
+Déplacé depuis "Modifier le profil" (accord Ronald, anticipation des tickets à venir annoncés par Bertrand sur cet écran — voir issue #296). Même logique exacte que l'ancien emplacement (dialog `AjouterVehiculeDialogComponent`, `usagerService.addVehicule()`/`deleteVehicule()`) : "Modifier le profil" ne gère plus les véhicules du tout. Bloc "Véhicules" toujours gaté par `allowImmatriculationsParticuliers`/`allowImmatriculationsProfessionnels`, mais affiché même à 0 véhicule (pour permettre le premier ajout).
+
+⚠️ **Bug corrigé le 2026-07-22 (même PR #41)** : après ajout/suppression, la liste ne se rafraîchissait pas fiablement. Le code patchait localement le signal `usager` (concat/filter manuel sur `vehicules`) au lieu de relire la source de vérité — fragile et sans gestion d'erreur (un échec HTTP silencieux donnait l'impression que rien ne s'était passé). **Pattern à privilégier pour toute mutation de liste (ajout/suppression) : recharger l'entité complète depuis le back (`usagerService.getUsager().subscribe(u => this.usager.set(u))`) plutôt que patcher l'état local à la main**, et toujours ajouter un handler `error` (même juste `console.error`) sur les `subscribe()` de mutation — son absence est indétectable côté UI (pas d'erreur visible, juste "rien ne se passe").
+
+## Piège — `ng serve` qui ne recharge plus après des opérations git (stash/checkout) mi-session
+
+Le serveur dev peut cesser de rebuilder silencieusement après des changements de branche/stash sur le même repo pendant qu'il tourne — repéré en cherchant pourquoi un fix (rafraîchissement véhicule, ci-dessus) semblait "ne pas fonctionner" alors que le code était correct : le dernier rebuild du log datait de plus de 2h, avant l'édition. **Réflexe** : après tout `git stash`/`checkout`/`branch` sur un repo dont le dev server tourne, vérifier le timestamp du dernier "Application bundle generation complete" dans son log avant de conclure à un bug applicatif — si le serveur n'a pas rebuild depuis l'édition, le redémarrer (`kill` + `nohup npm start &`) avant de chercher plus loin. Même famille de piège que le `bootRun` backend resté stale (cf. CLAUDE.md idbatv7), côté frontend cette fois.
 
 ## Squelette WIP sprint 10 — reverté (2026-07-10)
 
