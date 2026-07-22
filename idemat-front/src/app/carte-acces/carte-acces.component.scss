@@ -3,6 +3,9 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
+// Harmonisé avec Mon compte / Modifier le profil / Paramètres du compte.
+.page-container { max-width: 720px; }
+
 .page-title { margin-bottom: 28px; }
 .bloc { margin-bottom: 16px; }
 
@@ -16,7 +19,58 @@
 .carte-num { font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; color: $text-color-dark; }
 .separateur { border: none; border-top: 1px solid $border-color-light; margin: 4px 0; }
 
-.vehicule-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; flex-wrap: wrap; }
-.vehicule-immat { font-size: 0.95rem; font-weight: 600; color: $text-color-dark; letter-spacing: 0.05em; }
+.vehicule-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: $background-hover-neutral;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.vehicule-immat { font-size: 0.95rem; font-weight: 700; color: $text-color-dark; letter-spacing: 0.05em; }
 .vehicule-zones { display: flex; gap: 6px; flex-wrap: wrap; }
 .zone-badge { font-size: 0.75rem; color: $text-color-secondary; background: $border-color-light; border-radius: 4px; padding: 2px 6px; }
+
+.badge-en-attente {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $primary-color;
+  background: $primary-color-background;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-left: auto;
+  .material-icons { font-size: 16px; width: 16px; height: 16px; }
+}
+
+.btn-vehicule-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.7; }
+}
+
+.btn-vehicule-img { width: 20px; height: 20px; object-fit: contain; }
+
+.btn-ajouter-vehicule {
+  display: flex; align-items: center; justify-content: center;
+  margin: 8px auto 0;
+  background: $text-color-primary;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 32px;
+  font-size: 0.9rem; font-weight: 700; font-family: inherit;
+  color: white;
+  cursor: pointer; transition: opacity 0.15s;
+  &:hover { opacity: 0.85; }
+}
