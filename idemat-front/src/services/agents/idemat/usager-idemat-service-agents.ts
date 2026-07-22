@@ -37,7 +37,8 @@ export class UsagerIdematServiceAgents {
         ville: r.ville,
         hasChangedPassword: r.hasChangedPassword,
         codeBarres: r.codeBarres,
-        numeroCarte: (r as any).numeroCarte,
+        autresCartesCodeBarres: r.autresCartesCodeBarres ?? [],
+        numeroCarte: r.numeroCarte,
         isPro: r.isPro,
         vehicules: r.vehicules.map((v): VehiculeIdematModel => ({
           immatriculation: v.immatriculation,

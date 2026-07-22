@@ -3,7 +3,10 @@
     <button type="button" class="btn-retour" (click)="retour()">
       <img src="Gauche.svg" alt="" class="btn-retour-img" />
     </button>
-    <h1>Modifier mon profil</h1>
+    <div>
+      <h1>Modifier mon profil</h1>
+      <p class="page-titre-sous">{{ usager()?.prenom }} {{ usager()?.nom }}</p>
+    </div>
   </div>
 
   @if (!usager() || !contrat()) {
@@ -71,37 +74,6 @@
             }
           </div>
         </div>
-
-        <!-- Bloc Véhicules enregistrés (conditionnel sur allowImmatriculationsParticuliers / allowImmatriculationsProfessionnels) -->
-        @if (usager()!.isPro ? contrat()!.allowImmatriculationsProfessionnels : contrat()!.allowImmatriculationsParticuliers) {
-          <div class="bloc">
-            <div class="bloc-header">
-              <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
-              <span class="bloc-titre">Véhicules enregistrés</span>
-            </div>
-
-            @for (vehicule of usager()!.vehicules ?? []; track vehicule.immatriculation) {
-              <div class="vehicule-item">
-                @if (!vehicule.enAttente) {
-                  <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(vehicule)" title="Supprimer">
-                    <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
-                  </button>
-                }
-                <span class="vehicule-immat">{{ vehicule.immatriculation }}</span>
-                @if (vehicule.enAttente) {
-                  <span class="badge-en-attente">
-                    <span class="material-icons">schedule</span>
-                    En attente
-                  </span>
-                }
-              </div>
-            }
-
-            <button type="button" class="btn-ajouter-vehicule" (click)="onOuvrirDialogVehicule()">
-              Ajouter un véhicule
-            </button>
-          </div>
-        }
 
       </div>
     </form>

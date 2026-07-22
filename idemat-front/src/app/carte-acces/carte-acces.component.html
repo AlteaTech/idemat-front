@@ -33,33 +33,51 @@
       </div>
     }
 
-    <!-- CARTE PHYSIQUE (PUCE) -->
-    @if (contrat()?.allowCartePhysique) {
+    <!-- CARTE PHYSIQUE (PUCE) — affichée uniquement si l'usager a au moins une carte de ce type (#296) -->
+    @if (usager()?.numeroCarte) {
       <div class="bloc">
         <div class="bloc-header">
           <img src="Carte.svg" alt="" class="bloc-icon-img" />
-          <span class="bloc-titre">Carte puce</span>
+          <span class="bloc-titre">Cartes à puce</span>
         </div>
-        @if (usager()?.numeroCarte) {
+        <div class="info-ligne">
+          <span class="info-label">Numéro de carte</span>
+          <span class="info-valeur carte-num">{{ usager()!.numeroCarte }}</span>
+        </div>
+      </div>
+    }
+
+    <!-- CARTES CODE-BARRES (hors QR code, déjà géré ci-dessus) — affichées uniquement si
+         l'usager a au moins une carte de ce type (#296) -->
+    @if ((usager()?.autresCartesCodeBarres?.length ?? 0) > 0) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <img src="Code barres.svg" alt="" class="bloc-icon-img" />
+          <span class="bloc-titre">Cartes à code-barres</span>
+        </div>
+        @for (carte of usager()!.autresCartesCodeBarres; track carte) {
           <div class="info-ligne">
-            <span class="info-label">Numéro de carte</span>
-            <span class="info-valeur carte-num">{{ usager()!.numeroCarte }}</span>
+            <span class="info-valeur carte-num">{{ carte }}</span>
           </div>
-        } @else {
-          <p class="no-carte">Aucune carte puce associée à votre compte</p>
+          @if (!$last) { <hr class="separateur" /> }
         }
       </div>
     }
 
     <!-- IMMATRICULATIONS -->
-    @if ((usager()?.isPro ? contrat()?.allowImmatriculationsProfessionnels : contrat()?.allowImmatriculationsParticuliers) && (usager()?.vehicules?.length ?? 0) > 0) {
+    @if (usager()?.isPro ? contrat()?.allowImmatriculationsProfessionnels : contrat()?.allowImmatriculationsParticuliers) {
       <div class="bloc">
         <div class="bloc-header">
           <img src="Immatriculation.svg" alt="" class="bloc-icon-img" />
           <span class="bloc-titre">Véhicules</span>
         </div>
-        @for (v of usager()!.vehicules!; track v.immatriculation) {
-          <div class="vehicule-row">
+        @for (v of usager()?.vehicules ?? []; track v.immatriculation) {
+          <div class="vehicule-item">
+            @if (!v.enAttente) {
+              <button type="button" class="btn-vehicule-action" (click)="onSupprimerVehicule(v)" title="Supprimer">
+                <img src="Picto corbeille.svg" alt="Supprimer" class="btn-vehicule-img" />
+              </button>
+            }
             <span class="vehicule-immat">{{ v.immatriculation }}</span>
             @if (v.zoneJ1 || v.zoneF3) {
               <span class="vehicule-zones">
@@ -67,9 +85,18 @@
                 @if (v.zoneF3) { <span class="zone-badge">F3 : {{ v.zoneF3 }}</span> }
               </span>
             }
+            @if (v.enAttente) {
+              <span class="badge-en-attente">
+                <span class="material-icons">schedule</span>
+                En attente
+              </span>
+            }
           </div>
-          @if (!$last) { <hr class="separateur" /> }
         }
+
+        <button type="button" class="btn-ajouter-vehicule" (click)="onOuvrirDialogVehicule()">
+          Ajouter un véhicule
+        </button>
       </div>
     }
 

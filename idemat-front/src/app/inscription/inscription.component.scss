@@ -3,6 +3,21 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
+// Aucun gap natif entre mat-form-field consécutifs (confirmé DevTools : subscript-wrapper
+// et champ suivant ont tous les deux margin:0) — le message d'erreur touche donc directement
+// le champ suivant. Espacement explicite pour laisser respirer le message rouge.
+mat-form-field.mat-form-field-invalid,
+mat-form-field:has(mat-hint) {
+  margin-bottom: 10px;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: -32px;
+  }
+}
+
+// Compteur SIRET (x/14) — rouge quand le format est invalide, idem écran usagers du BO.
+.hint-erreur { color: $error-color !important; }
+
 .bloc { padding-bottom: 12px; }
 .bloc-header { margin-bottom: 12px; }
 
@@ -13,6 +28,7 @@
 .row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: start;
   gap: 0 16px;
   @media (max-width: 600px) { grid-template-columns: 1fr; }
 }

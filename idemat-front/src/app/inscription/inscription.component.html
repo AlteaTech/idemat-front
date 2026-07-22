@@ -31,8 +31,15 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>SIRET</mat-label>
-                  <input matInput formControlName="siret" placeholder="14 chiffres" />
-                  <mat-error>Champ obligatoire</mat-error>
+                  <input matInput formControlName="siret" placeholder="14 chiffres" maxlength="14" (input)="onSiretInput($event)" [errorStateMatcher]="siretErrorMatcher" #siretInput />
+                  @if (siretInput.value.length > 0) {
+                    <mat-hint align="end" [class.hint-erreur]="form.controls.siret.hasError('pattern')">{{ siretInput.value.length }} / 14</mat-hint>
+                  }
+                  @if (form.controls.siret.hasError("required")) {
+                    <mat-error>Champ obligatoire</mat-error>
+                  } @else if (form.controls.siret.hasError("formatInvalide")) {
+                    <mat-error>Ce SIRET n'est pas valide</mat-error>
+                  }
                 </mat-form-field>
               </div>
             }
@@ -95,7 +102,11 @@
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>E-mail</mat-label>
                 <input matInput formControlName="email" type="email" placeholder="ex. adresse@mail.com" />
-                <mat-error>E-mail invalide</mat-error>
+                @if (form.controls.email.hasError('required')) {
+                  <mat-error>Champ obligatoire</mat-error>
+                } @else if (form.controls.email.hasError('email')) {
+                  <mat-error>E-mail invalide</mat-error>
+                }
               </mat-form-field>
               <div></div>
             </div>
@@ -288,8 +299,15 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>SIRET</mat-label>
-                  <input matInput formControlName="siret" placeholder="14 chiffres" />
-                  <mat-error>Champ obligatoire</mat-error>
+                  <input matInput formControlName="siret" placeholder="14 chiffres" maxlength="14" (input)="onSiretInput($event)" [errorStateMatcher]="siretErrorMatcher" #siretInput />
+                  @if (siretInput.value.length > 0) {
+                    <mat-hint align="end" [class.hint-erreur]="form.controls.siret.hasError('pattern')">{{ siretInput.value.length }} / 14</mat-hint>
+                  }
+                  @if (form.controls.siret.hasError("required")) {
+                    <mat-error>Champ obligatoire</mat-error>
+                  } @else if (form.controls.siret.hasError("formatInvalide")) {
+                    <mat-error>Ce SIRET n'est pas valide</mat-error>
+                  }
                 </mat-form-field>
               }
 
@@ -345,7 +363,11 @@
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>E-mail</mat-label>
                 <input matInput formControlName="email" type="email" placeholder="ex. adresse@mail.com" />
-                <mat-error>E-mail invalide</mat-error>
+                @if (form.controls.email.hasError('required')) {
+                  <mat-error>Champ obligatoire</mat-error>
+                } @else if (form.controls.email.hasError('email')) {
+                  <mat-error>E-mail invalide</mat-error>
+                }
               </mat-form-field>
 
               @if (erreurEmail()) {
