@@ -5,7 +5,7 @@
 .overlay {
   flex: 1;
   min-height: 100vh;
-  background: $color-gray-neutral;
+  background: $primary-gradient;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,7 +13,7 @@
 }
 
 .popup {
-  background: white;
+  background: $background-white;
   border-radius: 20px;
   padding: 32px 28px 28px;
   width: 100%;
