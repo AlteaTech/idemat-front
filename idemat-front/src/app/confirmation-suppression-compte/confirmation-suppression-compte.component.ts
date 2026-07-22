@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirmation-suppression-compte',
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [],
   templateUrl: './confirmation-suppression-compte.component.html',
+  styleUrl: './confirmation-suppression-compte.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationSuppressionCompteComponent {

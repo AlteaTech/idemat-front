@@ -505,14 +505,24 @@ h1 {
 }
 
 button, mat-error, mat-hint, body, th, td, input, .mat-mdc-cell, mat-card-content, mat-card-title, .mat-toolbar,
-input, mat-label, [mat-dialog-title], [mat-dialog-content], mat-paginator, mat-option, mat-select,
+input, mat-label, [mat-dialog-title], mat-dialog-title, [mat-dialog-content], mat-dialog-content,
+mat-paginator, mat-option, mat-select,
 .form-field, .actions-container, .form-container, .mat-mdc-menu-item-text, .mdc-label, .mat-mdc-tab,
 .mdc-tooltip__surface {
   font-family: $font-idbat-family;
 }
 
+// mat-dialog (Material 20/MDC) pilote sa police via ces variables internes, qui passent
+// devant la règle font-family ci-dessus — même piège que mat-card/mat-button déjà rencontré.
+// Deux syntaxes possibles selon les composants : attribut (<div mat-dialog-content>) ou
+// balise (<mat-dialog-content>) — un sélecteur d'attribut seul ne couvre pas la 2e.
+[mat-dialog-title], mat-dialog-title, [mat-dialog-content], mat-dialog-content {
+  --mat-dialog-subhead-font: #{$font-idbat-family};
+  --mat-dialog-supporting-text-font: #{$font-idbat-family};
+}
 
-[mat-dialog-title] {
+
+[mat-dialog-title], mat-dialog-title {
 
   color: $primary-color !important;
   font-weight: 700;

@@ -1,11 +1,15 @@
-<h2 mat-dialog-title>Supprimer mon compte</h2>
+<div class="dialog-container">
 
-<mat-dialog-content>
+  <div class="dialog-header">
+    <h2 class="dialog-title">Supprimer mon compte</h2>
+  </div>
+
   <p>Cette action est <strong>irréversible</strong>. Votre compte et toutes vos données seront définitivement supprimés.</p>
-  <p>Souhaitez-vous continuer ?</p>
-</mat-dialog-content>
+  <p class="question-continuer">Souhaitez-vous continuer ?</p>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="annuler()">Annuler</button>
-  <button mat-button color="warn" (click)="confirmer()">Supprimer définitivement</button>
-</mat-dialog-actions>
+  <div class="actions-row">
+    <button type="button" class="btn-annuler" (click)="annuler()">Annuler</button>
+    <button type="button" class="btn-supprimer" (click)="confirmer()">Supprimer définitivement</button>
+  </div>
+
+</div>
