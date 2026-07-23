@@ -12,6 +12,7 @@ import {ContratIdematModel} from '../../models/idemat/contrat-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {AjouterVehiculeDialogComponent} from '../inscription/ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
+import {ConfirmationSuppressionVehiculeComponent} from './confirmation-suppression-vehicule/confirmation-suppression-vehicule.component';
 
 @Component({
   selector: 'app-carte-acces',
@@ -70,9 +71,17 @@ export class CarteAccesComponent implements OnInit {
   }
 
   protected onSupprimerVehicule(vehicule: VehiculeIdematModel): void {
-    this.usagerService.deleteVehicule(vehicule.immatriculation).subscribe({
-      next: () => this.rafraichirUsager(),
-      error: err => console.error('Erreur suppression véhicule', err),
+    const ref = this.dialog.open(ConfirmationSuppressionVehiculeComponent, {
+      data: {immatriculation: vehicule.immatriculation},
+      width: '400px',
+      maxWidth: '90vw',
+    });
+    ref.afterClosed().subscribe((confirme: boolean) => {
+      if (!confirme) return;
+      this.usagerService.deleteVehicule(vehicule.immatriculation).subscribe({
+        next: () => this.rafraichirUsager(),
+        error: err => console.error('Erreur suppression véhicule', err),
+      });
     });
   }
 
