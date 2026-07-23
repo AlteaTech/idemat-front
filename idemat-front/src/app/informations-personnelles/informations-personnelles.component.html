@@ -13,10 +13,8 @@
 
   <!-- LISTE ENTRÉES -->
   <div class="liste">
-    <button class="liste-item" (click)="naviguer(routesConstantes.modificationProfil)">
-      <span class="liste-item-label">Modifier le profil</span>
-      <img src="Droite.svg" alt="" class="liste-item-chevron-img" />
-    </button>
+    <!-- #306 : bouton masqué, l'écran modification-profil n'a plus de champ éditable
+         depuis le déplacement des véhicules vers Mes accès — route/composant conservés -->
     <button class="liste-item" (click)="naviguer(routesConstantes.parametresCompte)">
       <span class="liste-item-label">Paramètres du compte</span>
       <img src="Droite.svg" alt="" class="liste-item-chevron-img" />

@@ -41,7 +41,7 @@ export class ParametresCompteComponent implements OnInit {
   }
 
   protected retour(): void {
-    this.router.navigate(['/' + routesConstantes.informationsPersonnelles]);
+    this.router.navigate(['/' + routesConstantes.home]);
   }
 
   protected supprimerCompte(): void {
