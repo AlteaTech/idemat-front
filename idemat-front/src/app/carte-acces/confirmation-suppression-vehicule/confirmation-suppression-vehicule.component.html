@@ -1,0 +1,14 @@
+<div class="dialog-container">
+
+  <div class="dialog-header">
+    <h2 class="dialog-title">Supprimer le véhicule</h2>
+  </div>
+
+  <p class="question-continuer">Êtes-vous sûr de vouloir supprimer le véhicule <strong>{{ data.immatriculation }}</strong> ?</p>
+
+  <div class="actions-row">
+    <button type="button" class="btn-annuler" (click)="annuler()">Annuler</button>
+    <button type="button" class="btn-supprimer" (click)="confirmer()">Valider</button>
+  </div>
+
+</div>
