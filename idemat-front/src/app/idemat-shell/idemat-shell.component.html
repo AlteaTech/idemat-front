@@ -49,7 +49,7 @@
         <!-- TOP BAR DESKTOP -->
         @if (isDesktop()) {
           <div class="top-bar">
-            <button class="top-bar-user" (click)="naviguer(routesConstantes.informationsPersonnelles)">
+            <button class="top-bar-user" (click)="naviguer(routesConstantes.parametresCompte)">
               {{ usager()?.prenom }} {{ usager()?.nom }}
               <img src="User.svg" alt="" class="top-bar-user-icon" />
             </button>

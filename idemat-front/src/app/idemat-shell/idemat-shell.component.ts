@@ -78,7 +78,7 @@ export class IdematShellComponent implements OnInit {
       {icon: 'delete_outline', label: 'Déchetteries', route: routesConstantes.dechetteries, visible: true},
       {icon: 'bar_chart', label: 'Mes passages & points', route: routesConstantes.consultationSolde, visible: true},
       {icon: 'add_circle_outline', label: 'Recharger mon compte', route: routesConstantes.achatPassages, visible: contrat.allowAchatPassages},
-      {icon: 'person', label: 'Mon compte', route: routesConstantes.informationsPersonnelles, visible: true, mobileOnly: true},
+      {icon: 'person', label: 'Mon compte', route: routesConstantes.parametresCompte, visible: true, mobileOnly: true},
       {icon: 'gavel', label: 'Mentions légales', route: routesConstantes.mentionsLegales, visible: true},
     ].filter(l => l.visible);
   }
