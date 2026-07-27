@@ -39,6 +39,7 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 import {InscriptionIdematFormModel} from '../../models/forms/inscription-idemat-form.model';
 import {AjouterVehiculeDialogComponent} from './ajouter-vehicule-dialog/ajouter-vehicule-dialog.component';
 import {AjouterVehiculeDialogResult} from '../../models/idemat/ajouter-vehicule-dialog.model';
+import {EmailNonEnvoyeDialogComponent} from './email-non-envoye-dialog/email-non-envoye-dialog.component';
 import {LinkifyPipe} from '../../pipes/linkify.pipe';
 import {siretValidator} from '../../validateurs/siret.validator';
 
@@ -252,7 +253,15 @@ export class InscriptionComponent implements OnInit {
       justificatifDomicile: isPart ? (this.fileJustificatif() ?? undefined) : undefined,
       kbis: isPro ? (this.fileKbis() ?? undefined) : undefined,
     }).subscribe({
-      next: () => this.router.navigate(['/' + routesConstantes.demandeOk], { state: { contratUrl: this.contratUrl() } }),
+      next: (result) => {
+        if (!result.emailUsagerEnvoye) {
+          this.dialog.open(EmailNonEnvoyeDialogComponent).afterClosed().subscribe(() =>
+            this.router.navigate(['/' + routesConstantes.demandeOk], { state: { contratUrl: this.contratUrl() } })
+          );
+          return;
+        }
+        this.router.navigate(['/' + routesConstantes.demandeOk], { state: { contratUrl: this.contratUrl() } });
+      },
       error: (err) => {
         this.enCours.set(false);
         let isEmailError = false;
