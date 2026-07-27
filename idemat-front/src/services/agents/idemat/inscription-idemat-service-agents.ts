@@ -4,6 +4,7 @@ import {from, Observable, switchMap} from 'rxjs';
 import {Configuration} from '../../../core/api';
 import {FichierIdematParam} from '../../../models/idemat/fichier-idemat-param.model';
 import {InscriptionIdematParams} from '../../../models/idemat/inscription-idemat-params.model';
+import {InscriptionResultIdematModel} from '../../../models/idemat/inscription-result-idemat.model';
 import {VehiculeInscriptionParam} from '../../../models/idemat/vehicule-inscription-param.model';
 
 @Injectable({providedIn: 'root'})
@@ -11,9 +12,9 @@ export class InscriptionIdematServiceAgents {
   private readonly http = inject(HttpClient);
   private readonly config = inject(Configuration);
 
-  inscrire(params: InscriptionIdematParams): Observable<void> {
+  inscrire(params: InscriptionIdematParams): Observable<InscriptionResultIdematModel> {
     return from(this.buildBody(params)).pipe(
-      switchMap(body => this.http.post<void>(`${this.config.basePath}/api/inscription`, body))
+      switchMap(body => this.http.post<InscriptionResultIdematModel>(`${this.config.basePath}/api/inscription`, body))
     );
   }
 
