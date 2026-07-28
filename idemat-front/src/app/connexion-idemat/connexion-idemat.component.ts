@@ -40,6 +40,7 @@ export class ConnexionIdematComponent implements OnInit {
   );
 
   protected contrat = signal('');
+  protected contratId = signal<number | null>(null);
   protected logoUrl = signal('');
   protected nomContrat = signal('');
   protected enCours = signal(false);
@@ -66,6 +67,7 @@ export class ConnexionIdematComponent implements OnInit {
       this.contratService.getByUrl(contrat).subscribe({
         next: c => {
           this.storageService.setLocalStorage(storagesConstantes.contratSlug, contrat);
+          this.contratId.set(c.id);
           this.nomContrat.set(c.nom);
           if (c.logoBase64 && c.logoMime) {
             this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
@@ -80,10 +82,11 @@ export class ConnexionIdematComponent implements OnInit {
     this.erreurLogin.set(false);
     this.erreurMotdepasse.set(false);
     this.erreurCompteSupprime.set(false);
-    if (this.form.invalid) return;
+    const contratId = this.contratId();
+    if (this.form.invalid || contratId === null) return;
     this.enCours.set(true);
     const {login, motdepasse} = this.form.getRawValue();
-    this.apiService.login({courriel: login, motDePasse: motdepasse}).subscribe({
+    this.apiService.login({courriel: login, motDePasse: motdepasse, contratId}).subscribe({
       next: (resp) => {
         const profile = {
           sub: 'ext-' + Math.random(),
