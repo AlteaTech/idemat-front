@@ -9,8 +9,9 @@
  */
 
 
-export interface LoginIdmRequest { 
+export interface LoginIdmRequest {
     courriel: string;
     motDePasse: string;
+    contratId: number;
 }
 
