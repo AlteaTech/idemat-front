@@ -7,6 +7,18 @@
 
 .subtitle { font-size: 0.9rem; color: $text-color-muted; margin: 0 0 28px; }
 
+.message-resultat {
+  max-width: 360px;
+  padding: 14px 18px;
+  border-radius: $bloc-border-radius;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.message-succes { background: $success-background; color: $success-color; }
+.message-echec { background: $error-background; color: $error-color; }
+
 .contenu {
   max-width: 360px;
   display: flex;
