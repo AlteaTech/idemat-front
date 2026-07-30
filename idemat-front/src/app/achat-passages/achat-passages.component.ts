@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -19,6 +19,7 @@ import {routesConstantes} from '../../constantes/routes.constantes';
 })
 export class AchatPassagesComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly service = inject(AchatPassagesIdematServiceAgents);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
 
@@ -26,8 +27,15 @@ export class AchatPassagesComponent implements OnInit {
   protected usager = signal<UsagerIdematModel | null>(null);
   protected loading = signal(true);
   protected enCours = signal(false);
+  protected resultatPaiement = signal<'succes' | 'echec' | null>(null);
 
   ngOnInit(): void {
+    const resultat = this.route.snapshot.queryParamMap.get('resultat');
+    if (resultat !== null) {
+      this.resultatPaiement.set(resultat === 'P' ? 'succes' : 'echec');
+      this.router.navigate([], {relativeTo: this.route, queryParams: {}, replaceUrl: true});
+    }
+
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
     this.service.getOptions().subscribe(opt => {
       this.options.set(opt);

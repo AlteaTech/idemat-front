@@ -16,6 +16,13 @@ export class AchatPassagesIdematServiceAgents {
 
   // TODO: remplacer par le client OpenAPI généré une fois le back démarré (table PayFiP en attente de migration)
   initierPaiement(): Observable<string> {
-    return this.http.post<string>(`${this.config.basePath}/api/achat-passages/initier`, {});
+    return this.http.post(`${this.config.basePath}/api/achat-passages/initier`, {}, {responseType: 'text'});
+  }
+
+  // Réconciliation ciblée sur l'usager connecté — à appeler avant l'affichage du solde pour
+  // garantir sa fraîcheur (le job Quartz global couvre le reste, cadence plus large).
+  // TODO: remplacer par le client OpenAPI généré une fois le back démarré (table PayFiP en attente de migration)
+  reconcilierMesAchatsEnAttente(): Observable<void> {
+    return this.http.post<void>(`${this.config.basePath}/api/achat-passages/reconcilier`, {});
   }
 }
