@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angul
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -15,7 +16,7 @@ import {ModificationMotDePasseFormModel} from '../../models/forms/modification-m
 
 @Component({
   selector: 'app-modification-mot-de-passe',
-  imports: [ReactiveFormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule],
   templateUrl: './modification-mot-de-passe.component.html',
   styleUrl: './modification-mot-de-passe.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +29,9 @@ export class ModificationMotDePasseComponent implements OnInit {
   protected usager = signal<UsagerIdematModel | null>(null);
   protected enCours = signal(false);
   protected erreur = signal('');
+  protected afficherAncien = signal(false);
+  protected afficherNouveau = signal(false);
+  protected afficherConfirmation = signal(false);
 
   protected form = new FormGroup<ModificationMotDePasseFormModel>({
     ancienMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),

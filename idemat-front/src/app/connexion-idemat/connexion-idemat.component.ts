@@ -44,6 +44,7 @@ export class ConnexionIdematComponent implements OnInit {
   protected logoUrl = signal('');
   protected nomContrat = signal('');
   protected enCours = signal(false);
+  protected afficherMotDePasse = signal(false);
   protected erreurLogin = signal(false);
   protected erreurMotdepasse = signal(false);
   protected erreurCompteSupprime = signal(false);

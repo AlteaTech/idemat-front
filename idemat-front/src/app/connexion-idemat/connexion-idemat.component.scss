@@ -100,6 +100,33 @@
   &:focus { background: $connexion-input-bg-focus; }
 }
 
+.input-mdp {
+  position: relative;
+
+  .input {
+    padding-right: 48px;
+  }
+}
+
+.btn-oeil {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $text-color-muted;
+
+  svg {
+    display: block;
+  }
+}
+
 .lien-oublie {
   background: none;
   border: none;

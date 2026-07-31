@@ -20,19 +20,34 @@
 
       <label class="field-label">Mot de passe actuel</label>
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput formControlName="ancienMotDePasse" type="password" placeholder="Mot de passe"/>
+        <input matInput formControlName="ancienMotDePasse" [type]="afficherAncien() ? 'text' : 'password'" placeholder="Mot de passe"/>
+        <button mat-icon-button matSuffix type="button" tabindex="-1"
+                [attr.aria-label]="afficherAncien() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+                (click)="afficherAncien.set(!afficherAncien())">
+          <mat-icon>{{ afficherAncien() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error>Champ requis</mat-error>
       </mat-form-field>
 
       <label class="field-label">Nouveau mot de passe</label>
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput formControlName="nouveauMotDePasse" type="password" placeholder="Mot de passe"/>
+        <input matInput formControlName="nouveauMotDePasse" [type]="afficherNouveau() ? 'text' : 'password'" placeholder="Mot de passe"/>
+        <button mat-icon-button matSuffix type="button" tabindex="-1"
+                [attr.aria-label]="afficherNouveau() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+                (click)="afficherNouveau.set(!afficherNouveau())">
+          <mat-icon>{{ afficherNouveau() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error>8 caractères minimum</mat-error>
       </mat-form-field>
 
       <label class="field-label">Confirmer le mot de passe</label>
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput formControlName="confirmation" type="password" placeholder="Mot de passe"/>
+        <input matInput formControlName="confirmation" [type]="afficherConfirmation() ? 'text' : 'password'" placeholder="Mot de passe"/>
+        <button mat-icon-button matSuffix type="button" tabindex="-1"
+                [attr.aria-label]="afficherConfirmation() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+                (click)="afficherConfirmation.set(!afficherConfirmation())">
+          <mat-icon>{{ afficherConfirmation() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         @if (form.hasError('passwordsMismatch')) {
           <mat-error>Les mots de passe ne correspondent pas</mat-error>
         }
