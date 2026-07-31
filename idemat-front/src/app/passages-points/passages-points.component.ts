@@ -3,9 +3,11 @@ import {Router} from '@angular/router';
 import {CommonModule, DatePipe} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {catchError, of} from 'rxjs';
 
 import {PassagesIdematServiceAgents} from '../../services/agents/idemat/passages-idemat-service-agents';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
+import {AchatPassagesIdematServiceAgents} from '../../services/agents/idemat/achat-passages-idemat-service-agents';
 import {PassagesInfoModel, PassagesStatsIdematModel} from '../../models/idemat/passages-idemat.model';
 import {DepotIdematModel} from '../../models/idemat/depot-idemat.model';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
@@ -23,6 +25,7 @@ export class PassagesPointsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly service = inject(PassagesIdematServiceAgents);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
+  private readonly achatPassagesService = inject(AchatPassagesIdematServiceAgents);
 
   protected info = signal<PassagesInfoModel | null>(null);
   protected stats = signal<PassagesStatsIdematModel | null>(null);
@@ -36,8 +39,17 @@ export class PassagesPointsComponent implements OnInit {
 
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
-    this.service.getPassagesInfo().subscribe(data => this.info.set(data));
-    this.service.getStats().subscribe(s => this.stats.set(s));
+
+    // Réconciliation ciblée avant de lire le solde, pour garantir sa fraîcheur au moment de
+    // l'affichage (le job Quartz global ne suffit pas seul, sa cadence introduit un décalage).
+    // Best-effort : un échec ne doit pas empêcher l'affichage de l'écran.
+    this.achatPassagesService.reconcilierMesAchatsEnAttente()
+      .pipe(catchError(() => of(void 0)))
+      .subscribe(() => {
+        this.service.getPassagesInfo().subscribe(data => this.info.set(data));
+        this.service.getStats().subscribe(s => this.stats.set(s));
+      });
+
     this.chargerApercu();
   }
 

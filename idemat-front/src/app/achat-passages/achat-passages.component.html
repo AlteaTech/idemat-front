@@ -18,6 +18,17 @@
 
     <p class="subtitle">Sélectionnez le nombre de passages que vous souhaitez obtenir</p>
 
+    @if (resultatPaiement() === 'succes') {
+      <div class="message-resultat message-succes">
+        Votre opération a bien été prise en compte, votre compte sera crédité sous réserve de réussite de la transaction.
+      </div>
+    } @else if (resultatPaiement() === 'echec') {
+      <div class="message-resultat message-echec">
+        Nous vous informons qu'après avoir saisi vos informations bancaires, vous avez annulé la transaction. Aucun débit n'a été effectué sur votre compte.<br><br>
+        Si vous souhaitez finaliser votre achat, nous vous invitons à recommencer le parcours de commande et à valider le paiement pour que la transaction soit complétée.
+      </div>
+    }
+
     <div class="contenu">
     <!-- OFFRE -->
     <div class="offre-ligne">
