@@ -12,5 +12,6 @@
 export interface LoginDioRequest { 
     courriel: string;
     motDePasse: string;
+    contratId: number;
 }
 

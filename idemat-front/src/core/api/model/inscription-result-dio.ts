@@ -9,9 +9,7 @@
  */
 
 
-export interface SortObject { 
-    sorted?: boolean;
-    unsorted?: boolean;
-    empty?: boolean;
+export interface InscriptionResultDio { 
+    emailUsagerEnvoye: boolean;
 }
 

@@ -18,6 +18,8 @@ import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
 import { InscriptionDioRequest } from '../model/inscription-dio-request';
+// @ts-ignore
+import { InscriptionResultDio } from '../model/inscription-result-dio';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -41,10 +43,10 @@ export class InscriptionControllerService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<InscriptionResultDio>;
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<InscriptionResultDio>>;
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<InscriptionResultDio>>;
+    public inscrire(inscriptionDioRequest: InscriptionDioRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (inscriptionDioRequest === null || inscriptionDioRequest === undefined) {
             throw new Error('Required parameter inscriptionDioRequest was null or undefined when calling inscrire.');
         }
@@ -55,6 +57,7 @@ export class InscriptionControllerService extends BaseService {
         localVarHeaders = this.configuration.addCredentialToHeaders('bearerAuth', 'Authorization', localVarHeaders, 'Bearer ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            '*/*'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -87,7 +90,7 @@ export class InscriptionControllerService extends BaseService {
 
         let localVarPath = `/api/inscription`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<InscriptionResultDio>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: inscriptionDioRequest,

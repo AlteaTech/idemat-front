@@ -15,14 +15,15 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/achat-passages-histo-dio.ts
 model/ajouter-vehicule-dio-request.ts
 model/commune-dio.ts
-model/confirmer-reset-password-dio-request.ts
 model/contrat-dio.ts
 model/dechetterie-detail-dio.ts
 model/dechetterie-dio.ts
 model/fichier-dio.ts
 model/inscription-dio-request.ts
+model/inscription-result-dio.ts
 model/login-dio-request.ts
 model/login-dio.ts
 model/models.ts
@@ -31,6 +32,7 @@ model/page-passage-dio.ts
 model/pageable-object.ts
 model/passage-dio.ts
 model/passage-matiere-dio.ts
+model/passages-info-dio.ts
 model/passages-stats-dio.ts
 model/refresh-dio-request.ts
 model/reset-password-dio-request.ts

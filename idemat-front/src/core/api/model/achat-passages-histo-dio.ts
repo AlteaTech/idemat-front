@@ -9,8 +9,8 @@
  */
 
 
-export interface ConfirmerResetPasswordDioRequest { 
-    token: string;
-    nouveauMotDePasse: string;
+export interface AchatPassagesHistoDio { 
+    date: string;
+    nbPassages: number;
 }
 
