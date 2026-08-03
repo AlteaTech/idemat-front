@@ -38,6 +38,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
   protected erreurEmail = signal(false);
 
   private contratSlug = '';
+  private contratId = 0;
 
   protected form = new FormGroup<MotDePasseOublieIdematFormModel>({
     email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
@@ -55,6 +56,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
         next: c => {
           this.logoUrl.set(c.logoUrl);
           this.nomContrat.set(c.nomEnseigne);
+          this.contratId = Number(c.idEnseigne);
         },
         error: () => this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true}),
       });
@@ -69,7 +71,7 @@ export class MotDePasseOublieIdematComponent implements OnInit {
     this.erreurEmail.set(false);
     if (this.form.invalid) return;
     this.enCours.set(true);
-    this.usagerService.demanderResetPassword(this.form.getRawValue().email).subscribe({
+    this.usagerService.demanderResetPassword(this.form.getRawValue().email, this.contratId).subscribe({
       next: () => {
         this.enCours.set(false);
         this.succes.set(true);
