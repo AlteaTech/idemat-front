@@ -1,3 +1,5 @@
+export * from './achat-passages-histo-dio';
+export * from './achat-passages-options-dio';
 export * from './ajouter-vehicule-dio-request';
 export * from './commune-dio';
 export * from './confirmer-reset-password-dio-request';

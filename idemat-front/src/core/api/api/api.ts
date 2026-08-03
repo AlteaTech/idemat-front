@@ -1,3 +1,5 @@
+export * from './achat-passages-controller.service';
+import { AchatPassagesControllerService } from './achat-passages-controller.service';
 export * from './auth-controller.service';
 import { AuthControllerService } from './auth-controller.service';
 export * from './contrat-controller.service';
@@ -14,4 +16,4 @@ export * from './usager-controller.service';
 import { UsagerControllerService } from './usager-controller.service';
 export * from './vehicule-controller.service';
 import { VehiculeControllerService } from './vehicule-controller.service';
-export const APIS = [AuthControllerService, ContratControllerService, DechetterieControllerService, InscriptionControllerService, MotDePasseControllerService, PassagesControllerService, UsagerControllerService, VehiculeControllerService];
+export const APIS = [AchatPassagesControllerService, AuthControllerService, ContratControllerService, DechetterieControllerService, InscriptionControllerService, MotDePasseControllerService, PassagesControllerService, UsagerControllerService, VehiculeControllerService];
