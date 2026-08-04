@@ -297,6 +297,17 @@ Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA
 - **PR [#42](https://github.com/AlteaTech/idemat-front/pull/42)** (#306, mergée 2026-07-23) — écran intermédiaire "Mon compte" (`informations-personnelles`) bypassé : profil (header desktop) et item "Mon compte" (menu mobile) mènent directement à Paramètres du compte, retitré "Mon compte". Bouton "Modifier le profil" masqué (route conservée). Retour de Paramètres du compte → accueil.
 - **PR [#43](https://github.com/AlteaTech/idemat-front/pull/43)** (#308, mergée 2026-07-23) — confirmation (Annuler/Valider) avant suppression d'un véhicule sur `/carte-acces`, nouveau dialog `ConfirmationSuppressionVehiculeComponent` calqué sur `ConfirmationSuppressionCompteComponent`.
 
+**Vérifié à nouveau le 2026-08-04** — PRs ouvertes vers `release/sprint12` :
+- **PR [#50](https://github.com/AlteaTech/idemat-front/pull/50)** (#342) — retrait du flux "nouveau mot de passe par lien", devenu mort (voir CLAUDE.md idbatv7, chantier #342/RG1-RG4).
+- **PR [#51](https://github.com/AlteaTech/idemat-front/pull/51)** — reset password ne transmettait pas `contratId` au back (bug signalé par Jérémie, cause racine détaillée dans CLAUDE.md idbatv7). `mot-de-passe-oublie-idemat.component.ts` transmet désormais l'id du contrat résolu depuis le slug d'URL.
+- **PR [#52](https://github.com/AlteaTech/idemat-front/pull/52)** — client OpenAPI nettoyé suite au fix back du bug `RedirectView` (voir CLAUDE.md idbatv7) — `achat-passages-controller.service.ts` apparaît enfin proprement dans le client généré.
+
+## Piège — fichiers générés orphelins après un renommage de classe côté back (découvert 2026-08-03)
+
+`npm run generate-client-local` **n'efface jamais** les fichiers d'une génération précédente qui ne correspondent plus au spec actuel — il ajoute/écrase, mais ne nettoie pas. Repéré sur `mot-de-passe-idm-controller.service.ts` (+ son modèle `ResetPasswordIdmRequest`) : ancien nom de classe (`MotDePasseIdmControllerService`), généré avant le retrait du suffixe "Idm" côté back, jamais supprimé du disque — le code (`UsagerIdematServiceAgents`) l'importait toujours au lieu du bon service à jour (`MotDePasseControllerService`, `mot-de-passe-controller.service.ts`), avec un type de requête périmé (sans `contratId`).
+
+**Réflexe généralisable** : après toute régénération suite à un renommage de controller/DTO côté back, vérifier `git status` sur `src/core/api/` pour repérer d'éventuels fichiers **orphelins non modifiés** (ancien nom encore présent sur disque, non référencé dans `api.ts`/`models.ts` régénérés) — ils compilent souvent silencieusement (l'ancien code les importe toujours) sans qu'on remarque qu'on tape sur une version obsolète du contrat d'API.
+
 ## Piège — validation "live" vs "lostfocus" cohabitant sur un même formulaire (#292, 2026-07-22)
 
 Un `ErrorStateMatcher` fourni au niveau du `@Component` (`providers: [{provide: ErrorStateMatcher, useClass: ...}]`) s'applique à **tous** les champs du formulaire. Si un seul champ doit se comporter différemment (ex. SIRET : validation en direct dès la frappe, comme le fait le BO par défaut — sans `ErrorStateMatcher` custom, Material utilise `dirty || touched`), ne pas changer le matcher global : donner un `[errorStateMatcher]` **local** à ce seul `<input matInput>`, avec une classe dédiée (`dirty || touched`), en laissant le matcher global (`touched` seul, demande Bertrand) pour tout le reste du formulaire.
