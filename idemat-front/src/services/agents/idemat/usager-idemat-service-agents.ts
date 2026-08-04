@@ -1,12 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {from, map, Observable, switchMap} from 'rxjs';
 import {ProfilIdematUpdateModel, UsagerIdematModel} from '../../../models/idemat/usager-idemat.model';
 import {VehiculeIdematModel} from '../../../models/idemat/vehicule-idemat.model';
 import {UsagerControllerService} from '../../../core/api/api/usager-controller.service';
 import {VehiculeControllerService} from '../../../core/api/api/vehicule-controller.service';
 import {MotDePasseControllerService} from '../../../core/api/api/mot-de-passe-controller.service';
-import {Configuration} from '../../../core/api';
 import {FichierIdematParam} from '../../../models/idemat/fichier-idemat-param.model';
 
 @Injectable({providedIn: 'root'})
@@ -14,8 +12,6 @@ export class UsagerIdematServiceAgents {
   private readonly usagerService = inject(UsagerControllerService);
   private readonly vehiculeService = inject(VehiculeControllerService);
   private readonly motDePasseService = inject(MotDePasseControllerService);
-  private readonly http = inject(HttpClient);
-  private readonly config = inject(Configuration); // used by confirmerResetPassword (endpoint public, non généré)
 
   getUsager(): Observable<UsagerIdematModel> {
     return this.usagerService.getMe().pipe(map(r => {
@@ -83,10 +79,6 @@ export class UsagerIdematServiceAgents {
 
   demanderResetPassword(email: string, contratId: number): Observable<void> {
     return this.motDePasseService.demanderReset({courriel: email, contratId});
-  }
-
-  confirmerResetPassword(token: string, nouveauMotDePasse: string): Observable<void> {
-    return this.http.post<void>(`${this.config.basePath}/api/mot-de-passe/confirmer`, {token, nouveauMotDePasse});
   }
 }
 

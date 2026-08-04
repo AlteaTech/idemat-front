@@ -9,8 +9,7 @@
  */
 
 
-export interface ConfirmerResetPasswordDioRequest { 
-    token: string;
-    nouveauMotDePasse: string;
+export interface InscriptionResultDio { 
+    emailUsagerEnvoye: boolean;
 }
 

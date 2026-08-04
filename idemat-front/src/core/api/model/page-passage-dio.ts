@@ -15,10 +15,10 @@ import { PassageDio } from './passage-dio';
 export interface PagePassageDio { 
     totalPages?: number;
     totalElements?: number;
-    pageable?: PageableObject;
-    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
+    pageable?: PageableObject;
+    numberOfElements?: number;
     size?: number;
     content?: Array<PassageDio>;
     number?: number;

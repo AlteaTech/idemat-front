@@ -15,6 +15,5 @@ export const routesConstantes = {
   mentionsLegales: 'mentions-legales',
   creationCompte: 'creation-compte',
   demandeOk: 'demande-ok',
-  nouveauMotDePasse: 'nouveau-mot-de-passe',
   lienInvalide: 'lien-invalide',
 }

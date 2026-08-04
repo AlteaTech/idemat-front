@@ -18,7 +18,6 @@ import {MotDePasseOublieIdematComponent} from './mot-de-passe-oublie-idemat/mot-
 import {InscriptionTypeComponent} from './inscription-type/inscription-type.component';
 import {InscriptionComponent} from './inscription/inscription.component';
 import {DemandOkIdematComponent} from './demande-ok-idemat/demande-ok-idemat.component';
-import {NouveauMotDePasseComponent} from './nouveau-mot-de-passe/nouveau-mot-de-passe.component';
 import {LienInvalideComponent} from './lien-invalide/lien-invalide.component';
 import {authGuard} from './core/guards/auth.guard';
 import {passwordChangedGuard} from './core/guards/password-changed.guard';
@@ -31,7 +30,6 @@ export const routes: Routes = [
   {path: `${routesConstantes.creationCompte}/:contrat`, component: InscriptionTypeComponent},
   {path: `${routesConstantes.creationCompte}/:contrat/:type`, component: InscriptionComponent},
   {path: routesConstantes.demandeOk, component: DemandOkIdematComponent},
-  {path: `${routesConstantes.nouveauMotDePasse}/:contrat`, component: NouveauMotDePasseComponent},
   {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
   {path: ':contrat', component: ConnexionIdematComponent, canMatch: [isContratSlugGuard]},
   {path: routesConstantes.lienInvalide, component: LienInvalideComponent},
