@@ -297,6 +297,17 @@ Les interfaces `Data` et `Result` des dialogs Angular Material (`MAT_DIALOG_DATA
 - **PR [#42](https://github.com/AlteaTech/idemat-front/pull/42)** (#306, mergée 2026-07-23) — écran intermédiaire "Mon compte" (`informations-personnelles`) bypassé : profil (header desktop) et item "Mon compte" (menu mobile) mènent directement à Paramètres du compte, retitré "Mon compte". Bouton "Modifier le profil" masqué (route conservée). Retour de Paramètres du compte → accueil.
 - **PR [#43](https://github.com/AlteaTech/idemat-front/pull/43)** (#308, mergée 2026-07-23) — confirmation (Annuler/Valider) avant suppression d'un véhicule sur `/carte-acces`, nouveau dialog `ConfirmationSuppressionVehiculeComponent` calqué sur `ConfirmationSuppressionCompteComponent`.
 
+**Vérifié à nouveau le 2026-08-04** — PRs ouvertes vers `release/sprint12` :
+- **PR [#50](https://github.com/AlteaTech/idemat-front/pull/50)** (#342) — retrait du flux "nouveau mot de passe par lien", devenu mort (voir CLAUDE.md idbatv7, chantier #342/RG1-RG4).
+- **PR [#51](https://github.com/AlteaTech/idemat-front/pull/51)** — reset password ne transmettait pas `contratId` au back (bug signalé par Jérémie, cause racine détaillée dans CLAUDE.md idbatv7). `mot-de-passe-oublie-idemat.component.ts` transmet désormais l'id du contrat résolu depuis le slug d'URL.
+- **PR [#52](https://github.com/AlteaTech/idemat-front/pull/52)** — client OpenAPI nettoyé suite au fix back du bug `RedirectView` (voir CLAUDE.md idbatv7) — `achat-passages-controller.service.ts` apparaît enfin proprement dans le client généré.
+
+## Piège — fichiers générés orphelins après un renommage de classe côté back (découvert 2026-08-03)
+
+`npm run generate-client-local` **n'efface jamais** les fichiers d'une génération précédente qui ne correspondent plus au spec actuel — il ajoute/écrase, mais ne nettoie pas. Repéré sur `mot-de-passe-idm-controller.service.ts` (+ son modèle `ResetPasswordIdmRequest`) : ancien nom de classe (`MotDePasseIdmControllerService`), généré avant le retrait du suffixe "Idm" côté back, jamais supprimé du disque — le code (`UsagerIdematServiceAgents`) l'importait toujours au lieu du bon service à jour (`MotDePasseControllerService`, `mot-de-passe-controller.service.ts`), avec un type de requête périmé (sans `contratId`).
+
+**Réflexe généralisable** : après toute régénération suite à un renommage de controller/DTO côté back, vérifier `git status` sur `src/core/api/` pour repérer d'éventuels fichiers **orphelins non modifiés** (ancien nom encore présent sur disque, non référencé dans `api.ts`/`models.ts` régénérés) — ils compilent souvent silencieusement (l'ancien code les importe toujours) sans qu'on remarque qu'on tape sur une version obsolète du contrat d'API.
+
 ## Piège — validation "live" vs "lostfocus" cohabitant sur un même formulaire (#292, 2026-07-22)
 
 Un `ErrorStateMatcher` fourni au niveau du `@Component` (`providers: [{provide: ErrorStateMatcher, useClass: ...}]`) s'applique à **tous** les champs du formulaire. Si un seul champ doit se comporter différemment (ex. SIRET : validation en direct dès la frappe, comme le fait le BO par défaut — sans `ErrorStateMatcher` custom, Material utilise `dirty || touched`), ne pas changer le matcher global : donner un `[errorStateMatcher]` **local** à ce seul `<input matInput>`, avec une classe dédiée (`dirty || touched`), en laissant le matcher global (`touched` seul, demande Bertrand) pour tout le reste du formulaire.
@@ -354,6 +365,23 @@ La route `home` a pointé temporairement vers `WipComponent` (page plein écran 
 ## TODO prod (avant mise en production)
 
 - Remplacer les adresses email hardcodées de test (`rrosier@altea-si.com`) par les vraies adresses dans le backend (`InscriptionIdmService.inscrire()` et `DemandeInscriptionService.valider()`)
+- Payfip (#276, mergé 2026-07-30) : checklist bascule prod détaillée dans `idbatv7/CLAUDE.md` et la mémoire `project_payfip_chantier.md` (numcli/saisie réels par contrat, endpoint SOAP à reconfirmer avec Bertrand, accès sortant back jamais vérifié depuis un vrai serveur de prod)
+
+## Pattern — réconciliation Payfip à la consultation du solde (#276, 2026-07-30)
+
+`PassagesPointsComponent.ngOnInit()` appelle `AchatPassagesIdematServiceAgents.reconcilierMesAchatsEnAttente()` (`POST /api/achat-passages/reconcilier`, filtré sur l'usager connecté) **avant** de charger `getPassagesInfo()`/`getStats()`, pour garantir la fraîcheur du solde affiché — le job Quartz global côté back (toutes les 20 min) ne suffit pas seul, sa cadence introduit un décalage. Appel best-effort (`catchError(() => of(void 0))`) : un échec ne doit jamais empêcher l'affichage de l'écran. Pas de déclencheur équivalent à la connexion/accueil — jugé redondant après discussion (voir `project_payfip_chantier.md` pour le raisonnement complet).
+
+## Piège CSS — `min-height:100vh` + padding vertical sans `box-sizing:border-box` (#334/#337, 2026-07-30)
+
+Plusieurs écrans plein écran (`.page`/`.overlay`, hors layout applicatif — login, mot de passe oublié, création de compte, confirmation, lien invalide) ont `min-height: 100vh` en `box-sizing: content-box` (comportement par défaut CSS) combiné à un `padding` vertical non nul. Le padding s'ajoute alors **par-dessus** les 100vh au lieu d'être compris dedans, provoquant une barre de scroll vertical inutile quel que soit le contenu réel de la page.
+
+**Fix systématique** : ajouter `box-sizing: border-box;` au conteneur concerné (aucun changement des valeurs de padding elles-mêmes nécessaire).
+
+⚠️ **Repéré deux fois de suite** (#334 sur `connexion-idemat`, puis #337 sur 5 autres écrans avec le même bloc copié-collé) — dès qu'un de ces deux symptômes apparaît sur un nouvel écran, vérifier immédiatement tous les autres via :
+```bash
+grep -rl "min-height:\s*100vh" src/app --include="*.scss"
+```
+et corriger tous les fichiers remontés d'un coup, plutôt que d'attendre un ticket séparé par écran.
 
 ## Convention commentaire sur les issues GitHub
 
