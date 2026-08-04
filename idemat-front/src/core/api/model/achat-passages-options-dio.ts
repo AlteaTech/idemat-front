@@ -9,7 +9,9 @@
  */
 
 
-export interface ResetPasswordIdmRequest { 
-    courriel: string;
+export interface AchatPassagesOptionsDio { 
+    nbPassages: number;
+    montant: number;
+    montantFormate: string;
 }
 

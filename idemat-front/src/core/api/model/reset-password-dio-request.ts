@@ -11,5 +11,6 @@
 
 export interface ResetPasswordDioRequest { 
     courriel: string;
+    contratId: number;
 }
 
