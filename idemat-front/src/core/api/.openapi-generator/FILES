@@ -2,6 +2,7 @@
 README.md
 api.base.service.ts
 api.module.ts
+api/achat-passages-controller.service.ts
 api/api.ts
 api/auth-controller.service.ts
 api/contrat-controller.service.ts
@@ -16,6 +17,7 @@ encoder.ts
 git_push.sh
 index.ts
 model/achat-passages-histo-dio.ts
+model/achat-passages-options-dio.ts
 model/ajouter-vehicule-dio-request.ts
 model/commune-dio.ts
 model/contrat-dio.ts

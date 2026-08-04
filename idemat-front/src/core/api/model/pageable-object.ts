@@ -11,11 +11,11 @@ import { SortObject } from './sort-object';
 
 
 export interface PageableObject { 
-    unpaged?: boolean;
-    paged?: boolean;
-    pageSize?: number;
-    pageNumber?: number;
     offset?: number;
     sort?: SortObject;
+    pageSize?: number;
+    paged?: boolean;
+    unpaged?: boolean;
+    pageNumber?: number;
 }
 
