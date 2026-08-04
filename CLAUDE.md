@@ -365,6 +365,23 @@ La route `home` a pointé temporairement vers `WipComponent` (page plein écran 
 ## TODO prod (avant mise en production)
 
 - Remplacer les adresses email hardcodées de test (`rrosier@altea-si.com`) par les vraies adresses dans le backend (`InscriptionIdmService.inscrire()` et `DemandeInscriptionService.valider()`)
+- Payfip (#276, mergé 2026-07-30) : checklist bascule prod détaillée dans `idbatv7/CLAUDE.md` et la mémoire `project_payfip_chantier.md` (numcli/saisie réels par contrat, endpoint SOAP à reconfirmer avec Bertrand, accès sortant back jamais vérifié depuis un vrai serveur de prod)
+
+## Pattern — réconciliation Payfip à la consultation du solde (#276, 2026-07-30)
+
+`PassagesPointsComponent.ngOnInit()` appelle `AchatPassagesIdematServiceAgents.reconcilierMesAchatsEnAttente()` (`POST /api/achat-passages/reconcilier`, filtré sur l'usager connecté) **avant** de charger `getPassagesInfo()`/`getStats()`, pour garantir la fraîcheur du solde affiché — le job Quartz global côté back (toutes les 20 min) ne suffit pas seul, sa cadence introduit un décalage. Appel best-effort (`catchError(() => of(void 0))`) : un échec ne doit jamais empêcher l'affichage de l'écran. Pas de déclencheur équivalent à la connexion/accueil — jugé redondant après discussion (voir `project_payfip_chantier.md` pour le raisonnement complet).
+
+## Piège CSS — `min-height:100vh` + padding vertical sans `box-sizing:border-box` (#334/#337, 2026-07-30)
+
+Plusieurs écrans plein écran (`.page`/`.overlay`, hors layout applicatif — login, mot de passe oublié, création de compte, confirmation, lien invalide) ont `min-height: 100vh` en `box-sizing: content-box` (comportement par défaut CSS) combiné à un `padding` vertical non nul. Le padding s'ajoute alors **par-dessus** les 100vh au lieu d'être compris dedans, provoquant une barre de scroll vertical inutile quel que soit le contenu réel de la page.
+
+**Fix systématique** : ajouter `box-sizing: border-box;` au conteneur concerné (aucun changement des valeurs de padding elles-mêmes nécessaire).
+
+⚠️ **Repéré deux fois de suite** (#334 sur `connexion-idemat`, puis #337 sur 5 autres écrans avec le même bloc copié-collé) — dès qu'un de ces deux symptômes apparaît sur un nouvel écran, vérifier immédiatement tous les autres via :
+```bash
+grep -rl "min-height:\s*100vh" src/app --include="*.scss"
+```
+et corriger tous les fichiers remontés d'un coup, plutôt que d'attendre un ticket séparé par écran.
 
 ## Convention commentaire sur les issues GitHub
 
