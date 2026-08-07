@@ -16,8 +16,6 @@
       </div>
     </div>
 
-    <p class="subtitle">Sélectionnez le nombre de passages que vous souhaitez obtenir</p>
-
     @if (resultatPaiement() === 'succes') {
       <div class="message-resultat message-succes">
         Votre opération a bien été prise en compte, votre compte sera crédité sous réserve de réussite de la transaction.
@@ -27,25 +25,27 @@
         Nous vous informons qu'après avoir saisi vos informations bancaires, vous avez annulé la transaction. Aucun débit n'a été effectué sur votre compte.<br><br>
         Si vous souhaitez finaliser votre achat, nous vous invitons à recommencer le parcours de commande et à valider le paiement pour que la transaction soit complétée.
       </div>
+    } @else {
+      <p class="subtitle">Sélectionnez le nombre de passages que vous souhaitez obtenir</p>
+
+      <div class="contenu">
+        <!-- OFFRE -->
+        <div class="offre-ligne">
+          <span class="offre-label">{{ options()!.nbPassages }} passages</span>
+          <span class="offre-prix">{{ options()!.montantFormate }}</span>
+        </div>
+
+        <!-- BOUTON VALIDER -->
+        <button class="btn-valider" (click)="valider()" [disabled]="enCours()">
+          @if (enCours()) {
+            <mat-spinner diameter="20" color="accent"></mat-spinner>
+          } @else {
+            <mat-icon>check_circle_outline</mat-icon>
+            <span>Valider</span>
+          }
+        </button>
+      </div>
     }
-
-    <div class="contenu">
-    <!-- OFFRE -->
-    <div class="offre-ligne">
-      <span class="offre-label">{{ options()!.nbPassages }} passages</span>
-      <span class="offre-prix">{{ options()!.montantFormate }}</span>
-    </div>
-
-    <!-- BOUTON VALIDER -->
-    <button class="btn-valider" (click)="valider()" [disabled]="enCours()">
-      @if (enCours()) {
-        <mat-spinner diameter="20" color="accent"></mat-spinner>
-      } @else {
-        <mat-icon>check_circle_outline</mat-icon>
-        <span>Valider</span>
-      }
-    </button>
-    </div>
 
   </div>
 }
