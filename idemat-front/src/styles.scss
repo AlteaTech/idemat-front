@@ -1,5 +1,12 @@
 @use '@angular/material' as mat;
 
+// 0. --- RESET BOX-SIZING ---
+// Sans ça, tout élément avec width:100%+padding (ex: .page-container, .liste-item dans
+// _common.scss) déborde du parent de la valeur du padding horizontal (content-box par défaut).
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 // 1. --- VARIABLES & GLOBAL SETTINGS ---
 $font-idbat-family: 'Raleway', sans-serif !important;
 $primary-color: #ED6E57;
