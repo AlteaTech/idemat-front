@@ -5,12 +5,11 @@
 
 .bloc-header { margin-bottom: 12px; }
 
-.contenu { max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+.contenu { display: flex; flex-direction: column; gap: 16px; }
 
 .field-label { font-size: 0.85rem; color: $text-color-muted; display: block; margin-bottom: 8px; }
 
 .succes-bloc {
-  max-width: 480px;
   background: $background-white;
   border-radius: $bloc-border-radius;
   padding: 40px 24px;

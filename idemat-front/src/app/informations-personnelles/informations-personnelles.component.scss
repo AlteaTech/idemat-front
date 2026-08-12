@@ -3,7 +3,7 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-.page-container { max-width: 720px; display: flex; flex-direction: column; }
+.page-container { display: flex; flex-direction: column; }
 
 .btn-deconnexion {
   display: flex; align-items: center; justify-content: center; gap: 8px;

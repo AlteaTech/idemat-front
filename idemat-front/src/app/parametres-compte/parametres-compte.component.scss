@@ -3,10 +3,6 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-// .page-container global se centre déjà via width:50%+margin:auto — max-width dessus,
-// pas sur .contenu (enfant non centré, colle au bord gauche sinon).
-.page-container { max-width: 720px; }
-
 .liste { margin-bottom: 20px; }
 
 .contenu { display: flex; flex-direction: column; gap: 16px; }
