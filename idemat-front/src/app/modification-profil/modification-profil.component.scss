@@ -3,11 +3,6 @@
 
 :host { display: flex; flex-direction: column; flex: 1; }
 
-// .page-container global se centre déjà via width:50%+margin:auto — on cale le max-width
-// dessus (comme informations-personnelles/parametres-compte), pas sur un enfant .contenu
-// non centré, sinon le contenu colle au bord gauche de la boîte large au lieu d'être centré.
-.page-container { max-width: 720px; }
-
 .bloc { padding-bottom: 12px; }
 .bloc-header { margin-bottom: 12px; }
 
