@@ -101,6 +101,13 @@ export class PassagesPointsComponent implements OnInit {
     return heure.substring(0, 5).replace(':', 'h');
   }
 
+  // RG3 #386 : N = forfait autorisé (seuil) + forfait acheté - passages consommés
+  protected get passagesRestantsSurAnnee(): number {
+    const info = this.info();
+    if (!info) return 0;
+    return info.forfaitGratuitAnnuel + info.forfaitAcheteAnnuel - info.passagesConsommesAnnee;
+  }
+
   protected retour(): void {
     this.router.navigate(['/' + routesConstantes.home]);
   }
