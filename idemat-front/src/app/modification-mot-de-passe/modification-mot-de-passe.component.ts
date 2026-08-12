@@ -12,6 +12,7 @@ import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {AuthService} from '../../services/auth/auth.service';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {passwordsMatchValidator} from '../../validateurs/passwords-match.validator';
+import {motDePasseComplexiteValidator} from '../../validateurs/mot-de-passe-complexite.validator';
 import {ModificationMotDePasseFormModel} from '../../models/forms/modification-mot-de-passe-form.model';
 
 @Component({
@@ -35,9 +36,31 @@ export class ModificationMotDePasseComponent implements OnInit {
 
   protected form = new FormGroup<ModificationMotDePasseFormModel>({
     ancienMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    nouveauMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(8)]}),
+    nouveauMotDePasse: new FormControl('', {nonNullable: true, validators: [Validators.required, motDePasseComplexiteValidator]}),
     confirmation: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
   }, {validators: passwordsMatchValidator});
+
+  // Critères de complexité affichés en direct entre les champs (issue #383) — même regex que le back
+  protected get critereLongueur(): boolean {
+    const valeur = this.form.controls.nouveauMotDePasse.value;
+    return valeur.length >= 8 && valeur.length <= 15;
+  }
+
+  protected get critereMajuscule(): boolean {
+    return /[A-Z]/.test(this.form.controls.nouveauMotDePasse.value);
+  }
+
+  protected get critereMinuscule(): boolean {
+    return /[a-z]/.test(this.form.controls.nouveauMotDePasse.value);
+  }
+
+  protected get critereChiffre(): boolean {
+    return /[0-9]/.test(this.form.controls.nouveauMotDePasse.value);
+  }
+
+  protected get critereSpecial(): boolean {
+    return /[^a-zA-Z0-9]/.test(this.form.controls.nouveauMotDePasse.value);
+  }
 
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
