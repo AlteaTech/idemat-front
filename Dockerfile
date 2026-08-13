@@ -1,16 +1,23 @@
-# Stage 1: Serve with Nginx
+# Nginx sert le build Angular produit par le job `angular-build` de la CI.
 FROM nginx:alpine
 
-# Copy the build output from the previous stage (assuming artifacts are passed from CI)
-# Note: In the CI pipeline, we build in a separate job and pass artifacts.
-# Since the Dockerfile is now at the root, and the build output is in idemat-front/dist
-COPY idemat-front/dist/idemat-front/browser /usr/share/nginx/html
+RUN addgroup -g 1001 -S appgroup \
+ && adduser -S -u 1001 -G appgroup appuser
 
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Fichiers applicatifs, propriete de l'utilisateur applicatif
+COPY --chown=appuser:appgroup idemat-front/dist/idemat-front/browser /usr/share/nginx/html
+COPY --chown=appuser:appgroup nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
-EXPOSE 80
+RUN sed -i -e '/^[[:space:]]*user[[:space:]]/d' \
+           -e '/^[[:space:]]*pid[[:space:]]/d' /etc/nginx/nginx.conf \
+ && { echo 'pid /var/run/nginx/nginx.pid;'; cat /etc/nginx/nginx.conf; } > /etc/nginx/nginx.conf.new \
+ && mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf \
+ && mkdir -p /var/run/nginx /var/cache/nginx \
+ && chown -R appuser:appgroup /var/run/nginx /var/cache/nginx /var/log/nginx \
+                              /etc/nginx/conf.d /usr/share/nginx/html
 
-# Start Nginx
+EXPOSE 8080
+
+USER 1001:1001
+
 CMD ["nginx", "-g", "daemon off;"]

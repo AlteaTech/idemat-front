@@ -15,7 +15,7 @@ variables:
   K8S_NAMESPACE_REC: "nsv-rec-idbat-01"
   K8S_NAMESPACE_DEV: "nsv-rec-idbat-01"
   K8S_LABELS: "app=idematfront"
-  K8S_PORT: "80"
+  K8S_PORT: "8080"
   
   # Configuration Base de données - REC
   DB_API_URL: "frontbackidbat:8081"
