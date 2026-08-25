@@ -11,4 +11,5 @@ export interface ContratIdematModel {
   demandeZoneJ1F3: boolean;
   communes: { id: number; nom: string; codePostal: string }[];
   mentionsLegales?: string;
+  hasGuideTri: boolean;
 }

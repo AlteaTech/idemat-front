@@ -25,7 +25,7 @@
       <nav class="sidenav-nav">
         @for (lien of liensNav(); track lien.route) {
           @if (!lien.mobileOnly || !isDesktop()) {
-            <button class="nav-lien" [class.nav-lien--active]="isActive(lien.route)" (click)="naviguer(lien.route)">
+            <button class="nav-lien" [class.nav-lien--active]="!lien.external && isActive(lien.route)" (click)="onLienClick(lien)">
               <mat-icon>{{ lien.icon }}</mat-icon>
               <span>{{ lien.label }}</span>
             </button>
