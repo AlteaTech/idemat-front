@@ -9,9 +9,9 @@
  */
 
 
-export interface SortObject { 
-    sorted?: boolean;
-    unsorted?: boolean;
-    empty?: boolean;
+export interface SiteMatiereDio { 
+    libelle: string;
+    tarif?: number;
+    unite?: string;
 }
 

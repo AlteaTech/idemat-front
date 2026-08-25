@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SiteMatiereDio } from './site-matiere-dio';
 
 
 export interface DechetterieDetailDio { 
@@ -16,5 +17,6 @@ export interface DechetterieDetailDio {
     codePostal: string;
     ville: string;
     horaires?: string;
+    matieres: Array<SiteMatiereDio>;
 }
 
