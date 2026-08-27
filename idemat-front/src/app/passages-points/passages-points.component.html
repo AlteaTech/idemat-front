@@ -106,6 +106,61 @@
       }
     </div>
 
+    <!-- HISTORIQUE DES PASSAGES REFUSÉS -->
+    @if (passagesRefuses().length > 0) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <mat-icon class="bloc-icon">block</mat-icon>
+          <span class="bloc-titre">Historique des passages refusés</span>
+        </div>
+
+        @for (p of passagesRefuses(); track p.id) {
+          <div class="histo-item">
+            <div class="histo-resume">
+              <div class="histo-info">
+                <span class="histo-date">{{ p.date | date:'dd/MM/yyyy' }}</span>
+                <span class="histo-site">{{ p.nomSite }}</span>
+                <span class="histo-label">1 passage refusé à {{ formatHeure(p.heure) }}</span>
+              </div>
+              <button class="btn-details" (click)="toggleDetailsRefuse(p.id)">
+                <mat-icon class="details-chevron">{{ isOuvertRefuse(p.id) ? 'expand_less' : 'expand_more' }}</mat-icon>
+                Détails
+              </button>
+            </div>
+            @if (isOuvertRefuse(p.id)) {
+              <div class="histo-details">
+                <p class="points-debites">Motif de refus</p>
+                <p class="motif-refus-valeur">{{ p.commentaire }}</p>
+              </div>
+            }
+          </div>
+        }
+
+        @if (apercuModeRefuses()) {
+          <button class="btn-voir-tout" (click)="afficherToutRefuses()">
+            <mat-icon>expand_more</mat-icon>
+            Afficher tout l'historique
+          </button>
+        } @else {
+          <div class="pagination-bar">
+            <button class="btn-voir-tout" (click)="reduireRefuses()">
+              <mat-icon>expand_less</mat-icon>
+              Réduire
+            </button>
+            <div class="pagination">
+              <button class="btn-page" [disabled]="currentPageRefuses() === 0" (click)="changerPageRefuses(currentPageRefuses() - 1)">
+                <img src="Gauche.svg" alt="Précédent" class="pagination-icon" />
+              </button>
+              <span class="page-info">{{ currentPageRefuses() + 1 }} / {{ totalPagesRefuses() }}</span>
+              <button class="btn-page" [disabled]="currentPageRefuses() >= totalPagesRefuses() - 1" (click)="changerPageRefuses(currentPageRefuses() + 1)">
+                <img src="Droite.svg" alt="Suivant" class="pagination-icon" />
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
     <!-- PASSAGES ACHETÉS -->
     @if (info()) {
       <div class="bloc">

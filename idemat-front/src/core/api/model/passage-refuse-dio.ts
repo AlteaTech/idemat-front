@@ -9,9 +9,11 @@
  */
 
 
-export interface SortObject { 
-    sorted?: boolean;
-    unsorted?: boolean;
-    empty?: boolean;
+export interface PassageRefuseDio { 
+    id: number;
+    date: string;
+    heure: string;
+    nomSite: string;
+    commentaire?: string;
 }
 
