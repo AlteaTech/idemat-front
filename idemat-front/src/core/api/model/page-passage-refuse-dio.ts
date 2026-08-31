@@ -8,11 +8,11 @@
  * Do not edit the class manually.
  */
 import { PageableObject } from './pageable-object';
+import { PassageRefuseDio } from './passage-refuse-dio';
 import { SortObject } from './sort-object';
-import { PassageDio } from './passage-dio';
 
 
-export interface PagePassageDio { 
+export interface PagePassageRefuseDio { 
     totalPages?: number;
     totalElements?: number;
     pageable?: PageableObject;
@@ -20,7 +20,7 @@ export interface PagePassageDio {
     first?: boolean;
     last?: boolean;
     size?: number;
-    content?: Array<PassageDio>;
+    content?: Array<PassageRefuseDio>;
     number?: number;
     sort?: SortObject;
     empty?: boolean;
