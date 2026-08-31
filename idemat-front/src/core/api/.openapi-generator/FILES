@@ -10,6 +10,7 @@ api/dechetterie-controller.service.ts
 api/inscription-controller.service.ts
 api/mot-de-passe-controller.service.ts
 api/passages-controller.service.ts
+api/passages-refuses-controller.service.ts
 api/usager-controller.service.ts
 api/vehicule-controller.service.ts
 configuration.ts
@@ -31,9 +32,11 @@ model/login-dio.ts
 model/models.ts
 model/modifier-vehicule-dio-request.ts
 model/page-passage-dio.ts
+model/page-passage-refuse-dio.ts
 model/pageable-object.ts
 model/passage-dio.ts
 model/passage-matiere-dio.ts
+model/passage-refuse-dio.ts
 model/passages-info-dio.ts
 model/passages-stats-dio.ts
 model/refresh-dio-request.ts
