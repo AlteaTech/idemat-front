@@ -41,6 +41,7 @@ model/passages-info-dio.ts
 model/passages-stats-dio.ts
 model/refresh-dio-request.ts
 model/reset-password-dio-request.ts
+model/site-matiere-dio.ts
 model/sort-object.ts
 model/update-email-dio-request.ts
 model/update-mot-de-passe-dio-request.ts

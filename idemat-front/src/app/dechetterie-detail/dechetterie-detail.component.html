@@ -29,6 +29,22 @@
       </div>
     </div>
 
+    <!-- MATIERES ACCEPTEES -->
+    @if (dechetterie()!.matieres.length > 0) {
+      <div class="bloc">
+        <div class="bloc-header">
+          <mat-icon class="bloc-icon">check</mat-icon>
+          <span class="bloc-titre">Matières acceptées</span>
+        </div>
+        @for (matiere of dechetterie()!.matieres; track matiere.libelle) {
+          <div class="adresse-ligne">
+            <span class="adresse-label">{{ matiere.libelle }}</span>
+            <span class="adresse-valeur">Tarif : {{ matiere.tarif }} € par {{ matiere.unite }}</span>
+          </div>
+        }
+      </div>
+    }
+
     <!-- HORAIRES -->
     @if (dechetterie()!.horaires) {
       <div class="bloc">

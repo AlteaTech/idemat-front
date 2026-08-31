@@ -10,6 +10,7 @@ export class DechetteriesIdematServiceAgents {
   getListe(): Observable<DechetterieIdematModel[]> {
     return this.dechetterieService.getDechetteries().pipe(map(list => list.map(d => ({
       id: d.id, nom: d.nom, adresse: d.adresse, codePostal: d.codePostal, ville: d.ville, horaires: null,
+      matieres: [],
     }))));
   }
 
@@ -17,6 +18,7 @@ export class DechetteriesIdematServiceAgents {
     return this.dechetterieService.getById(id).pipe(map(d => ({
       id: d.id, nom: d.nom, adresse: d.adresse, codePostal: d.codePostal, ville: d.ville,
       horaires: d.horaires ?? null,
+      matieres: d.matieres.map(m => ({libelle: m.libelle, tarif: m.tarif ?? null, unite: m.unite ?? null})),
     })));
   }
 }

@@ -21,6 +21,7 @@ export * from './passages-info-dio';
 export * from './passages-stats-dio';
 export * from './refresh-dio-request';
 export * from './reset-password-dio-request';
+export * from './site-matiere-dio';
 export * from './sort-object';
 export * from './update-email-dio-request';
 export * from './update-mot-de-passe-dio-request';
