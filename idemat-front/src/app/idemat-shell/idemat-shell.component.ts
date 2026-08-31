@@ -63,6 +63,36 @@ export class IdematShellComponent implements OnInit {
     }
   }
 
+  protected onLienClick(lien: LienNav): void {
+    if (lien.external) {
+      this.ouvrirGuideTri();
+      if (!this.isDesktop()) {
+        this.sidenav.close();
+      }
+      return;
+    }
+    this.naviguer(lien.route);
+  }
+
+  private ouvrirGuideTri(): void {
+    // onglet ouvert de façon synchrone dans le geste utilisateur (clic) — un window.open()
+    // appelé après la réponse HTTP async serait bloqué silencieusement par le navigateur
+    const nouvelOnglet = window.open('', '_blank');
+    this.contratService.getGuideTri().subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        if (nouvelOnglet) {
+          nouvelOnglet.location.href = url;
+        }
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+      },
+      error: (err) => {
+        console.error('Erreur ouverture guide de tri', err);
+        nouvelOnglet?.close();
+      }
+    });
+  }
+
   protected goBack(): void {
     this.location.back();
   }
@@ -74,6 +104,7 @@ export class IdematShellComponent implements OnInit {
   private buildLiens(contrat: ContratIdematModel): LienNav[] {
     return [
       {icon: 'home', label: 'Accueil', route: routesConstantes.home, visible: true},
+      {icon: 'menu_book', label: 'Guide de tri', route: 'guide-tri', visible: contrat.hasGuideTri, external: true},
       {icon: 'qr_code_2', label: 'Mes accès', route: routesConstantes.carteAcces, visible: contrat.allowCarteDematerialisee},
       {icon: 'delete_outline', label: 'Déchetteries', route: routesConstantes.dechetteries, visible: true},
       {icon: 'bar_chart', label: 'Mes passages', route: routesConstantes.consultationSolde, visible: true},

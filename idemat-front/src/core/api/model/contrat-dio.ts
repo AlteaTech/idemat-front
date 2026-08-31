@@ -24,5 +24,6 @@ export interface ContratDio {
     demandeZoneJ1F3: boolean;
     allowAchatPassages: boolean;
     mentionsLegales?: string;
+    hasGuideTri: boolean;
 }
 

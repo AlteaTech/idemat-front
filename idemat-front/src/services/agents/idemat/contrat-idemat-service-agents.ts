@@ -16,6 +16,13 @@ export class ContratIdematServiceAgents {
     return this.contratService.getCurrent().pipe(map(r => this.toModel(r)));
   }
 
+  getGuideTri(): Observable<Blob> {
+    // httpHeaderAccept explicite obligatoire : sans lui, le client généré part sur 'Accept: */*'
+    // et Angular retombe sur responseType 'json' par défaut — JSON.parse plante sur le PDF brut
+    // malgré un vrai 200 (même piège que documenté dans le CLAUDE.md idbatv7-front).
+    return this.contratService.getContratGuideTri('body', false, { httpHeaderAccept: 'application/pdf' as any }) as unknown as Observable<Blob>;
+  }
+
   private toModel(r: ContratDio): ContratIdematModel {
     const logoUrl = r.logoBase64 && r.logoMime
       ? `data:${r.logoMime};base64,${r.logoBase64}`
@@ -33,6 +40,7 @@ export class ContratIdematServiceAgents {
       demandeZoneJ1F3: r.demandeZoneJ1F3,
       allowAchatPassages: r.allowAchatPassages,
       mentionsLegales: r.mentionsLegales ?? undefined,
+      hasGuideTri: r.hasGuideTri,
     };
   }
 }

@@ -4,4 +4,5 @@ export interface LienNav {
   route: string;
   visible: boolean;
   mobileOnly?: boolean;
+  external?: boolean;
 }
