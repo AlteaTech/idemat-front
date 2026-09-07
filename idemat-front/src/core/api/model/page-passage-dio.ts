@@ -15,8 +15,8 @@ import { PassageDio } from './passage-dio';
 export interface PagePassageDio { 
     totalPages?: number;
     totalElements?: number;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     first?: boolean;
     last?: boolean;
     size?: number;

@@ -39,7 +39,9 @@
         @for (matiere of dechetterie()!.matieres; track matiere.libelle) {
           <div class="adresse-ligne">
             <span class="adresse-label">{{ matiere.libelle }}</span>
-            <span class="adresse-valeur">Tarif : {{ matiere.tarif }} € par {{ matiere.unite }}</span>
+            @if (!dechetterie()!.masquerTarifs) {
+              <span class="adresse-valeur">Tarif : {{ matiere.tarif ?? 0 }} € par {{ matiere.unite }}</span>
+            }
           </div>
         }
       </div>
