@@ -18,5 +18,6 @@ export interface DechetterieDetailDio {
     ville: string;
     horaires?: string;
     matieres: Array<SiteMatiereDio>;
+    masquerTarifs: boolean;
 }
 
