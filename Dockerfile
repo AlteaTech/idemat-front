@@ -1,5 +1,12 @@
 # Nginx sert le build Angular produit par le job `angular-build` de la CI.
-FROM nginx:alpine
+# Image de base epinglee : le tag flottant `nginx:alpine` rendait le contenu de l image
+# non reproductible d un build a l autre et pouvait embarquer des paquets systeme obsoletes.
+FROM nginx:1.31.5-alpine3.24
+
+# Patch OS Alpine (expat, OpenSSL...) - meme traitement que le Dockerfile du back.
+# Indispensable meme avec une image epinglee : les correctifs de securite Alpine sortent
+# entre deux publications de l image nginx.
+RUN apk upgrade --no-cache
 
 RUN addgroup -g 1001 -S appgroup \
  && adduser -S -u 1001 -G appgroup appuser
