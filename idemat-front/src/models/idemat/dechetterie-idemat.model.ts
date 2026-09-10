@@ -12,4 +12,5 @@ export interface DechetterieIdematModel {
   ville: string;
   horaires: string | null;
   matieres: SiteMatiereIdematModel[];
+  masquerTarifs: boolean;
 }
