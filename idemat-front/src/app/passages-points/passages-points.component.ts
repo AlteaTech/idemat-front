@@ -6,12 +6,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {catchError, of} from 'rxjs';
 
 import {PassagesIdematServiceAgents} from '../../services/agents/idemat/passages-idemat-service-agents';
-import {PassagesRefusesIdematServiceAgents} from '../../services/agents/idemat/passages-refuses-idemat-service-agents';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {AchatPassagesIdematServiceAgents} from '../../services/agents/idemat/achat-passages-idemat-service-agents';
 import {PassagesInfoModel, PassagesStatsIdematModel} from '../../models/idemat/passages-idemat.model';
-import {DepotIdematModel} from '../../models/idemat/depot-idemat.model';
-import {PassageRefuseIdematModel} from '../../models/idemat/passage-refuse-idemat.model';
+import {HistoriquePassageIdematModel} from '../../models/idemat/historique-passage-idemat.model';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
 import {routesConstantes} from '../../constantes/routes.constantes';
 import {HISTORIQUE_DEPOTS_APERCU, HISTORIQUE_DEPOTS_PAGE_SIZE} from '../../constantes/depots.constantes';
@@ -26,26 +24,18 @@ import {HISTORIQUE_DEPOTS_APERCU, HISTORIQUE_DEPOTS_PAGE_SIZE} from '../../const
 export class PassagesPointsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly service = inject(PassagesIdematServiceAgents);
-  private readonly passagesRefusesService = inject(PassagesRefusesIdematServiceAgents);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly achatPassagesService = inject(AchatPassagesIdematServiceAgents);
 
   protected info = signal<PassagesInfoModel | null>(null);
   protected stats = signal<PassagesStatsIdematModel | null>(null);
   protected usager = signal<UsagerIdematModel | null>(null);
-  protected passages = signal<DepotIdematModel[]>([]);
+  protected passages = signal<HistoriquePassageIdematModel[]>([]);
   protected loading = signal(true);
   protected apercuMode = signal(true);
   protected currentPage = signal(0);
   protected totalPages = signal(0);
   protected ouvertsIds = signal<Set<number>>(new Set());
-
-  // RG13 : bloc "Historique des passages refusés"
-  protected passagesRefuses = signal<PassageRefuseIdematModel[]>([]);
-  protected apercuModeRefuses = signal(true);
-  protected currentPageRefuses = signal(0);
-  protected totalPagesRefuses = signal(0);
-  protected ouvertsIdsRefuses = signal<Set<number>>(new Set());
 
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
@@ -61,11 +51,10 @@ export class PassagesPointsComponent implements OnInit {
       });
 
     this.chargerApercu();
-    this.chargerApercuRefuses();
   }
 
   private chargerApercu(): void {
-    this.service.getDepots(0, HISTORIQUE_DEPOTS_APERCU).subscribe(page => {
+    this.service.getHistorique(0, HISTORIQUE_DEPOTS_APERCU).subscribe(page => {
       this.passages.set(page.content);
       this.totalPages.set(page.totalPages);
       this.loading.set(false);
@@ -82,7 +71,7 @@ export class PassagesPointsComponent implements OnInit {
     this.apercuMode.set(false);
     this.loading.set(true);
     this.currentPage.set(0);
-    this.service.getDepots(0, HISTORIQUE_DEPOTS_PAGE_SIZE).subscribe(page => {
+    this.service.getHistorique(0, HISTORIQUE_DEPOTS_PAGE_SIZE).subscribe(page => {
       this.passages.set(page.content);
       this.totalPages.set(page.totalPages);
       this.loading.set(false);
@@ -92,7 +81,7 @@ export class PassagesPointsComponent implements OnInit {
   protected changerPage(page: number): void {
     this.loading.set(true);
     this.currentPage.set(page);
-    this.service.getDepots(page, HISTORIQUE_DEPOTS_PAGE_SIZE).subscribe(result => {
+    this.service.getHistorique(page, HISTORIQUE_DEPOTS_PAGE_SIZE).subscribe(result => {
       this.passages.set(result.content);
       this.loading.set(false);
     });
@@ -106,45 +95,6 @@ export class PassagesPointsComponent implements OnInit {
 
   protected isOuvert(id: number): boolean {
     return this.ouvertsIds().has(id);
-  }
-
-  private chargerApercuRefuses(): void {
-    this.passagesRefusesService.getPassagesRefuses(0, HISTORIQUE_DEPOTS_APERCU).subscribe(page => {
-      this.passagesRefuses.set(page.content);
-      this.totalPagesRefuses.set(page.totalPages);
-    });
-  }
-
-  protected reduireRefuses(): void {
-    this.apercuModeRefuses.set(true);
-    this.currentPageRefuses.set(0);
-    this.chargerApercuRefuses();
-  }
-
-  protected afficherToutRefuses(): void {
-    this.apercuModeRefuses.set(false);
-    this.currentPageRefuses.set(0);
-    this.passagesRefusesService.getPassagesRefuses(0, HISTORIQUE_DEPOTS_PAGE_SIZE).subscribe(page => {
-      this.passagesRefuses.set(page.content);
-      this.totalPagesRefuses.set(page.totalPages);
-    });
-  }
-
-  protected changerPageRefuses(page: number): void {
-    this.currentPageRefuses.set(page);
-    this.passagesRefusesService.getPassagesRefuses(page, HISTORIQUE_DEPOTS_PAGE_SIZE).subscribe(result => {
-      this.passagesRefuses.set(result.content);
-    });
-  }
-
-  protected toggleDetailsRefuse(id: number): void {
-    const set = new Set(this.ouvertsIdsRefuses());
-    if (set.has(id)) { set.delete(id); } else { set.add(id); }
-    this.ouvertsIdsRefuses.set(set);
-  }
-
-  protected isOuvertRefuse(id: number): boolean {
-    return this.ouvertsIdsRefuses().has(id);
   }
 
   protected formatHeure(heure: string): string {
