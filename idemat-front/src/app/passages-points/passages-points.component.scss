@@ -52,6 +52,20 @@
 .histo-site { font-size: 0.88rem; font-weight: 600; color: $text-color-primary; }
 .histo-label { font-size: 0.82rem; color: $text-color-secondary; }
 
+// #463 : ligne "passage refusé" (RG4) — picto (RG4.1) + ligne rouge (RG4.2) + "refusé" en gras (RG4.3, cf. template)
+.histo-label--refuse {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $error-color;
+}
+.icone-refuse {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: $refuse-icon-color;
+}
+
 .btn-details {
   display: flex;
   align-items: center;

@@ -5,6 +5,7 @@ import {Configuration} from '../../../core/api';
 import {PassagesControllerService} from '../../../core/api/api/passages-controller.service';
 import {PassagesInfoModel, PassagesStatsIdematModel} from '../../../models/idemat/passages-idemat.model';
 import {DepotIdematModel} from '../../../models/idemat/depot-idemat.model';
+import {HistoriquePassageIdematModel} from '../../../models/idemat/historique-passage-idemat.model';
 import {PageIdematModel} from '../../../models/idemat/page-idemat.model';
 
 @Injectable({providedIn: 'root'})
@@ -34,5 +35,21 @@ export class PassagesIdematServiceAgents {
 
   getStats(): Observable<PassagesStatsIdematModel> {
     return this.passagesService.getStats();
+  }
+
+  // #463 : bloc "Historique des passages" fusionné (passages effectués + refusés, tri chronologique unique).
+  // Remplace pour cet écran le duo getDepots()/PassagesRefusesIdematServiceAgents.getPassagesRefuses().
+  getHistorique(page: number, size: number): Observable<PageIdematModel<HistoriquePassageIdematModel>> {
+    return this.passagesService.getHistoriquePassages(page, size).pipe(
+      map(p => ({
+        content: (p.content ?? []) as HistoriquePassageIdematModel[],
+        totalElements: p.totalElements ?? 0,
+        totalPages: p.totalPages ?? 0,
+        number: p.number ?? 0,
+        size: p.size ?? size,
+        first: p.first ?? true,
+        last: p.last ?? true,
+      }))
+    );
   }
 }

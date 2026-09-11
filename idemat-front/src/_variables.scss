@@ -21,6 +21,9 @@ $error-color: #d32f2f;
 $error-background: #fde8e8;
 $success-color: #2e7d32;
 $success-background: #e8f5e9;
+// #463 : picto triangle d'alerte des passages refusés (RG4.1) — corail distinct de $error-color,
+// valeur exacte demandée par le client sur la maquette validée
+$refuse-icon-color: #F2664F;
 
 // Fonds
 $background-page: #f2f2f2;
