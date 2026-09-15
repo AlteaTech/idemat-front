@@ -35,7 +35,7 @@ export class PassagesPointsComponent implements OnInit {
   protected apercuMode = signal(true);
   protected currentPage = signal(0);
   protected totalPages = signal(0);
-  protected ouvertsIds = signal<Set<number>>(new Set());
+  protected ouvertsIds = signal<Set<string>>(new Set());
 
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
@@ -87,14 +87,21 @@ export class PassagesPointsComponent implements OnInit {
     });
   }
 
-  protected toggleDetails(id: number): void {
+  // `passages` et `passages_refuses` ont des séquences d'id indépendantes (même cause que le fix
+  // back #463) — un id numérique seul peut désigner à la fois une ligne acceptée et une ligne
+  // refusée. On identifie donc chaque ligne par id + estRefuse, jamais par id seul.
+  protected cle(p: HistoriquePassageIdematModel): string {
+    return `${p.id}-${p.estRefuse}`;
+  }
+
+  protected toggleDetails(cle: string): void {
     const set = new Set(this.ouvertsIds());
-    if (set.has(id)) { set.delete(id); } else { set.add(id); }
+    if (set.has(cle)) { set.delete(cle); } else { set.add(cle); }
     this.ouvertsIds.set(set);
   }
 
-  protected isOuvert(id: number): boolean {
-    return this.ouvertsIds().has(id);
+  protected isOuvert(cle: string): boolean {
+    return this.ouvertsIds().has(cle);
   }
 
   protected formatHeure(heure: string): string {

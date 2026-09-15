@@ -46,7 +46,7 @@
       @if (passages().length === 0) {
         <p class="bloc-vide">Aucun passage enregistré.</p>
       } @else {
-        @for (p of passages(); track p.id) {
+        @for (p of passages(); track cle(p)) {
           <div class="histo-item">
             <div class="histo-resume">
               <div class="histo-info">
@@ -64,13 +64,13 @@
                 }
               </div>
               @if (p.estRefuse || p.estDepotQualifie) {
-                <button class="btn-details" (click)="toggleDetails(p.id)">
-                  <mat-icon class="details-chevron">{{ isOuvert(p.id) ? 'expand_less' : 'expand_more' }}</mat-icon>
+                <button class="btn-details" (click)="toggleDetails(cle(p))">
+                  <mat-icon class="details-chevron">{{ isOuvert(cle(p)) ? 'expand_less' : 'expand_more' }}</mat-icon>
                   Détails
                 </button>
               }
             </div>
-            @if (isOuvert(p.id)) {
+            @if (isOuvert(cle(p))) {
               @if (p.estRefuse) {
                 <div class="histo-details">
                   <p class="points-debites">Motif de refus</p>
