@@ -9,6 +9,8 @@ variables:
   API_URL: "https://idemat-ws-rec.recyclage.veolia.fr"
   API_URL_PRIV: "https://idemat-ws-rec.recyclage.veolia.fr"
   TYPE_IMPRIMANTES_SITE: "GX420d;LP2844"
+  # Slugs de contrat dont la plateforme n est pas encore ouverte au format slug:AAAA-MM-JJ (date de fin affichee dans le message), separes par ; - #492
+  SLUGS_EN_ATTENTE: "TerreValserhone:2026-12-31"
 
   # Configuration Kubernetes
   K8S_POD_NAME: "idemat-front"
@@ -48,9 +50,10 @@ angular-build:
     # 1. On corrige le lockfile pour Linux
     # 2. On remplace les placeholders dans environment.gitlab.ts par les variables d'env
     # 3. On lance le build avec la configuration 'gitlab'
-    - docker run --rm -v "$(pwd)/idemat-front":/app -w /app -e API_URL="$API_URL" -e BASE_IDEMAT_URL="$BASE_IDEMAT_URL" -e TYPE_IMPRIMANTES_SITE="$TYPE_IMPRIMANTES_SITE" node:20 /bin/sh -c "
+    - docker run --rm -v "$(pwd)/idemat-front":/app -w /app -e API_URL="$API_URL" -e BASE_IDEMAT_URL="$BASE_IDEMAT_URL" -e TYPE_IMPRIMANTES_SITE="$TYPE_IMPRIMANTES_SITE" -e SLUGS_EN_ATTENTE="$SLUGS_EN_ATTENTE" node:20 /bin/sh -c "
         npm install --package-lock-only && 
         sed -i \"s|API_URL_PLACEHOLDER|\$API_URL|g\" src/environments/environment.gitlab.ts &&
+        sed -i \"s|SLUGS_EN_ATTENTE_PLACEHOLDER|\$SLUGS_EN_ATTENTE|g\" src/environments/environment.gitlab.ts &&
         npm ci && 
         npm run build -- --configuration=gitlab; 
         RET=\$?; 

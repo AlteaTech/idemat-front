@@ -15,6 +15,7 @@ import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-ide
 import {StorageService} from '../../services/storage.service';
 import {storagesConstantes} from '../../constantes/storages.constantes';
 import {routesConstantes} from '../../constantes/routes.constantes';
+import {SLUGS_EN_ATTENTE} from '../../constantes/slugs-en-attente.constantes';
 
 @Component({
   selector: 'app-connexion-idemat',
@@ -43,6 +44,12 @@ export class ConnexionIdematComponent implements OnInit {
   protected contratId = signal<number | null>(null);
   protected logoUrl = signal('');
   protected nomContrat = signal('');
+  // Slug listé dans SLUGS_EN_ATTENTE : formulaire masqué d'emblée (pas de flash)
+  protected slugEnAttente = signal(false);
+  // Date de fin d'accès par carte de déchèterie, affichée dans le message (ex. "31 décembre 2026")
+  protected dateFinAttente = signal('');
+  // Slug en attente ET contrat existant : message "bientôt disponible" affiché
+  protected plateformeEnAttente = signal(false);
   protected enCours = signal(false);
   protected afficherMotDePasse = signal(false);
   protected erreurLogin = signal(false);
@@ -65,6 +72,9 @@ export class ConnexionIdematComponent implements OnInit {
         return;
       }
       this.contrat.set(contrat);
+      const enAttente = SLUGS_EN_ATTENTE.find(s => s.slug === contrat.toLowerCase());
+      this.slugEnAttente.set(!!enAttente);
+      this.dateFinAttente.set(enAttente?.dateFin.toLocaleDateString('fr-FR', {day: 'numeric', month: 'long', year: 'numeric'}) ?? '');
       this.contratService.getByUrl(contrat).subscribe({
         next: c => {
           this.storageService.setLocalStorage(storagesConstantes.contratSlug, contrat);
@@ -73,6 +83,7 @@ export class ConnexionIdematComponent implements OnInit {
           if (c.logoBase64 && c.logoMime) {
             this.logoUrl.set(`data:${c.logoMime};base64,${c.logoBase64}`);
           }
+          this.plateformeEnAttente.set(this.slugEnAttente());
         },
         error: () => this.router.navigate(['/' + routesConstantes.lienInvalide], {replaceUrl: true}),
       });
