@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {AchatPassagesIdematServiceAgents} from '../../services/agents/idemat/achat-passages-idemat-service-agents';
+import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {AchatPassagesOptionsModel} from '../../models/idemat/achat-passages-idemat.model';
 import {UsagerIdematModel} from '../../models/idemat/usager-idemat.model';
@@ -22,9 +23,11 @@ export class AchatPassagesComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly service = inject(AchatPassagesIdematServiceAgents);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
+  private readonly contratService = inject(ContratIdematServiceAgents);
 
   protected options = signal<AchatPassagesOptionsModel | null>(null);
   protected usager = signal<UsagerIdematModel | null>(null);
+  protected decompteUnites = signal(false);
   protected loading = signal(true);
   protected enCours = signal(false);
   protected resultatPaiement = signal<'succes' | 'echec' | null>(null);
@@ -36,11 +39,17 @@ export class AchatPassagesComponent implements OnInit {
       this.router.navigate([], {relativeTo: this.route, queryParams: {}, replaceUrl: true});
     }
 
+    this.contratService.getContratForCurrentUser().subscribe(c => this.decompteUnites.set(c.hasDecompteUnites));
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
     this.service.getOptions().subscribe(opt => {
       this.options.set(opt);
       this.loading.set(false);
     });
+  }
+
+  protected libelleOffre(nb: number): string {
+    const pluriel = nb > 1 ? 's' : '';
+    return this.decompteUnites() ? `${nb} unité${pluriel} de passage` : `${nb} passage${pluriel}`;
   }
 
   protected valider(): void {

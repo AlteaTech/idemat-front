@@ -25,5 +25,6 @@ export interface ContratDio {
     allowAchatPassages: boolean;
     mentionsLegales?: string;
     hasGuideTri: boolean;
+    hasDecompteUnites: boolean;
 }
 

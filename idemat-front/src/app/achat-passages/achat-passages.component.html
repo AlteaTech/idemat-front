@@ -25,12 +25,12 @@
         Si vous souhaitez finaliser votre achat, nous vous invitons à recommencer le parcours de commande et à valider le paiement pour que la transaction soit complétée.
       </div>
     } @else {
-      <p class="subtitle">Sélectionnez le nombre de passages que vous souhaitez obtenir</p>
+      <p class="subtitle">Sélectionnez le nombre {{ decompteUnites() ? "d'unités de passage" : 'de passages' }} que vous souhaitez obtenir</p>
 
       <div class="contenu">
         <!-- OFFRE -->
         <div class="offre-ligne">
-          <span class="offre-label">{{ options()!.nbPassages }} passages</span>
+          <span class="offre-label">{{ libelleOffre(options()!.nbPassages) }}</span>
           <span class="offre-prix">{{ options()!.montantFormate }}</span>
         </div>
 
