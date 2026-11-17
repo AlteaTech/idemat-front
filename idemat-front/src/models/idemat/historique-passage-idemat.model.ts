@@ -10,4 +10,6 @@ export interface HistoriquePassageIdematModel {
   matieres: PassageMatiereIdematModel[];
   valeurPoints: number;
   commentaire?: string;
+  carteValeur?: string;
+  nbUnitesDecomptees?: number;
 }

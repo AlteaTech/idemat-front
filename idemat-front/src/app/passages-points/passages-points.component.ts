@@ -6,6 +6,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {catchError, of} from 'rxjs';
 
 import {PassagesIdematServiceAgents} from '../../services/agents/idemat/passages-idemat-service-agents';
+import {ContratIdematServiceAgents} from '../../services/agents/idemat/contrat-idemat-service-agents';
 import {UsagerIdematServiceAgents} from '../../services/agents/idemat/usager-idemat-service-agents';
 import {AchatPassagesIdematServiceAgents} from '../../services/agents/idemat/achat-passages-idemat-service-agents';
 import {PassagesInfoModel, PassagesStatsIdematModel} from '../../models/idemat/passages-idemat.model';
@@ -26,11 +27,13 @@ export class PassagesPointsComponent implements OnInit {
   private readonly service = inject(PassagesIdematServiceAgents);
   private readonly usagerService = inject(UsagerIdematServiceAgents);
   private readonly achatPassagesService = inject(AchatPassagesIdematServiceAgents);
+  private readonly contratService = inject(ContratIdematServiceAgents);
 
   protected info = signal<PassagesInfoModel | null>(null);
   protected stats = signal<PassagesStatsIdematModel | null>(null);
   protected usager = signal<UsagerIdematModel | null>(null);
   protected passages = signal<HistoriquePassageIdematModel[]>([]);
+  protected decompteUnites = signal(false);
   protected loading = signal(true);
   protected apercuMode = signal(true);
   protected currentPage = signal(0);
@@ -39,6 +42,7 @@ export class PassagesPointsComponent implements OnInit {
 
   ngOnInit(): void {
     this.usagerService.getUsager().subscribe(u => this.usager.set(u));
+    this.contratService.getContratForCurrentUser().subscribe(c => this.decompteUnites.set(c.hasDecompteUnites));
 
     // Réconciliation ciblée avant de lire le solde, pour garantir sa fraîcheur au moment de
     // l'affichage (le job Quartz global ne suffit pas seul, sa cadence introduit un décalage).
@@ -113,6 +117,22 @@ export class PassagesPointsComponent implements OnInit {
     const info = this.info();
     if (!info) return 0;
     return info.forfaitGratuitAnnuel + info.forfaitAcheteAnnuel - info.passagesConsommesAnnee;
+  }
+
+  // #517 : "N passage(s)" ou, si le contrat décompte par unités, "N unité(s) de passage" (singulier pour 0 et 1)
+  protected nb(n: number): string {
+    const s = n > 1 ? 's' : '';
+    return this.decompteUnites() ? `${n} unité${s} de passage` : `${n} passage${s}`;
+  }
+
+  // Accord de l'adjectif/participe : féminin avec "unité", masculin avec "passage"
+  protected accord(base: string, n: number): string {
+    return base + (this.decompteUnites() ? 'e' : '') + (n > 1 ? 's' : '');
+  }
+
+  // "supplémentaire" ne s'accorde pas avec "unités de passage" (il qualifie "passage"), seulement avec "passages"
+  protected supplementaire(n: number): string {
+    return this.decompteUnites() || n <= 1 ? 'supplémentaire' : 'supplémentaires';
   }
 
   protected retour(): void {

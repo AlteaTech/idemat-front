@@ -14,4 +14,7 @@ export interface PassagesStatsIdematModel {
   jour: number;
   mois: number;
   annee: number;
+  unitesJour?: number;
+  unitesMois?: number;
+  unitesAnnee?: number;
 }
