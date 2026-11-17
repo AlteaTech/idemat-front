@@ -12,4 +12,5 @@ export interface ContratIdematModel {
   communes: { id: number; nom: string; codePostal: string }[];
   mentionsLegales?: string;
   hasGuideTri: boolean;
+  hasDecompteUnites: boolean;
 }

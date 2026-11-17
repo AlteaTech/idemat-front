@@ -41,6 +41,7 @@ export class ContratIdematServiceAgents {
       allowAchatPassages: r.allowAchatPassages,
       mentionsLegales: r.mentionsLegales ?? undefined,
       hasGuideTri: r.hasGuideTri,
+      hasDecompteUnites: r.hasDecompteUnites,
     };
   }
 }

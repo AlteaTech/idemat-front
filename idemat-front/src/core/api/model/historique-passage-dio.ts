@@ -22,5 +22,7 @@ export interface HistoriquePassageDio {
     ancienSoldePoints: number;
     nouveauSoldePoints: number;
     commentaire?: string;
+    carteValeur?: string;
+    nbUnitesDecomptees?: number;
 }
 
