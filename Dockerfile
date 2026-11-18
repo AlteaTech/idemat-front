@@ -1,12 +1,18 @@
 # Nginx sert le build Angular produit par le job `angular-build` de la CI.
 # Image de base epinglee : le tag flottant `nginx:alpine` rendait le contenu de l image
 # non reproductible d un build a l autre et pouvait embarquer des paquets systeme obsoletes.
-FROM nginx:1.31.5-alpine3.24
+# Variante -slim : sans curl ni modules dynamiques (njs, image-filter, xslt, geoip), donc sans
+# leurs dependances (curl/libcurl, c-ares, brotli-libs, libpng, expat...) remontees par NeuVector.
+# nginx.conf n utilise aucun de ces modules, et aucun probe/healthcheck n appelle curl dans l image.
+FROM nginx:1.31.5-alpine3.24-slim
 
 # Patch OS Alpine (expat, OpenSSL...) - meme traitement que le Dockerfile du back.
 # Indispensable meme avec une image epinglee : les correctifs de securite Alpine sortent
 # entre deux publications de l image nginx.
+# Le `apk del` est defensif : garantit qu aucun de ces paquets ne reapparait si la
+# variante slim venait a les embarquer.
 RUN apk upgrade --no-cache
+RUN for p in curl libcurl brotli-libs c-ares libexpat libpng; do apk del --no-cache "$p" 2>/dev/null || true; done
 
 RUN addgroup -g 1001 -S appgroup \
  && adduser -S -u 1001 -G appgroup appuser
