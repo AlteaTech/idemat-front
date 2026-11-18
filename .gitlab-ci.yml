@@ -79,7 +79,10 @@ docker-build-dev:
     # En dev : on ajoute le SHA
     IMAGE_TAG_UNIQUE: "$IMAGE_BASE_NAME:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
   script:
-    - docker build --pull -t "$IMAGE_TAG_UNIQUE" .
+    # --pull : recupere la derniere version de l image de base epinglee.
+    # --no-cache : force la reexecution de `apk upgrade` ; sinon la couche reste en cache
+    # sur le runner et les correctifs de securite Alpine publies depuis ne sont jamais appliques.
+    - docker build --pull --no-cache -t "$IMAGE_TAG_UNIQUE" .
   needs:
     - angular-build
 
