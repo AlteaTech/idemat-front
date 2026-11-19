@@ -130,9 +130,8 @@ export class PassagesPointsComponent implements OnInit {
     return base + (this.decompteUnites() ? 'e' : '') + (n > 1 ? 's' : '');
   }
 
-  // "supplémentaire" ne s'accorde pas avec "unités de passage" (il qualifie "passage"), seulement avec "passages"
   protected supplementaire(n: number): string {
-    return this.decompteUnites() || n <= 1 ? 'supplémentaire' : 'supplémentaires';
+    return n > 1 ? 'supplémentaires' : 'supplémentaire';
   }
 
   protected retour(): void {
