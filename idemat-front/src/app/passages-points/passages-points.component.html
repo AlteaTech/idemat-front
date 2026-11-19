@@ -81,7 +81,7 @@
                 }
                 @if (p.carteValeur && p.nbUnitesDecomptees != null) {
                   <!-- #517 RG2 -->
-                  <span class="histo-label">Véhicule {{ p.carteValeur }} : {{ nb(p.nbUnitesDecomptees) }} à décompter</span>
+                  <span class="histo-label">Véhicule {{ p.carteValeur }} : {{ nb(p.nbUnitesDecomptees) }} {{ p.estRefuse ? 'à décompter' : accord('décompté', p.nbUnitesDecomptees) }}</span>
                 }
               </div>
               @if (p.estRefuse || p.estDepotQualifie) {
